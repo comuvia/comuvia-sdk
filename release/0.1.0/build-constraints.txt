@@ -1,0 +1,4 @@
+# The only build backend for the 0.1.0 release, pinned by version and wheel hash.
+# Used by tools/build_release.py (pip --require-hashes) and by uv build --build-constraint; see BUILD.md.
+flit_core==3.12.0 \
+    --hash=sha256:e7a0304069ea895172e3c7bb703292e992c5d1555dd1233ab7b5621b5b69e62c

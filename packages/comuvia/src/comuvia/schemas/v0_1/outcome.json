@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:outcome",
+  "title": "Question outcome",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "outcome"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "question": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "question"
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+            },
+            {
+              "properties": {
+                "record_type": {
+                  "const": "resource_snapshot"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "resolved",
+        "unresolved",
+        "ambiguous",
+        "annulled"
+      ]
+    },
+    "resolved_value": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "enum": [
+        0,
+        1,
+        null
+      ]
+    },
+    "observed": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+            },
+            "period": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/period"
+            }
+          },
+          "required": [
+            "value",
+            "unit",
+            "period"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "vintage": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/vintage"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "source_published_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/time_point"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "retrieved_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "question",
+    "evidence",
+    "status",
+    "resolved_value",
+    "observed",
+    "vintage",
+    "source_published_at",
+    "retrieved_at",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "status": {
+        "const": "resolved"
+      }
+    },
+    "required": [
+      "status"
+    ]
+  },
+  "then": {
+    "properties": {
+      "resolved_value": {
+        "type": "number",
+        "enum": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "resolved_value": {
+        "const": null
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "forecast",
+  "id": "fc-lantern-port-calder-teu-2027-01",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "question": {
+    "record_type": "question",
+    "id": "q-port-calder-teu-2027-01",
+    "revision": 1,
+    "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+  },
+  "provider": {
+    "id": "lantern-synthetic",
+    "name": "Lantern Forecasts (fictional provider)"
+  },
+  "model": {
+    "id": "lantern-demo",
+    "version": "0.0.1-synthetic"
+  },
+  "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+  "issued_at": "2026-10-01T12:00:00Z",
+  "information_cutoff": "2026-09-30T23:59:59Z",
+  "output": {
+    "kind": "binary_probability",
+    "event": "resolves_1",
+    "probability": 0.7
+  },
+  "conditions": [],
+  "limitations": [],
+  "recorded_by": "provider:lantern-synthetic",
+  "recorded_at": "2026-10-01T12:05:00Z"
+}

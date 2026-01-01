@@ -1,0 +1,172 @@
+{
+  "fixture": "foreglass-ledger",
+  "status": "synthetic",
+  "note": "Expected results, specified by hand. foreglass normalization and the comuvia evaluator must reproduce them.",
+  "ledger": {
+    "byte_length": 17241,
+    "sha256": "d7229dd0a01976573b72ac5c178a4f6777892cd3d7ae4cc9e916b1386955662e",
+    "crlf": true,
+    "ascii": true
+  },
+  "lanes": {
+    "count": 12,
+    "by_kind": {
+      "binary": 9,
+      "interval": 2,
+      "point": 1
+    }
+  },
+  "mapping": {
+    "mapped": {
+      "llm-2026-12-15-harbor-berth-closure-alpha": {
+        "question_qid": "q:harbor_berth_closure@2026-12-15",
+        "limitations": []
+      },
+      "llm-2027-03-31-lantern-rate-cut": {
+        "question_qid": "q:lantern_rate_cut@2027-03-31",
+        "limitations": [
+          "text_possibly_truncated"
+        ]
+      },
+      "eng-2027-01-31-canal-closure-hazard": {
+        "question_qid": "q:canal_closure_hazard@2027-01-31",
+        "limitations": [],
+        "conditional": true
+      },
+      "llm-2026-09-10-lantern-fair-attendance": {
+        "question_qid": "q:lantern_fair_attendance@2026-09-10",
+        "limitations": [
+          "outcome_published_before_registration"
+        ]
+      },
+      "ens-2026-11-15-canal-toll-increase": {
+        "question_qid": "q:canal_toll_increase@2026-11-15",
+        "limitations": [
+          "text_possibly_truncated",
+          "provider_fields_withheld"
+        ]
+      },
+      "ens-2026-12-15-harbor-berth-closure": {
+        "question_qid": "q:harbor_berth_closure@2026-12-15",
+        "limitations": []
+      },
+      "llm-2026-10-20-lantern-bridge-opening": {
+        "question_qid": "q:lantern_bridge_opening@2026-10-20",
+        "limitations": []
+      },
+      "ens-2027-06-30-lantern-slowdown-2027h1": {
+        "question_qid": "q:lantern_slowdown_2027h1@2027-06-30",
+        "limitations": [],
+        "question_unit": {
+          "unknown": "provider_declares_no_unit"
+        }
+      }
+    },
+    "not_mapped": {
+      "eng-2026-11-30-canal-delay-days-scenario": "unsupported_output_kind",
+      "llm-2026-12-31-harbor-teu-index": "unsupported_output_kind",
+      "ens-2026-10-31-lantern-price-level": "unsupported_output_kind",
+      "llm-2026-12-01-harbor-strike": "no_pinned_question"
+    },
+    "questions": 7,
+    "forecasts": 8,
+    "same_family": [
+      [
+        "llm-2026-12-15-harbor-berth-closure-alpha",
+        "ens-2026-12-15-harbor-berth-closure"
+      ]
+    ]
+  },
+  "drift": [
+    {
+      "lane": "llm-2026-10-20-lantern-bridge-opening",
+      "field": "outcome",
+      "code": "outcome_normalization_unsupported"
+    },
+    {
+      "lane": "llm-2026-10-20-lantern-bridge-opening",
+      "field": "graded_at",
+      "code": "outcome_normalization_unsupported"
+    },
+    {
+      "lane": "llm-2026-10-20-lantern-bridge-opening",
+      "field": "horizon_days",
+      "code": "unrecognized_provider_field"
+    }
+  ],
+  "evaluation": {
+    "counts": {
+      "candidates": 8,
+      "forecasts": 8,
+      "independent_questions": 7,
+      "forecast_families": 7,
+      "eligible": 0,
+      "scored": 0,
+      "unresolved": 0,
+      "excluded": 8
+    },
+    "reasons": {
+      "llm-2026-12-15-harbor-berth-closure-alpha": [
+        "incomplete_question",
+        "missing_required_time",
+        "no_outcome_recorded"
+      ],
+      "llm-2027-03-31-lantern-rate-cut": [
+        "incomplete_question",
+        "missing_required_time",
+        "resolution_rule_incomplete",
+        "no_outcome_recorded"
+      ],
+      "eng-2027-01-31-canal-closure-hazard": [
+        "incomplete_question",
+        "conditional_scenario",
+        "missing_required_time",
+        "no_outcome_recorded"
+      ],
+      "llm-2026-09-10-lantern-fair-attendance": [
+        "incomplete_question",
+        "missing_required_time",
+        "retrospective_registration",
+        "no_outcome_recorded"
+      ],
+      "ens-2026-11-15-canal-toll-increase": [
+        "incomplete_question",
+        "missing_required_time",
+        "resolution_rule_incomplete",
+        "no_outcome_recorded"
+      ],
+      "ens-2026-12-15-harbor-berth-closure": [
+        "incomplete_question",
+        "missing_required_time",
+        "no_outcome_recorded"
+      ],
+      "llm-2026-10-20-lantern-bridge-opening": [
+        "incomplete_question",
+        "missing_required_time",
+        "no_outcome_recorded"
+      ],
+      "ens-2027-06-30-lantern-slowdown-2027h1": [
+        "incomplete_question",
+        "missing_required_time",
+        "no_outcome_recorded"
+      ]
+    }
+  },
+  "never": [
+    "an interval or point lane becomes a forecast",
+    "lo/hi becomes a coverage level",
+    "a reading, naive_value or CI becomes a probability",
+    "built becomes source_published_at",
+    "a blank qid gets an identity"
+  ],
+  "intake": {
+    "complete_bundle": "accepted",
+    "truncated_ledger": "parse_refused",
+    "missing_declared_role": "incomplete_intake",
+    "wrong_schema": "schema_mismatch",
+    "counts_mismatch": "counts_mismatch",
+    "digest_mismatch": "digest_mismatch",
+    "archive_index_without_ledger": "archive_index_mismatch",
+    "replay": "verified, never accepted as the live snapshot"
+  }
+}

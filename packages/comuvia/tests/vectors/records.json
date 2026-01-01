@@ -1,0 +1,1105 @@
+{
+  "description": "Single-record validation vectors: valid records and named refusals (review sections 5-7).",
+  "generated_by": "tools/sync_vectors.py",
+  "layers": {
+    "parse": "refused by the strict JSON parser before validation",
+    "schema": "refused by the packaged JSON Schemas",
+    "semantic": "schema-valid; refused by a rule JSON Schema cannot express"
+  },
+  "valid": [
+    {
+      "id": "fixture-asr-harbor-weekly-e42-ilsley-freight",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource": {
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+        },
+        "quote": {
+          "exact": "Freight disruption could intensify next winter if the canal closes.",
+          "verbatim": true,
+          "language": "en",
+          "translation": null
+        },
+        "selector": {
+          "text_quote": {
+            "exact": "Freight disruption could intensify next winter if the canal closes.",
+            "prefix": "g volumes should look ordinary. ",
+            "suffix": " Nobody can put a date on that.\n"
+          },
+          "text_position": {
+            "start": 407,
+            "end": 474
+          },
+          "media_time": {
+            "unknown": "caption_timing_not_retained"
+          }
+        },
+        "attributed_to": {
+          "name": "Rowan Ilsley (fictional)",
+          "basis": "transcript_speaker_label"
+        },
+        "assertion_kind": "conditional_scenario",
+        "stated_probability": null,
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:20:00Z"
+      }
+    },
+    {
+      "id": "fixture-int-ilsley-freight-analyst-1",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "interpretation",
+        "id": "int-ilsley-freight-analyst-1",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "assertion": {
+          "record_type": "source_assertion",
+          "id": "asr-harbor-weekly-e42-ilsley-freight",
+          "revision": 1,
+          "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+        },
+        "author": "analyst:example-analyst-1",
+        "status": "reviewer_interpretation",
+        "frozen_at": "2026-03-10T10:00:00Z",
+        "proposed_target": "Meridian Canal corridor freight-delay index (fictional) above 120 in at least one month",
+        "proposed_period": {
+          "start": "2026-12-01",
+          "end": "2027-02-28",
+          "inclusive": true,
+          "precision": "day"
+        },
+        "condition": {
+          "text": "Meridian Canal closes",
+          "state": "unresolved",
+          "note": "The speaker did not define closure."
+        },
+        "assumptions": [
+          "\"the canal\" is identified as the Meridian Canal from the host's preceding question",
+          "\"next winter\" is read as December 2026 through February 2027",
+          "\"intensify\" is read as index > 120, since the speaker gave no threshold"
+        ],
+        "proposed_probability": null,
+        "extraction": {
+          "method": "manual_reading",
+          "confidence": 0.85
+        },
+        "recorded_by": "analyst:example-analyst-1",
+        "recorded_at": "2026-03-10T10:00:00Z"
+      }
+    },
+    {
+      "id": "fixture-res-harbor-weekly-e42-transcript",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      }
+    },
+    {
+      "id": "fixture-fc-lantern-port-calder-teu-2027-01",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": "2026-10-01T12:00:00Z",
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "fixture-out-port-calder-teu-2027-01",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "outcome",
+        "id": "out-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "evidence": {
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+        },
+        "status": "resolved",
+        "resolved_value": 1,
+        "observed": {
+          "value": 386500,
+          "unit": "TEU",
+          "period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          }
+        },
+        "vintage": "first_release",
+        "source_published_at": {
+          "date": "2027-02-15",
+          "precision": "day"
+        },
+        "retrieved_at": "2027-02-16T09:30:00Z",
+        "recorded_by": "recorder:example-resolver",
+        "recorded_at": "2027-02-16T10:00:00Z"
+      }
+    },
+    {
+      "id": "fixture-q-port-calder-teu-2027-01",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "question",
+        "id": "q-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+        "outcome_kind": "binary",
+        "unit": "TEU",
+        "transformation": "none",
+        "observable": "monthly container throughput, Port Calder (fictional)",
+        "target_period": {
+          "start": "2027-01-01",
+          "end": "2027-01-31",
+          "inclusive": true,
+          "precision": "day"
+        },
+        "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+        "resolution_source": {
+          "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/"
+        },
+        "vintage_policy": "first_release",
+        "forecast_deadline": "2026-12-31T23:59:59Z",
+        "resolution_deadline": "2027-03-31T23:59:59Z",
+        "limitations": [],
+        "recorded_by": "registry:example-question-desk",
+        "recorded_at": "2026-09-15T00:00:00Z"
+      }
+    },
+    {
+      "id": "fixture-res-port-calder-bulletin-2027-01-first",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-port-calder-bulletin-2027-01-first",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "statistical_bulletin_excerpt",
+        "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+        "language": {
+          "unknown": "source_declares_no_language",
+          "note": "CSV excerpt; the header names are English words."
+        },
+        "source_version": "first_release",
+        "source_published_at": {
+          "date": "2027-02-15",
+          "precision": "day"
+        },
+        "captured_at": "2027-02-16T09:30:00Z",
+        "captured_assets": [
+          "bulletin_excerpt_csv"
+        ],
+        "not_captured": [
+          "full_bulletin"
+        ],
+        "content": {
+          "media_type": "text/csv; charset=utf-8",
+          "retained": true,
+          "byte_length": 49,
+          "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+        },
+        "recorded_by": "recorder:example-resolver",
+        "recorded_at": "2027-02-16T09:45:00Z"
+      }
+    },
+    {
+      "id": "shape-assessment",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "assessment",
+        "id": "asm-ilsley-freight-checker-1",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "assertion": {
+          "record_type": "source_assertion",
+          "id": "asr-harbor-weekly-e42-ilsley-freight",
+          "revision": 1,
+          "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+        },
+        "checker": "checker:example-checker-1",
+        "evidence": [
+          {
+            "record_type": "resource_snapshot",
+            "id": "res-harbor-weekly-e42-transcript",
+            "revision": 1,
+            "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+          }
+        ],
+        "rubric": {
+          "id": "rubric-quote-fidelity",
+          "version": "0.1-synthetic"
+        },
+        "verdict": "supported",
+        "checker_confidence": 0.9,
+        "coverage": {
+          "scope": "full",
+          "items_checked": 1,
+          "items_total": 1
+        },
+        "assessed_at": "2026-03-12T09:00:00Z",
+        "recorded_by": "checker:example-checker-1",
+        "recorded_at": "2026-03-12T09:05:00Z"
+      }
+    },
+    {
+      "id": "shape-evaluation",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "evaluation",
+        "id": "eval-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "forecast": {
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:9495950eff32a14b022f53d372c324321464a616944d88d5c85467fbd135d9dd"
+        },
+        "outcome": {
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:2bac8966f62767370648bea0fc70418681a558d1e28fa8ce8433cf212fb2a0a8"
+        },
+        "scoring_rule": {
+          "id": "binary-brier-v1",
+          "version": "1",
+          "digest": "sha256:9a0180cf0678614b3d423ca8e641bff9805e8582ce898438d8586251f96877c1"
+        },
+        "policy": null,
+        "result": {
+          "eligible": true,
+          "exclusion_reasons": [],
+          "loss": 0.09000000000000002
+        },
+        "evaluated_at": "2027-02-17T00:00:00Z",
+        "recorded_by": "evaluator:example-evaluator",
+        "recorded_at": "2027-02-17T00:00:00Z"
+      }
+    },
+    {
+      "id": "shape-artifact_descriptor",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "artifact_descriptor",
+        "id": "art-port-calder-bulletin-2027-01-first",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "content": {
+          "media_type": "text/csv; charset=utf-8",
+          "byte_length": 49,
+          "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+        },
+        "content_schema": "month,container_teu,release",
+        "origin": {
+          "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/"
+        },
+        "published_at": {
+          "date": "2027-02-15",
+          "precision": "day"
+        },
+        "retrieved_at": "2027-02-16T09:30:00Z",
+        "units": [
+          "TEU"
+        ],
+        "rights_reference": {
+          "unknown": "rights_not_reviewed"
+        },
+        "access": "public",
+        "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+        "recorded_by": "recorder:example-resolver",
+        "recorded_at": "2027-02-16T09:50:00Z"
+      }
+    },
+    {
+      "id": "extension-namespaced",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": "2026-10-01T12:00:00Z",
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z",
+        "extensions": {
+          "org.example.lantern/v1": {
+            "run": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "outcome-unresolved",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "outcome",
+        "id": "out-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "evidence": {
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+        },
+        "status": "unresolved",
+        "resolved_value": null,
+        "observed": {
+          "value": 386500,
+          "unit": "TEU",
+          "period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          }
+        },
+        "vintage": "first_release",
+        "source_published_at": {
+          "date": "2027-02-15",
+          "precision": "day"
+        },
+        "retrieved_at": "2027-02-16T09:30:00Z",
+        "recorded_by": "recorder:example-resolver",
+        "recorded_at": "2027-02-16T10:00:00Z"
+      }
+    },
+    {
+      "id": "forecast-issued-at-unknown",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": {
+          "unknown": "provider_did_not_state"
+        },
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "probability-withheld",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": "2026-10-01T12:00:00Z",
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": {
+            "withheld": "licence_terms"
+          }
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "forecast-issued-at-day-precision",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": {
+          "date": "2026-10-01",
+          "precision": "day"
+        },
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "cutoff-same-day-as-day-issued-is-indeterminate-not-refused",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": {
+          "date": "2026-10-01",
+          "precision": "day"
+        },
+        "information_cutoff": "2026-10-01T18:00:00Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "forecast-limitations",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "question": {
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+        },
+        "provider": {
+          "id": "lantern-synthetic",
+          "name": "Lantern Forecasts (fictional provider)"
+        },
+        "model": {
+          "id": "lantern-demo",
+          "version": "0.0.1-synthetic"
+        },
+        "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+        "issued_at": "2026-10-01T12:00:00Z",
+        "information_cutoff": "2026-09-30T23:59:59Z",
+        "output": {
+          "kind": "binary_probability",
+          "event": "resolves_1",
+          "probability": 0.7
+        },
+        "conditions": [],
+        "limitations": [
+          "outcome_published_before_registration",
+          "provider_fields_withheld"
+        ],
+        "recorded_by": "provider:lantern-synthetic",
+        "recorded_at": "2026-10-01T12:05:00Z"
+      }
+    },
+    {
+      "id": "question-unknown-members",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "question",
+        "id": "q-port-calder-teu-2027-01",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+        "outcome_kind": "binary",
+        "unit": {
+          "unknown": "provider_declares_no_unit"
+        },
+        "transformation": {
+          "unknown": "provider_declares_no_transformation"
+        },
+        "observable": "monthly container throughput, Port Calder (fictional)",
+        "target_period": {
+          "unknown": "provider_declares_no_target_period"
+        },
+        "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+        "resolution_source": {
+          "withheld": "provider_terms"
+        },
+        "vintage_policy": {
+          "unknown": "provider_declares_no_vintage"
+        },
+        "forecast_deadline": {
+          "unknown": "provider_declares_no_deadline"
+        },
+        "resolution_deadline": {
+          "unknown": "provider_declares_no_deadline"
+        },
+        "limitations": [
+          "text_possibly_truncated"
+        ],
+        "recorded_by": "registry:example-question-desk",
+        "recorded_at": "2026-09-15T00:00:00Z"
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "probability-1.2",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 1.2}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "out_of_range",
+        "pointer": "/output/probability"
+      }
+    },
+    {
+      "id": "probability--0.1",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": -0.1}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "out_of_range",
+        "pointer": "/output/probability"
+      }
+    },
+    {
+      "id": "probability-true",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": true}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_type",
+        "pointer": "/output/probability"
+      }
+    },
+    {
+      "id": "probability-string",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": \"0.7\"}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_type",
+        "pointer": "/output/probability"
+      }
+    },
+    {
+      "id": "probability-raw-nan",
+      "layer": "parse",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": NaN}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "non_finite_number",
+        "pointer": ""
+      }
+    },
+    {
+      "id": "resolved-value-0.5",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"outcome\", \"id\": \"out-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"evidence\": {\"record_type\": \"resource_snapshot\", \"id\": \"res-port-calder-bulletin-2027-01-first\", \"revision\": 1, \"digest\": \"sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294\"}, \"status\": \"resolved\", \"resolved_value\": 0.5, \"observed\": {\"value\": 386500, \"unit\": \"TEU\", \"period\": {\"start\": \"2027-01-01\", \"end\": \"2027-01-31\", \"inclusive\": true, \"precision\": \"day\"}}, \"vintage\": \"first_release\", \"source_published_at\": {\"date\": \"2027-02-15\", \"precision\": \"day\"}, \"retrieved_at\": \"2027-02-16T09:30:00Z\", \"recorded_by\": \"recorder:example-resolver\", \"recorded_at\": \"2027-02-16T10:00:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/resolved_value"
+      }
+    },
+    {
+      "id": "resolved-value-true",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"outcome\", \"id\": \"out-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"evidence\": {\"record_type\": \"resource_snapshot\", \"id\": \"res-port-calder-bulletin-2027-01-first\", \"revision\": 1, \"digest\": \"sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294\"}, \"status\": \"resolved\", \"resolved_value\": true, \"observed\": {\"value\": 386500, \"unit\": \"TEU\", \"period\": {\"start\": \"2027-01-01\", \"end\": \"2027-01-31\", \"inclusive\": true, \"precision\": \"day\"}}, \"vintage\": \"first_release\", \"source_published_at\": {\"date\": \"2027-02-15\", \"precision\": \"day\"}, \"retrieved_at\": \"2027-02-16T09:30:00Z\", \"recorded_by\": \"recorder:example-resolver\", \"recorded_at\": \"2027-02-16T10:00:00Z\"}",
+      "expect": {
+        "code": "invalid_type",
+        "pointer": "/resolved_value"
+      }
+    },
+    {
+      "id": "resolved-value-null-when-resolved",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"outcome\", \"id\": \"out-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"evidence\": {\"record_type\": \"resource_snapshot\", \"id\": \"res-port-calder-bulletin-2027-01-first\", \"revision\": 1, \"digest\": \"sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294\"}, \"status\": \"resolved\", \"resolved_value\": null, \"observed\": {\"value\": 386500, \"unit\": \"TEU\", \"period\": {\"start\": \"2027-01-01\", \"end\": \"2027-01-31\", \"inclusive\": true, \"precision\": \"day\"}}, \"vintage\": \"first_release\", \"source_published_at\": {\"date\": \"2027-02-15\", \"precision\": \"day\"}, \"retrieved_at\": \"2027-02-16T09:30:00Z\", \"recorded_by\": \"recorder:example-resolver\", \"recorded_at\": \"2027-02-16T10:00:00Z\"}",
+      "expect": {
+        "code": "null_not_allowed",
+        "pointer": "/resolved_value"
+      }
+    },
+    {
+      "id": "resolved-value-set-when-unresolved",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"outcome\", \"id\": \"out-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"evidence\": {\"record_type\": \"resource_snapshot\", \"id\": \"res-port-calder-bulletin-2027-01-first\", \"revision\": 1, \"digest\": \"sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294\"}, \"status\": \"unresolved\", \"resolved_value\": 1, \"observed\": {\"value\": 386500, \"unit\": \"TEU\", \"period\": {\"start\": \"2027-01-01\", \"end\": \"2027-01-31\", \"inclusive\": true, \"precision\": \"day\"}}, \"vintage\": \"first_release\", \"source_published_at\": {\"date\": \"2027-02-15\", \"precision\": \"day\"}, \"retrieved_at\": \"2027-02-16T09:30:00Z\", \"recorded_by\": \"recorder:example-resolver\", \"recorded_at\": \"2027-02-16T10:00:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/resolved_value"
+      }
+    },
+    {
+      "id": "cutoff-after-issued",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-10-01T12:00:01Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "information_cutoff_after_issued_at",
+        "pointer": "/information_cutoff"
+      }
+    },
+    {
+      "id": "I10-schema-0.2",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.2\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "unsupported_schema_version",
+        "pointer": "/schema"
+      }
+    },
+    {
+      "id": "I10-schema-missing",
+      "layer": "schema",
+      "text": "{\"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "missing_required_field",
+        "pointer": "/schema"
+      }
+    },
+    {
+      "id": "unrecognized-member",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\", \"confidence\": 0.9}",
+      "expect": {
+        "code": "unrecognized_member",
+        "pointer": "/confidence"
+      }
+    },
+    {
+      "id": "unrecognized-nested-member",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7, \"note\": \"x\"}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "unrecognized_member",
+        "pointer": "/output/note"
+      }
+    },
+    {
+      "id": "missing-required-member",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "missing_required_field",
+        "pointer": "/issued_at"
+      }
+    },
+    {
+      "id": "null-for-unknown",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": null, \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "null_not_allowed",
+        "pointer": "/issued_at"
+      }
+    },
+    {
+      "id": "empty-string-for-unknown",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": \"\", \"source_published_at\": {\"date\": \"2026-01-14\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/source_version"
+      }
+    },
+    {
+      "id": "marker-without-reason",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": {\"unknown\": \"\"}, \"source_published_at\": {\"date\": \"2026-01-14\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_marker",
+        "pointer": "/source_version/unknown"
+      }
+    },
+    {
+      "id": "marker-extra-member",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": {\"unknown\": \"x\", \"value\": \"1\"}, \"source_published_at\": {\"date\": \"2026-01-14\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_marker",
+        "pointer": "/source_version/value"
+      }
+    },
+    {
+      "id": "marker-where-not-allowed",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": {\"unknown\": \"not_recorded\"}}",
+      "expect": {
+        "code": "invalid_timestamp",
+        "pointer": "/recorded_at"
+      }
+    },
+    {
+      "id": "day-value-expanded",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": {\"unknown\": \"source_declares_no_version\"}, \"source_published_at\": {\"date\": \"2026-01-14T00:00:00Z\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_date",
+        "pointer": "/source_published_at/date"
+      }
+    },
+    {
+      "id": "day-value-impossible-date",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": {\"unknown\": \"source_declares_no_version\"}, \"source_published_at\": {\"date\": \"2026-02-30\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_date",
+        "pointer": "/source_published_at/date"
+      }
+    },
+    {
+      "id": "timestamp-without-offset",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_timestamp",
+        "pointer": "/issued_at"
+      }
+    },
+    {
+      "id": "timestamp-impossible",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T25:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_timestamp",
+        "pointer": "/issued_at"
+      }
+    },
+    {
+      "id": "digest-unsupported-algorithm",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha512:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "unsupported_digest_algorithm",
+        "pointer": "/question/digest"
+      }
+    },
+    {
+      "id": "digest-uppercase",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"SHA256:26A438D6F5F8DD7DC76242469CDEDF2939277DE94DD13FD03B420BD9AF34E90F\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "malformed_digest",
+        "pointer": "/question/digest"
+      }
+    },
+    {
+      "id": "reference-without-digest",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "missing_required_field",
+        "pointer": "/question/digest"
+      }
+    },
+    {
+      "id": "reference-wrong-type",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"outcome\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/question/record_type"
+      }
+    },
+    {
+      "id": "legacy-id-as-content-digest",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\", \"language\": \"en\", \"source_version\": {\"unknown\": \"source_declares_no_version\"}, \"source_published_at\": {\"date\": \"2026-01-14\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": {\"scheme\": \"locator\", \"value\": \"https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt\"}}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_type",
+        "pointer": "/content/digest"
+      }
+    },
+    {
+      "id": "extension-key-not-namespaced",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\", \"extensions\": {\"lantern\": {}}}",
+      "expect": {
+        "code": "invalid_extension_key",
+        "pointer": "/extensions/lantern"
+      }
+    },
+    {
+      "id": "unknown-record-type",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"prediction\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "unknown_record_type",
+        "pointer": "/record_type"
+      }
+    },
+    {
+      "id": "predecessor-on-revision-1",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_predecessor",
+        "pointer": "/predecessor"
+      }
+    },
+    {
+      "id": "period-reversed",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"text\": \"Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?\", \"outcome_kind\": \"binary\", \"unit\": \"TEU\", \"transformation\": \"none\", \"observable\": \"monthly container throughput, Port Calder (fictional)\", \"target_period\": {\"start\": \"2027-01-01\", \"end\": \"2026-12-31\", \"inclusive\": true, \"precision\": \"day\"}, \"resolution_rule\": \"Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).\", \"resolution_source\": {\"name\": \"Port Calder Authority monthly statistical bulletin (fictional)\", \"locator\": \"https://example.org/synthetic/port-calder/bulletins/\"}, \"vintage_policy\": \"first_release\", \"forecast_deadline\": \"2026-12-31T23:59:59Z\", \"resolution_deadline\": \"2027-03-31T23:59:59Z\", \"limitations\": [], \"recorded_by\": \"registry:example-question-desk\", \"recorded_at\": \"2026-09-15T00:00:00Z\"}",
+      "expect": {
+        "code": "invalid_period",
+        "pointer": "/target_period"
+      }
+    },
+    {
+      "id": "credential-in-locator",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"resource_type\": \"transcript\", \"locator\": \"https://user:secret@example.org/x\", \"language\": \"en\", \"source_version\": {\"unknown\": \"source_declares_no_version\"}, \"source_published_at\": {\"date\": \"2026-01-14\", \"precision\": \"day\"}, \"captured_at\": \"2026-02-03T15:04:05Z\", \"captured_assets\": [\"transcript_text\"], \"not_captured\": [\"audio\", \"video\", \"caption_timing\"], \"content\": {\"media_type\": \"text/plain; charset=utf-8\", \"retained\": true, \"byte_length\": 530, \"digest\": \"sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9\"}, \"recorded_by\": \"recorder:example-transcriber\", \"recorded_at\": \"2026-02-03T15:10:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/locator"
+      }
+    },
+    {
+      "id": "extraction-confidence-above-1",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"interpretation\", \"id\": \"int-ilsley-freight-analyst-1\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"assertion\": {\"record_type\": \"source_assertion\", \"id\": \"asr-harbor-weekly-e42-ilsley-freight\", \"revision\": 1, \"digest\": \"sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63\"}, \"author\": \"analyst:example-analyst-1\", \"status\": \"reviewer_interpretation\", \"frozen_at\": \"2026-03-10T10:00:00Z\", \"proposed_target\": \"Meridian Canal corridor freight-delay index (fictional) above 120 in at least one month\", \"proposed_period\": {\"start\": \"2026-12-01\", \"end\": \"2027-02-28\", \"inclusive\": true, \"precision\": \"day\"}, \"condition\": {\"text\": \"Meridian Canal closes\", \"state\": \"unresolved\", \"note\": \"The speaker did not define closure.\"}, \"assumptions\": [\"\\\"the canal\\\" is identified as the Meridian Canal from the host's preceding question\", \"\\\"next winter\\\" is read as December 2026 through February 2027\", \"\\\"intensify\\\" is read as index > 120, since the speaker gave no threshold\"], \"proposed_probability\": null, \"extraction\": {\"method\": \"manual_reading\", \"confidence\": 1.5}, \"recorded_by\": \"analyst:example-analyst-1\", \"recorded_at\": \"2026-03-10T10:00:00Z\"}",
+      "expect": {
+        "code": "out_of_range",
+        "pointer": "/extraction/confidence"
+      }
+    },
+    {
+      "id": "R3-coverage-integral-float-above-total",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"assessment\", \"id\": \"asm-ilsley-freight-checker-1\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"assertion\": {\"record_type\": \"source_assertion\", \"id\": \"asr-harbor-weekly-e42-ilsley-freight\", \"revision\": 1, \"digest\": \"sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63\"}, \"checker\": \"checker:example-checker-1\", \"evidence\": [{\"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"digest\": \"sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040\"}], \"rubric\": {\"id\": \"rubric-quote-fidelity\", \"version\": \"0.1-synthetic\"}, \"verdict\": \"supported\", \"checker_confidence\": 0.9, \"coverage\": {\"scope\": \"sample\", \"items_checked\": 5.0, \"items_total\": 3}, \"assessed_at\": \"2026-03-12T09:00:00Z\", \"recorded_by\": \"checker:example-checker-1\", \"recorded_at\": \"2026-03-12T09:05:00Z\"}",
+      "expect": {
+        "code": "invalid_coverage",
+        "pointer": "/coverage"
+      }
+    },
+    {
+      "id": "R3-coverage-full-scope-integral-float",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"assessment\", \"id\": \"asm-ilsley-freight-checker-1\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"assertion\": {\"record_type\": \"source_assertion\", \"id\": \"asr-harbor-weekly-e42-ilsley-freight\", \"revision\": 1, \"digest\": \"sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63\"}, \"checker\": \"checker:example-checker-1\", \"evidence\": [{\"record_type\": \"resource_snapshot\", \"id\": \"res-harbor-weekly-e42-transcript\", \"revision\": 1, \"digest\": \"sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040\"}], \"rubric\": {\"id\": \"rubric-quote-fidelity\", \"version\": \"0.1-synthetic\"}, \"verdict\": \"supported\", \"checker_confidence\": 0.9, \"coverage\": {\"scope\": \"full\", \"items_checked\": 2.0, \"items_total\": 3}, \"assessed_at\": \"2026-03-12T09:00:00Z\", \"recorded_by\": \"checker:example-checker-1\", \"recorded_at\": \"2026-03-12T09:05:00Z\"}",
+      "expect": {
+        "code": "invalid_coverage",
+        "pointer": "/coverage"
+      }
+    },
+    {
+      "id": "limitations-missing",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "missing_required_field",
+        "pointer": "/limitations"
+      }
+    },
+    {
+      "id": "limitations-not-a-code",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [\"Text Possibly Truncated\"], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/limitations/0"
+      }
+    },
+    {
+      "id": "limitations-repeated",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-09-30T23:59:59Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [\"text_possibly_truncated\", \"text_possibly_truncated\"], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "invalid_value",
+        "pointer": "/limitations"
+      }
+    },
+    {
+      "id": "cutoff-definitely-after-day-issued",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": {\"date\": \"2026-10-01\", \"precision\": \"day\"}, \"information_cutoff\": \"2026-10-03T00:00:00Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "information_cutoff_after_issued_at",
+        "pointer": "/information_cutoff"
+      }
+    },
+    {
+      "id": "R4-cutoff-100ns-after-issued",
+      "layer": "semantic",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"forecast\", \"id\": \"fc-lantern-port-calder-teu-2027-01\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"question\": {\"record_type\": \"question\", \"id\": \"q-port-calder-teu-2027-01\", \"revision\": 1, \"digest\": \"sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f\"}, \"provider\": {\"id\": \"lantern-synthetic\", \"name\": \"Lantern Forecasts (fictional provider)\"}, \"model\": {\"id\": \"lantern-demo\", \"version\": \"0.0.1-synthetic\"}, \"forecast_family\": \"fam-lantern-port-calder-teu-2027-01\", \"issued_at\": \"2026-10-01T12:00:00Z\", \"information_cutoff\": \"2026-10-01T12:00:00.0000001Z\", \"output\": {\"kind\": \"binary_probability\", \"event\": \"resolves_1\", \"probability\": 0.7}, \"conditions\": [], \"limitations\": [], \"recorded_by\": \"provider:lantern-synthetic\", \"recorded_at\": \"2026-10-01T12:05:00Z\"}",
+      "expect": {
+        "code": "information_cutoff_after_issued_at",
+        "pointer": "/information_cutoff"
+      }
+    }
+  ]
+}

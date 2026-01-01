@@ -1,0 +1,43 @@
+[build-system]
+requires = ["flit_core>=3.12,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "foreglass"
+dynamic = ["version"]
+description = "Explicit, bounded reader for the public ForeGlass artifacts: exact-byte intake and honest normalization into comuvia records."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["comuvia>=0.1.0,<0.2"]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Comuvia" }]
+keywords = ["forecasting", "provenance", "foreglass", "exact-bytes"]
+# Python version classifiers name only versions measured on the release matrix
+# (CPython 3.11, 3.12 and 3.13 on Windows x86-64 and Linux x86-64).
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+[project.urls]
+Repository = "https://github.com/comuvia/comuvia-sdk"
+Documentation = "https://github.com/comuvia/comuvia-sdk/tree/main/documentation/tutorials"
+Issues = "https://github.com/comuvia/comuvia-sdk/issues"
+
+[tool.flit.module]
+name = "foreglass"
+
+# Distribution contents are listed explicitly; Git ignore rules are not a packaging boundary.
+# The wheel holds only src/foreglass; the sdist adds pyproject.toml, README.md, PKG-INFO and these paths.
+[tool.flit.sdist]
+include = ["tests/", "CHANGELOG.md"]
+exclude = ["**/__pycache__", "**/*.py[cod]"]

@@ -1,0 +1,120 @@
+{
+  "fixture": "narrative-conditional",
+  "status": "draft_semantic_example",
+  "note": "Expected results. comuvia validation, identity and evaluation reproduce them; the package test vectors check them.",
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+      },
+      "result": "match",
+      "byte_length": 530,
+      "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "interpretation",
+        "id": "int-ilsley-freight-analyst-1",
+        "revision": 1,
+        "digest": "sha256:0a1b806ad499bdc75a32ba451cbd8bc40651f9b88e119a83b6dec6b678816e58"
+      },
+      "result": "match"
+    }
+  ],
+  "timestamp_assurance": [
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+      },
+      "result": "unavailable"
+    },
+    {
+      "record": {
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+      },
+      "result": "unavailable"
+    },
+    {
+      "record": {
+        "record_type": "interpretation",
+        "id": "int-ilsley-freight-analyst-1",
+        "revision": 1,
+        "digest": "sha256:0a1b806ad499bdc75a32ba451cbd8bc40651f9b88e119a83b6dec6b678816e58"
+      },
+      "result": "unavailable"
+    }
+  ],
+  "evaluation": {
+    "scoring_rule": "binary-brier-v1",
+    "counts": {
+      "candidates": 2,
+      "eligible": 0,
+      "scored": 0,
+      "unresolved": 0,
+      "excluded": 2
+    },
+    "exclusions": [
+      {
+        "record": {
+          "record_type": "source_assertion",
+          "id": "asr-harbor-weekly-e42-ilsley-freight",
+          "revision": 1,
+          "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+        },
+        "reasons": [
+          "no_declared_probability",
+          "conditional_scenario",
+          "no_pinned_question"
+        ]
+      },
+      {
+        "record": {
+          "record_type": "interpretation",
+          "id": "int-ilsley-freight-analyst-1",
+          "revision": 1,
+          "digest": "sha256:0a1b806ad499bdc75a32ba451cbd8bc40651f9b88e119a83b6dec6b678816e58"
+        },
+        "reasons": [
+          "not_a_forecast",
+          "conditional_scenario"
+        ]
+      }
+    ]
+  },
+  "invariants": [
+    "0.85 never appears as a probability in any output",
+    "the speaker is never the author of the interpretation",
+    "source_published_at stays day precision",
+    "selector.media_time stays unknown",
+    "no time value is filled from captured_at"
+  ]
+}

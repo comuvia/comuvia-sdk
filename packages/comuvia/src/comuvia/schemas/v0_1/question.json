@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:question",
+  "title": "Pinned question",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "question"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "text": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+    },
+    "outcome_kind": {
+      "type": "string",
+      "enum": [
+        "binary"
+      ]
+    },
+    "unit": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "transformation": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "observable": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+    },
+    "target_period": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/period"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "resolution_rule": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+    },
+    "resolution_source": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+            },
+            "locator": {
+              "anyOf": [
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/locator"
+                },
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+                },
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+                }
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "locator"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "vintage_policy": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/vintage"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "forecast_deadline": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "resolution_deadline": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "limitations": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/limitations"
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "text",
+    "outcome_kind",
+    "unit",
+    "transformation",
+    "observable",
+    "target_period",
+    "resolution_rule",
+    "resolution_source",
+    "vintage_policy",
+    "forecast_deadline",
+    "resolution_deadline",
+    "limitations",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

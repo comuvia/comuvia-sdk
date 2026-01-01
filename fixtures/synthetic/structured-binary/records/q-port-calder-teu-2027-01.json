@@ -1,0 +1,30 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "question",
+  "id": "q-port-calder-teu-2027-01",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+  "outcome_kind": "binary",
+  "unit": "TEU",
+  "transformation": "none",
+  "observable": "monthly container throughput, Port Calder (fictional)",
+  "target_period": {
+    "start": "2027-01-01",
+    "end": "2027-01-31",
+    "inclusive": true,
+    "precision": "day"
+  },
+  "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+  "resolution_source": {
+    "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/bulletins/"
+  },
+  "vintage_policy": "first_release",
+  "forecast_deadline": "2026-12-31T23:59:59Z",
+  "resolution_deadline": "2027-03-31T23:59:59Z",
+  "limitations": [],
+  "recorded_by": "registry:example-question-desk",
+  "recorded_at": "2026-09-15T00:00:00Z"
+}

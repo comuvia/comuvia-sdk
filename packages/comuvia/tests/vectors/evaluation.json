@@ -1,0 +1,5007 @@
+{
+  "description": "Eligibility and binary-brier-v1 vectors: records in; counts and per-candidate status, reasons and loss out.",
+  "generated_by": "tools/sync_vectors.py",
+  "scoring_rule": {
+    "id": "binary-brier-v1",
+    "version": "1",
+    "digest": "sha256:9a0180cf0678614b3d423ca8e641bff9805e8582ce898438d8586251f96877c1"
+  },
+  "conventions": {
+    "results": "keyed by candidate record id; every candidate in a case is listed",
+    "counts": "only the listed counts are asserted",
+    "loss": "exact binary64 value; d = p - o; loss = d * d"
+  },
+  "cases": [
+    {
+      "id": "fixture-b-eligible",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          }
+        },
+        "counts": {
+          "candidates": 1,
+          "forecasts": 1,
+          "independent_questions": 1,
+          "forecast_families": 1,
+          "eligible": 1,
+          "scored": 1,
+          "unresolved": 0,
+          "excluded": 0
+        }
+      }
+    },
+    {
+      "id": "fixture-b-counterfactual-outcome-0",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 0,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.48999999999999994
+          }
+        }
+      }
+    },
+    {
+      "id": "fixture-a-narrative",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "transcript",
+          "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+          "language": "en",
+          "source_version": {
+            "unknown": "source_declares_no_version"
+          },
+          "source_published_at": {
+            "date": "2026-01-14",
+            "precision": "day"
+          },
+          "captured_at": "2026-02-03T15:04:05Z",
+          "captured_assets": [
+            "transcript_text"
+          ],
+          "not_captured": [
+            "audio",
+            "video",
+            "caption_timing"
+          ],
+          "content": {
+            "media_type": "text/plain; charset=utf-8",
+            "retained": true,
+            "byte_length": 530,
+            "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+          },
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:10:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "source_assertion",
+          "id": "asr-harbor-weekly-e42-ilsley-freight",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource": {
+            "record_type": "resource_snapshot",
+            "id": "res-harbor-weekly-e42-transcript",
+            "revision": 1,
+            "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+          },
+          "quote": {
+            "exact": "Freight disruption could intensify next winter if the canal closes.",
+            "verbatim": true,
+            "language": "en",
+            "translation": null
+          },
+          "selector": {
+            "text_quote": {
+              "exact": "Freight disruption could intensify next winter if the canal closes.",
+              "prefix": "g volumes should look ordinary. ",
+              "suffix": " Nobody can put a date on that.\n"
+            },
+            "text_position": {
+              "start": 407,
+              "end": 474
+            },
+            "media_time": {
+              "unknown": "caption_timing_not_retained"
+            }
+          },
+          "attributed_to": {
+            "name": "Rowan Ilsley (fictional)",
+            "basis": "transcript_speaker_label"
+          },
+          "assertion_kind": "conditional_scenario",
+          "stated_probability": null,
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:20:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "interpretation",
+          "id": "int-ilsley-freight-analyst-1",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "assertion": {
+            "record_type": "source_assertion",
+            "id": "asr-harbor-weekly-e42-ilsley-freight",
+            "revision": 1,
+            "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+          },
+          "author": "analyst:example-analyst-1",
+          "status": "reviewer_interpretation",
+          "frozen_at": "2026-03-10T10:00:00Z",
+          "proposed_target": "Meridian Canal corridor freight-delay index (fictional) above 120 in at least one month",
+          "proposed_period": {
+            "start": "2026-12-01",
+            "end": "2027-02-28",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "condition": {
+            "text": "Meridian Canal closes",
+            "state": "unresolved",
+            "note": "The speaker did not define closure."
+          },
+          "assumptions": [
+            "\"the canal\" is identified as the Meridian Canal from the host's preceding question",
+            "\"next winter\" is read as December 2026 through February 2027",
+            "\"intensify\" is read as index > 120, since the speaker gave no threshold"
+          ],
+          "proposed_probability": null,
+          "extraction": {
+            "method": "manual_reading",
+            "confidence": 0.85
+          },
+          "recorded_by": "analyst:example-analyst-1",
+          "recorded_at": "2026-03-10T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "asr-harbor-weekly-e42-ilsley-freight": {
+            "status": "excluded",
+            "reasons": [
+              "no_declared_probability",
+              "conditional_scenario",
+              "no_pinned_question"
+            ],
+            "loss": null
+          },
+          "int-ilsley-freight-analyst-1": {
+            "status": "excluded",
+            "reasons": [
+              "not_a_forecast",
+              "conditional_scenario"
+            ],
+            "loss": null
+          }
+        },
+        "counts": {
+          "candidates": 2,
+          "forecasts": 0,
+          "eligible": 0,
+          "scored": 0,
+          "unresolved": 0,
+          "excluded": 2
+        }
+      }
+    },
+    {
+      "id": "question-mismatch",
+      "description": "The outcome pins question r2; the forecast pins r1.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 2,
+          "predecessor": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-20T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 2,
+            "digest": "sha256:6d93da1fa2136f04f5701d825a355ed2698fe976025c8e430dce19bc7cc6b132"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "question_mismatch"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "unit-mismatch",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "tonnes",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "unit_mismatch"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-after-deadline",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2027-01-01T00:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "issued_after_forecast_deadline"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-after-deadline-by-100ns",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-12-31T23:59:59.0000001Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "issued_after_forecast_deadline"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-exactly-at-deadline",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-12-31T23:59:59.000000000Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-at-unknown",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": {
+            "unknown": "provider_did_not_state"
+          },
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "missing_required_time"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "conditional-forecast",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [
+            {
+              "text": "Meridian Canal stays open",
+              "state": "unresolved"
+            }
+          ],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "conditional_scenario"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "conditions-unknown",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": {
+            "unknown": "provider_did_not_state"
+          },
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "unknown_conditions"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "probability-withheld",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": {
+              "withheld": "licence_terms"
+            }
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "no_declared_probability"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "outcome-unresolved",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "unresolved",
+          "resolved_value": null,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "unresolved",
+            "reasons": [
+              "unresolved_outcome"
+            ],
+            "loss": null
+          }
+        },
+        "counts": {
+          "unresolved": 1,
+          "scored": 0,
+          "excluded": 0
+        }
+      }
+    },
+    {
+      "id": "outcome-ambiguous",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "ambiguous",
+          "resolved_value": null,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "ambiguous_outcome"
+            ],
+            "loss": null
+          }
+        },
+        "counts": {
+          "excluded": 1
+        }
+      }
+    },
+    {
+      "id": "outcome-annulled",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "annulled",
+          "resolved_value": null,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "annulled_question"
+            ],
+            "loss": null
+          }
+        },
+        "counts": {
+          "excluded": 1
+        }
+      }
+    },
+    {
+      "id": "no-outcome-recorded",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "unresolved",
+            "reasons": [
+              "no_outcome_recorded"
+            ],
+            "loss": null
+          }
+        },
+        "counts": {
+          "unresolved": 1
+        }
+      }
+    },
+    {
+      "id": "multiple-outcome-ids",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01-other-desk",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-other-desk",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "multiple_outcomes"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "every-failing-reason",
+      "description": "Every failing check is reported, in rule order, not only the first.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": {
+            "unknown": "provider_did_not_state"
+          },
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [
+            {
+              "text": "Meridian Canal stays open",
+              "state": "unresolved"
+            }
+          ],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "ambiguous",
+          "resolved_value": null,
+          "observed": {
+            "value": 386500,
+            "unit": "tonnes",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "conditional_scenario",
+              "missing_required_time",
+              "unit_mismatch",
+              "ambiguous_outcome"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "two-variants-one-family",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01-variant-b",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.2-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.6
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          },
+          "fc-lantern-port-calder-teu-2027-01-variant-b": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.16000000000000003
+          }
+        },
+        "counts": {
+          "forecasts": 2,
+          "independent_questions": 1,
+          "forecast_families": 1,
+          "scored": 2
+        }
+      }
+    },
+    {
+      "id": "two-families-one-question",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-harbourline-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "harbourline-synthetic",
+            "name": "Harbourline (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-harbourline-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.8
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:harbourline-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          },
+          "fc-harbourline-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.03999999999999998
+          }
+        },
+        "counts": {
+          "forecasts": 2,
+          "independent_questions": 1,
+          "forecast_families": 2
+        }
+      }
+    },
+    {
+      "id": "corrected-outcome-latest-revision",
+      "description": "Outcome r2 corrects r1; evaluation uses the latest revision.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 2,
+          "predecessor": {
+            "record_type": "outcome",
+            "id": "out-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:2bac8966f62767370648bea0fc70418681a558d1e28fa8ce8433cf212fb2a0a8"
+          },
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 0,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-20T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.48999999999999994
+          }
+        }
+      }
+    },
+    {
+      "id": "forecast-deadline-unknown",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": {
+            "unknown": "provider_declares_no_deadline"
+          },
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:ce2e912e813899143a78fa44bfd005fdef2d0f6a6dbfd318aa2d1a65585a2a9d"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:ce2e912e813899143a78fa44bfd005fdef2d0f6a6dbfd318aa2d1a65585a2a9d"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "missing_required_time"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "question-target-period-unknown",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "unknown": "provider_declares_no_target_period"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:7df7aba9e0f2231b7f5b2ac3088776c49b98d495ce48ab8d5cdc061ccb1e28cc"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:7df7aba9e0f2231b7f5b2ac3088776c49b98d495ce48ab8d5cdc061ccb1e28cc"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "incomplete_question"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "question-resolution-source-withheld",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "withheld": "provider_terms"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:68e5ceabdad211663a95e4f28a14cd8d37e0fd329a42ac37f05b15f19a5540b3"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:68e5ceabdad211663a95e4f28a14cd8d37e0fd329a42ac37f05b15f19a5540b3"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "incomplete_question"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "question-unit-unknown",
+      "description": "An unknown question unit is incomplete (rule version 3) and never compared with observed.unit.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": {
+            "unknown": "provider_declares_no_unit"
+          },
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:cb6508e1cfbe6b5932b0ada0b4b532a740b7f8c7cbf26a0bfdc23f028fe97222"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:cb6508e1cfbe6b5932b0ada0b4b532a740b7f8c7cbf26a0bfdc23f028fe97222"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "incomplete_question"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-day-on-deadline-day",
+      "description": "Day precision is never expanded to midnight (U5); its order against 23:59:59Z that day is indeterminate.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": {
+            "date": "2026-12-31",
+            "precision": "day"
+          },
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "indeterminate_time_order"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-day-well-before-deadline",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": {
+            "date": "2026-10-01",
+            "precision": "day"
+          },
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          }
+        }
+      }
+    },
+    {
+      "id": "issued-day-after-deadline-day",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": {
+            "date": "2027-01-02",
+            "precision": "day"
+          },
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "issued_after_forecast_deadline"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "limitation-retrospective-registration",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [
+            "outcome_published_before_registration"
+          ],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "retrospective_registration"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "limitation-truncated-question-text",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [
+            "text_possibly_truncated"
+          ],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:537c385a5e1c6734c6aa336b591be9d58ae3cb96ef9248040862faee8e8fd0eb"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:537c385a5e1c6734c6aa336b591be9d58ae3cb96ef9248040862faee8e8fd0eb"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "excluded",
+            "reasons": [
+              "resolution_rule_incomplete"
+            ],
+            "loss": null
+          }
+        }
+      }
+    },
+    {
+      "id": "limitation-not-excluding",
+      "description": "Limitation codes not named in the rule's limitation_exclusions are reported but do not exclude.",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "question",
+          "id": "q-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+          "outcome_kind": "binary",
+          "unit": "TEU",
+          "transformation": "none",
+          "observable": "monthly container throughput, Port Calder (fictional)",
+          "target_period": {
+            "start": "2027-01-01",
+            "end": "2027-01-31",
+            "inclusive": true,
+            "precision": "day"
+          },
+          "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+          "resolution_source": {
+            "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+            "locator": "https://example.org/synthetic/port-calder/bulletins/"
+          },
+          "vintage_policy": "first_release",
+          "forecast_deadline": "2026-12-31T23:59:59Z",
+          "resolution_deadline": "2027-03-31T23:59:59Z",
+          "limitations": [],
+          "recorded_by": "registry:example-question-desk",
+          "recorded_at": "2026-09-15T00:00:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-port-calder-bulletin-2027-01-first",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "statistical_bulletin_excerpt",
+          "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+          "language": {
+            "unknown": "source_declares_no_language",
+            "note": "CSV excerpt; the header names are English words."
+          },
+          "source_version": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "captured_at": "2027-02-16T09:30:00Z",
+          "captured_assets": [
+            "bulletin_excerpt_csv"
+          ],
+          "not_captured": [
+            "full_bulletin"
+          ],
+          "content": {
+            "media_type": "text/csv; charset=utf-8",
+            "retained": true,
+            "byte_length": 49,
+            "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+          },
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T09:45:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "provider": {
+            "id": "lantern-synthetic",
+            "name": "Lantern Forecasts (fictional provider)"
+          },
+          "model": {
+            "id": "lantern-demo",
+            "version": "0.0.1-synthetic"
+          },
+          "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+          "issued_at": "2026-10-01T12:00:00Z",
+          "information_cutoff": "2026-09-30T23:59:59Z",
+          "output": {
+            "kind": "binary_probability",
+            "event": "resolves_1",
+            "probability": 0.7
+          },
+          "conditions": [],
+          "limitations": [
+            "provider_fields_withheld"
+          ],
+          "recorded_by": "provider:lantern-synthetic",
+          "recorded_at": "2026-10-01T12:05:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "question": {
+            "record_type": "question",
+            "id": "q-port-calder-teu-2027-01",
+            "revision": 1,
+            "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+          },
+          "evidence": {
+            "record_type": "resource_snapshot",
+            "id": "res-port-calder-bulletin-2027-01-first",
+            "revision": 1,
+            "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+          },
+          "status": "resolved",
+          "resolved_value": 1,
+          "observed": {
+            "value": 386500,
+            "unit": "TEU",
+            "period": {
+              "start": "2027-01-01",
+              "end": "2027-01-31",
+              "inclusive": true,
+              "precision": "day"
+            }
+          },
+          "vintage": "first_release",
+          "source_published_at": {
+            "date": "2027-02-15",
+            "precision": "day"
+          },
+          "retrieved_at": "2027-02-16T09:30:00Z",
+          "recorded_by": "recorder:example-resolver",
+          "recorded_at": "2027-02-16T10:00:00Z"
+        }
+      ],
+      "expect": {
+        "results": {
+          "fc-lantern-port-calder-teu-2027-01": {
+            "status": "scored",
+            "reasons": [],
+            "loss": 0.09000000000000002
+          }
+        }
+      }
+    }
+  ]
+}

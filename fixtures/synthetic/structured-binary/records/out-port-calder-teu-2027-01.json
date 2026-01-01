@@ -1,0 +1,40 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "outcome",
+  "id": "out-port-calder-teu-2027-01",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "question": {
+    "record_type": "question",
+    "id": "q-port-calder-teu-2027-01",
+    "revision": 1,
+    "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+  },
+  "evidence": {
+    "record_type": "resource_snapshot",
+    "id": "res-port-calder-bulletin-2027-01-first",
+    "revision": 1,
+    "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+  },
+  "status": "resolved",
+  "resolved_value": 1,
+  "observed": {
+    "value": 386500,
+    "unit": "TEU",
+    "period": {
+      "start": "2027-01-01",
+      "end": "2027-01-31",
+      "inclusive": true,
+      "precision": "day"
+    }
+  },
+  "vintage": "first_release",
+  "source_published_at": {
+    "date": "2027-02-15",
+    "precision": "day"
+  },
+  "retrieved_at": "2027-02-16T09:30:00Z",
+  "recorded_by": "recorder:example-resolver",
+  "recorded_at": "2027-02-16T10:00:00Z"
+}

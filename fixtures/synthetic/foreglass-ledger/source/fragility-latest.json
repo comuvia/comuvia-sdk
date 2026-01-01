@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-20",
+  "reading": 0.412,
+  "regime": "calm",
+  "provisional": true,
+  "provisional_quarter": "2026Q3",
+  "qtd_through": "2026-09-18",
+  "leg_freshness": [
+    {
+      "leg": "harbor freight leg",
+      "through": "2026-09-18"
+    },
+    {
+      "leg": "canal leg",
+      "through": "2026-09-15"
+    }
+  ],
+  "staleness": {
+    "oldest_leg_through": "2026-09-15",
+    "max_age_days": 5,
+    "note": "Synthetic reading; legs lag."
+  },
+  "deltas": {
+    "vs_prior_day": null,
+    "vs_quarter_open": -0.031
+  },
+  "settle_band": {
+    "low": 0.38,
+    "high": 0.45
+  },
+  "last_settled": {
+    "quarter": "2026Q2",
+    "reading": 0.44,
+    "regime": "calm"
+  },
+  "caveat": "Index reading, not a forecast or a probability; synthetic fixture values."
+}

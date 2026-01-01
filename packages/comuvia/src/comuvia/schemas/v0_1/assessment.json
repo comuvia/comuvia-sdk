@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:assessment",
+  "title": "Assessment of a source assertion",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "assessment"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "assertion": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "source_assertion"
+            }
+          }
+        }
+      ]
+    },
+    "checker": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+      },
+      "minItems": 1
+    },
+    "rubric": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "contradicted",
+        "mixed",
+        "insufficient_evidence",
+        "not_checkable"
+      ]
+    },
+    "checker_confidence": {
+      "description": "The checker's confidence in the verdict. It is never a probability of the assertion.",
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unit_interval"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": [
+            "full",
+            "sample"
+          ]
+        },
+        "items_checked": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "items_total": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scope",
+        "items_checked",
+        "items_total"
+      ],
+      "additionalProperties": false
+    },
+    "assessed_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "assertion",
+    "checker",
+    "evidence",
+    "rubric",
+    "verdict",
+    "checker_confidence",
+    "coverage",
+    "assessed_at",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

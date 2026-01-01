@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:artifact_descriptor",
+  "title": "Artifact descriptor",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "artifact_descriptor"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "media_type": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/media_type"
+        },
+        "byte_length": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+        },
+        "digest": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/digest"
+        }
+      },
+      "required": [
+        "media_type",
+        "byte_length",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "content_schema": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "origin": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/locator"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "locator"
+      ],
+      "additionalProperties": false
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/time_point"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "retrieved_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "units": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+          }
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "rights_reference": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "access": {
+      "type": "string",
+      "enum": [
+        "public",
+        "restricted",
+        "private"
+      ]
+    },
+    "locator": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/locator"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "legacy_ids": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/legacy_ids"
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "content",
+    "content_schema",
+    "origin",
+    "published_at",
+    "retrieved_at",
+    "units",
+    "rights_reference",
+    "access",
+    "locator",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

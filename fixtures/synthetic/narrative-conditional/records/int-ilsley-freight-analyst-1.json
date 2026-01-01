@@ -1,0 +1,41 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "interpretation",
+  "id": "int-ilsley-freight-analyst-1",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "assertion": {
+    "record_type": "source_assertion",
+    "id": "asr-harbor-weekly-e42-ilsley-freight",
+    "revision": 1,
+    "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+  },
+  "author": "analyst:example-analyst-1",
+  "status": "reviewer_interpretation",
+  "frozen_at": "2026-03-10T10:00:00Z",
+  "proposed_target": "Meridian Canal corridor freight-delay index (fictional) above 120 in at least one month",
+  "proposed_period": {
+    "start": "2026-12-01",
+    "end": "2027-02-28",
+    "inclusive": true,
+    "precision": "day"
+  },
+  "condition": {
+    "text": "Meridian Canal closes",
+    "state": "unresolved",
+    "note": "The speaker did not define closure."
+  },
+  "assumptions": [
+    "\"the canal\" is identified as the Meridian Canal from the host's preceding question",
+    "\"next winter\" is read as December 2026 through February 2027",
+    "\"intensify\" is read as index > 120, since the speaker gave no threshold"
+  ],
+  "proposed_probability": null,
+  "extraction": {
+    "method": "manual_reading",
+    "confidence": 0.85
+  },
+  "recorded_by": "analyst:example-analyst-1",
+  "recorded_at": "2026-03-10T10:00:00Z"
+}

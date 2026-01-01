@@ -1,0 +1,42 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "source_assertion",
+  "id": "asr-harbor-weekly-e42-ilsley-freight",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource": {
+    "record_type": "resource_snapshot",
+    "id": "res-harbor-weekly-e42-transcript",
+    "revision": 1,
+    "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+  },
+  "quote": {
+    "exact": "Freight disruption could intensify next winter if the canal closes.",
+    "verbatim": true,
+    "language": "en",
+    "translation": null
+  },
+  "selector": {
+    "text_quote": {
+      "exact": "Freight disruption could intensify next winter if the canal closes.",
+      "prefix": "g volumes should look ordinary. ",
+      "suffix": " Nobody can put a date on that.\n"
+    },
+    "text_position": {
+      "start": 407,
+      "end": 474
+    },
+    "media_time": {
+      "unknown": "caption_timing_not_retained"
+    }
+  },
+  "attributed_to": {
+    "name": "Rowan Ilsley (fictional)",
+    "basis": "transcript_speaker_label"
+  },
+  "assertion_kind": "conditional_scenario",
+  "stated_probability": null,
+  "recorded_by": "recorder:example-transcriber",
+  "recorded_at": "2026-02-03T15:20:00Z"
+}

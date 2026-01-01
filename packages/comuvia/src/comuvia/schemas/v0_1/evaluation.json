@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:evaluation",
+  "title": "Evaluation of one forecast against one outcome",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "evaluation"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "forecast": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "forecast"
+            }
+          }
+        }
+      ]
+    },
+    "outcome": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "outcome"
+            }
+          }
+        }
+      ]
+    },
+    "scoring_rule": {
+      "description": "The scoring-rule descriptor, pinned by id, version and digest of its canonical bytes.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        "digest": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/digest"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "policy": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+            },
+            "version": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "eligible": {
+          "type": "boolean"
+        },
+        "exclusion_reasons": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/codes"
+        },
+        "loss": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "number",
+              "minimum": 0
+            }
+          ]
+        }
+      },
+      "required": [
+        "eligible",
+        "exclusion_reasons",
+        "loss"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "eligible": {
+            "const": true
+          }
+        },
+        "required": [
+          "eligible"
+        ]
+      },
+      "then": {
+        "properties": {
+          "exclusion_reasons": {
+            "maxItems": 0
+          },
+          "loss": {
+            "type": "number"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "exclusion_reasons": {
+            "minItems": 1
+          },
+          "loss": {
+            "const": null
+          }
+        }
+      }
+    },
+    "evaluated_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "forecast",
+    "outcome",
+    "scoring_rule",
+    "policy",
+    "result",
+    "evaluated_at",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

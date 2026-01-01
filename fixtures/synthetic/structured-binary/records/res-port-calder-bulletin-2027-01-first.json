@@ -1,0 +1,34 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "res-port-calder-bulletin-2027-01-first",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource_type": "statistical_bulletin_excerpt",
+  "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+  "language": {
+    "unknown": "source_declares_no_language",
+    "note": "CSV excerpt; the header names are English words."
+  },
+  "source_version": "first_release",
+  "source_published_at": {
+    "date": "2027-02-15",
+    "precision": "day"
+  },
+  "captured_at": "2027-02-16T09:30:00Z",
+  "captured_assets": [
+    "bulletin_excerpt_csv"
+  ],
+  "not_captured": [
+    "full_bulletin"
+  ],
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "retained": true,
+    "byte_length": 49,
+    "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+  },
+  "recorded_by": "recorder:example-resolver",
+  "recorded_at": "2027-02-16T09:45:00Z"
+}

@@ -1,0 +1,124 @@
+{
+  "fixture": "structured-binary",
+  "status": "draft_semantic_example",
+  "note": "Expected results. comuvia validation, identity and evaluation reproduce them; the package test vectors check them.",
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "res-port-calder-bulletin-2027-01-first",
+        "revision": 1,
+        "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+      },
+      "result": "match",
+      "byte_length": 49,
+      "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "question",
+        "id": "q-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:9495950eff32a14b022f53d372c324321464a616944d88d5c85467fbd135d9dd"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "res-port-calder-bulletin-2027-01-first",
+        "revision": 1,
+        "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "outcome",
+        "id": "out-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:2bac8966f62767370648bea0fc70418681a558d1e28fa8ce8433cf212fb2a0a8"
+      },
+      "result": "match"
+    }
+  ],
+  "timestamp_assurance": [
+    {
+      "record": {
+        "record_type": "forecast",
+        "id": "fc-lantern-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:9495950eff32a14b022f53d372c324321464a616944d88d5c85467fbd135d9dd"
+      },
+      "result": "unavailable",
+      "reason": "issued_at is declared by the provider"
+    }
+  ],
+  "evaluation": {
+    "scoring_rule": "binary-brier-v1",
+    "arithmetic": "IEEE-754 binary64: d = p - o; loss = d * d (no pow, no decimal arithmetic)",
+    "pairs": [
+      {
+        "forecast": {
+          "record_type": "forecast",
+          "id": "fc-lantern-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:9495950eff32a14b022f53d372c324321464a616944d88d5c85467fbd135d9dd"
+        },
+        "outcome": {
+          "record_type": "outcome",
+          "id": "out-port-calder-teu-2027-01",
+          "revision": 1,
+          "digest": "sha256:2bac8966f62767370648bea0fc70418681a558d1e28fa8ce8433cf212fb2a0a8"
+        },
+        "eligible": true,
+        "checks_passed": [
+          "question id and revision match",
+          "probability is a finite, non-boolean JSON number in [0,1]",
+          "outcome status is resolved with value in {0,1}",
+          "information_cutoff <= issued_at <= forecast_deadline",
+          "observed.unit equals the question unit"
+        ],
+        "probability": 0.7,
+        "resolved_value": 1,
+        "loss": 0.09000000000000002,
+        "loss_display": "0.09"
+      }
+    ],
+    "display_rounding": "2 decimal places, round half to even on the binary64 value",
+    "counterfactuals": [
+      {
+        "resolved_value": 0,
+        "loss": 0.48999999999999994,
+        "loss_display": "0.49"
+      },
+      {
+        "status": "unresolved",
+        "scored": false,
+        "counts": {
+          "scored": 0,
+          "unresolved": 1
+        }
+      }
+    ],
+    "counts": {
+      "independent_questions": 1,
+      "forecasts": 1,
+      "eligible": 1,
+      "scored": 1,
+      "excluded": 0,
+      "unresolved": 0
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:resource_snapshot",
+  "title": "Resource snapshot",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "resource_snapshot"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "resource_type": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/code"
+    },
+    "locator": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/locator"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "legacy_ids": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/legacy_ids"
+    },
+    "language": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/language"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "source_version": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "source_published_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/time_point"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "captured_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "captured_assets": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/codes"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "not_captured": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/codes"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "media_type": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/media_type"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "retained": {
+          "type": "boolean"
+        },
+        "byte_length": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/digest"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "media_type",
+        "retained",
+        "byte_length",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "retained": {
+            "const": true
+          }
+        },
+        "required": [
+          "retained"
+        ]
+      },
+      "then": {
+        "properties": {
+          "byte_length": {
+            "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+          },
+          "digest": {
+            "$ref": "urn:comuvia:schema:0.1:common#/$defs/digest"
+          }
+        }
+      }
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "resource_type",
+    "locator",
+    "language",
+    "source_version",
+    "source_published_at",
+    "captured_at",
+    "captured_assets",
+    "not_captured",
+    "content",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

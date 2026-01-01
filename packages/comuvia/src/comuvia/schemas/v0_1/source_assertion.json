@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:source_assertion",
+  "title": "Source assertion",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "source_assertion"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "resource": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "resource_snapshot"
+            }
+          }
+        }
+      ]
+    },
+    "quote": {
+      "type": "object",
+      "properties": {
+        "exact": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        },
+        "verbatim": {
+          "type": "boolean"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/language"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "translation": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+                },
+                "language": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/language"
+                },
+                "translated_by": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+                }
+              },
+              "required": [
+                "text",
+                "language",
+                "translated_by"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "exact",
+        "verbatim",
+        "language",
+        "translation"
+      ],
+      "additionalProperties": false
+    },
+    "selector": {
+      "type": "object",
+      "properties": {
+        "text_quote": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "exact": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+                },
+                "prefix": {
+                  "type": "string"
+                },
+                "suffix": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "exact",
+                "prefix",
+                "suffix"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "text_position": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+                },
+                "end": {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/count"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        },
+        "media_time": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "start_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "end_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "start_seconds",
+                "end_seconds"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "text_quote",
+        "text_position",
+        "media_time"
+      ],
+      "additionalProperties": false
+    },
+    "attributed_to": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+            },
+            "basis": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/code"
+            }
+          },
+          "required": [
+            "name",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "assertion_kind": {
+      "type": "string",
+      "enum": [
+        "factual_claim",
+        "forecast_statement",
+        "conditional_scenario",
+        "opinion",
+        "other"
+      ]
+    },
+    "stated_probability": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/probability"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "resource",
+    "quote",
+    "selector",
+    "attributed_to",
+    "assertion_kind",
+    "stated_probability",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

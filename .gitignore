@@ -1,0 +1,21 @@
+# Internal coordination and private data never belong in public history.
+.local/
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+build/
+dist/
+# Release staging: exactly the four distributions, SHA256SUMS and manifest.json (release/0.1.0/BUILD.md).
+dist-release/
+*.egg-info/
+outputs/
+*.log

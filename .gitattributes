@@ -1,0 +1,18 @@
+* text=auto
+*.md text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.jsonl text eol=lf
+*.yml text eol=lf
+SHA256SUMS text eol=lf
+*.pem text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+# Retained source bytes are content-digest inputs: never convert them.
+fixtures/**/source/** -text -eol
+# Provider-format test bytes (CRLF ledger) are retained exactly.
+packages/*/tests/vectors/**/source/** -text -eol
+# License texts are retained byte-for-byte (LF).
+LICENSE text eol=lf

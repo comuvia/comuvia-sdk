@@ -1,0 +1,19 @@
+{
+  "schema": "foreglass.ledger-archive/v1",
+  "note": "Synthetic archive index for the comuvia SDK fixture; identify a build by sha256, not by file name.",
+  "source_pack_bytes": "not published — synthetic fixture",
+  "files": [
+    {
+      "file": "2026-09-20.json",
+      "bytes": 17241,
+      "sha256": "d7229dd0a01976573b72ac5c178a4f6777892cd3d7ae4cc9e916b1386955662e",
+      "ots": "2026-09-20.json.ots"
+    },
+    {
+      "file": "2026-09-20b.json",
+      "bytes": 4096,
+      "sha256": "61c02e6e09177b8ac745e70358dace0d85eb429572db8e6148c77d68a7fcc142",
+      "ots": "2026-09-20b.json.ots"
+    }
+  ]
+}

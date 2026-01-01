@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:forecast",
+  "title": "Declared-probability forecast",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "forecast"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "question": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "question"
+            }
+          }
+        }
+      ]
+    },
+    "provider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+        },
+        "name": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "model": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+            },
+            "version": {
+              "anyOf": [
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+                },
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+                },
+                {
+                  "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+                }
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "forecast_family": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "issued_at": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/time_point"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "information_cutoff": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "binary_probability"
+        },
+        "event": {
+          "type": "string",
+          "const": "resolves_1"
+        },
+        "probability": {
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/probability"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "event",
+        "probability"
+      ],
+      "additionalProperties": false
+    },
+    "conditions": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "urn:comuvia:schema:0.1:common#/$defs/condition"
+          }
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "limitations": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/limitations"
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "question",
+    "provider",
+    "model",
+    "forecast_family",
+    "issued_at",
+    "information_cutoff",
+    "output",
+    "conditions",
+    "limitations",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

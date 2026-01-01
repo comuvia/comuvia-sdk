@@ -1,0 +1,35 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "res-harbor-weekly-e42-transcript",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource_type": "transcript",
+  "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+  "language": "en",
+  "source_version": {
+    "unknown": "source_declares_no_version"
+  },
+  "source_published_at": {
+    "date": "2026-01-14",
+    "precision": "day"
+  },
+  "captured_at": "2026-02-03T15:04:05Z",
+  "captured_assets": [
+    "transcript_text"
+  ],
+  "not_captured": [
+    "audio",
+    "video",
+    "caption_timing"
+  ],
+  "content": {
+    "media_type": "text/plain; charset=utf-8",
+    "retained": true,
+    "byte_length": 530,
+    "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+  },
+  "recorded_by": "recorder:example-transcriber",
+  "recorded_at": "2026-02-03T15:10:00Z"
+}

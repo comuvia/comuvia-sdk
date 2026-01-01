@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:comuvia:schema:0.1:interpretation",
+  "title": "Interpretation of a source assertion",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/schema_version"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "interpretation"
+    },
+    "id": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/identifier"
+    },
+    "revision": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/revision"
+    },
+    "predecessor": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/predecessor"
+    },
+    "data_origin": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/data_origin"
+    },
+    "assertion": {
+      "allOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/reference"
+        },
+        {
+          "properties": {
+            "record_type": {
+              "const": "source_assertion"
+            }
+          }
+        }
+      ]
+    },
+    "author": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "reviewer_interpretation",
+        "speaker_endorsed"
+      ]
+    },
+    "frozen_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "proposed_target": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+    },
+    "proposed_period": {
+      "anyOf": [
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/period"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+        }
+      ]
+    },
+    "condition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/condition"
+        }
+      ]
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "$ref": "urn:comuvia:schema:0.1:common#/$defs/text"
+      }
+    },
+    "proposed_probability": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/probability"
+        }
+      ]
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "urn:comuvia:schema:0.1:common#/$defs/code"
+        },
+        "confidence": {
+          "description": "Confidence in the reading. It is not an event probability.",
+          "anyOf": [
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unit_interval"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/unknown_marker"
+            },
+            {
+              "$ref": "urn:comuvia:schema:0.1:common#/$defs/withheld_marker"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "recorded_by": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/agent"
+    },
+    "recorded_at": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/timestamp"
+    },
+    "extensions": {
+      "$ref": "urn:comuvia:schema:0.1:common#/$defs/extensions"
+    }
+  },
+  "required": [
+    "schema",
+    "record_type",
+    "id",
+    "revision",
+    "predecessor",
+    "data_origin",
+    "assertion",
+    "author",
+    "status",
+    "frozen_at",
+    "proposed_target",
+    "proposed_period",
+    "condition",
+    "assumptions",
+    "proposed_probability",
+    "extraction",
+    "recorded_by",
+    "recorded_at"
+  ],
+  "additionalProperties": false
+}

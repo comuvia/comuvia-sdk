@@ -1,0 +1,1137 @@
+{
+  "description": "Identity vectors I7-I9, I11, I12 and day precision (review section 6.6), built from the synthetic fixtures.",
+  "generated_by": "tools/sync_vectors.py",
+  "records": {
+    "asr-harbor-weekly-e42-ilsley-freight": {
+      "schema": "comuvia/0.1",
+      "record_type": "source_assertion",
+      "id": "asr-harbor-weekly-e42-ilsley-freight",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "resource": {
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+      },
+      "quote": {
+        "exact": "Freight disruption could intensify next winter if the canal closes.",
+        "verbatim": true,
+        "language": "en",
+        "translation": null
+      },
+      "selector": {
+        "text_quote": {
+          "exact": "Freight disruption could intensify next winter if the canal closes.",
+          "prefix": "g volumes should look ordinary. ",
+          "suffix": " Nobody can put a date on that.\n"
+        },
+        "text_position": {
+          "start": 407,
+          "end": 474
+        },
+        "media_time": {
+          "unknown": "caption_timing_not_retained"
+        }
+      },
+      "attributed_to": {
+        "name": "Rowan Ilsley (fictional)",
+        "basis": "transcript_speaker_label"
+      },
+      "assertion_kind": "conditional_scenario",
+      "stated_probability": null,
+      "recorded_by": "recorder:example-transcriber",
+      "recorded_at": "2026-02-03T15:20:00Z"
+    },
+    "int-ilsley-freight-analyst-1": {
+      "schema": "comuvia/0.1",
+      "record_type": "interpretation",
+      "id": "int-ilsley-freight-analyst-1",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "assertion": {
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63"
+      },
+      "author": "analyst:example-analyst-1",
+      "status": "reviewer_interpretation",
+      "frozen_at": "2026-03-10T10:00:00Z",
+      "proposed_target": "Meridian Canal corridor freight-delay index (fictional) above 120 in at least one month",
+      "proposed_period": {
+        "start": "2026-12-01",
+        "end": "2027-02-28",
+        "inclusive": true,
+        "precision": "day"
+      },
+      "condition": {
+        "text": "Meridian Canal closes",
+        "state": "unresolved",
+        "note": "The speaker did not define closure."
+      },
+      "assumptions": [
+        "\"the canal\" is identified as the Meridian Canal from the host's preceding question",
+        "\"next winter\" is read as December 2026 through February 2027",
+        "\"intensify\" is read as index > 120, since the speaker gave no threshold"
+      ],
+      "proposed_probability": null,
+      "extraction": {
+        "method": "manual_reading",
+        "confidence": 0.85
+      },
+      "recorded_by": "analyst:example-analyst-1",
+      "recorded_at": "2026-03-10T10:00:00Z"
+    },
+    "res-harbor-weekly-e42-transcript": {
+      "schema": "comuvia/0.1",
+      "record_type": "resource_snapshot",
+      "id": "res-harbor-weekly-e42-transcript",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "resource_type": "transcript",
+      "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+      "language": "en",
+      "source_version": {
+        "unknown": "source_declares_no_version"
+      },
+      "source_published_at": {
+        "date": "2026-01-14",
+        "precision": "day"
+      },
+      "captured_at": "2026-02-03T15:04:05Z",
+      "captured_assets": [
+        "transcript_text"
+      ],
+      "not_captured": [
+        "audio",
+        "video",
+        "caption_timing"
+      ],
+      "content": {
+        "media_type": "text/plain; charset=utf-8",
+        "retained": true,
+        "byte_length": 530,
+        "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+      },
+      "recorded_by": "recorder:example-transcriber",
+      "recorded_at": "2026-02-03T15:10:00Z"
+    },
+    "fc-lantern-port-calder-teu-2027-01": {
+      "schema": "comuvia/0.1",
+      "record_type": "forecast",
+      "id": "fc-lantern-port-calder-teu-2027-01",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "question": {
+        "record_type": "question",
+        "id": "q-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+      },
+      "provider": {
+        "id": "lantern-synthetic",
+        "name": "Lantern Forecasts (fictional provider)"
+      },
+      "model": {
+        "id": "lantern-demo",
+        "version": "0.0.1-synthetic"
+      },
+      "forecast_family": "fam-lantern-port-calder-teu-2027-01",
+      "issued_at": "2026-10-01T12:00:00Z",
+      "information_cutoff": "2026-09-30T23:59:59Z",
+      "output": {
+        "kind": "binary_probability",
+        "event": "resolves_1",
+        "probability": 0.7
+      },
+      "conditions": [],
+      "limitations": [],
+      "recorded_by": "provider:lantern-synthetic",
+      "recorded_at": "2026-10-01T12:05:00Z"
+    },
+    "out-port-calder-teu-2027-01": {
+      "schema": "comuvia/0.1",
+      "record_type": "outcome",
+      "id": "out-port-calder-teu-2027-01",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "question": {
+        "record_type": "question",
+        "id": "q-port-calder-teu-2027-01",
+        "revision": 1,
+        "digest": "sha256:26a438d6f5f8dd7dc76242469cdedf2939277de94dd13fd03b420bd9af34e90f"
+      },
+      "evidence": {
+        "record_type": "resource_snapshot",
+        "id": "res-port-calder-bulletin-2027-01-first",
+        "revision": 1,
+        "digest": "sha256:0986be0aa86bb6ed26e3a761a96585ef0532d76426330c406590cd238f8b4294"
+      },
+      "status": "resolved",
+      "resolved_value": 1,
+      "observed": {
+        "value": 386500,
+        "unit": "TEU",
+        "period": {
+          "start": "2027-01-01",
+          "end": "2027-01-31",
+          "inclusive": true,
+          "precision": "day"
+        }
+      },
+      "vintage": "first_release",
+      "source_published_at": {
+        "date": "2027-02-15",
+        "precision": "day"
+      },
+      "retrieved_at": "2027-02-16T09:30:00Z",
+      "recorded_by": "recorder:example-resolver",
+      "recorded_at": "2027-02-16T10:00:00Z"
+    },
+    "q-port-calder-teu-2027-01": {
+      "schema": "comuvia/0.1",
+      "record_type": "question",
+      "id": "q-port-calder-teu-2027-01",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "text": "Will the first published January 2027 container throughput for Port Calder be below 400,000 TEU?",
+      "outcome_kind": "binary",
+      "unit": "TEU",
+      "transformation": "none",
+      "observable": "monthly container throughput, Port Calder (fictional)",
+      "target_period": {
+        "start": "2027-01-01",
+        "end": "2027-01-31",
+        "inclusive": true,
+        "precision": "day"
+      },
+      "resolution_rule": "Resolves 1 if the first published January 2027 value is strictly below 400000 TEU; resolves 0 if it is 400000 TEU or above. If no qualifying value is published by the resolution deadline, the outcome is unresolved (never 0 and never 0.5).",
+      "resolution_source": {
+        "name": "Port Calder Authority monthly statistical bulletin (fictional)",
+        "locator": "https://example.org/synthetic/port-calder/bulletins/"
+      },
+      "vintage_policy": "first_release",
+      "forecast_deadline": "2026-12-31T23:59:59Z",
+      "resolution_deadline": "2027-03-31T23:59:59Z",
+      "limitations": [],
+      "recorded_by": "registry:example-question-desk",
+      "recorded_at": "2026-09-15T00:00:00Z"
+    },
+    "res-port-calder-bulletin-2027-01-first": {
+      "schema": "comuvia/0.1",
+      "record_type": "resource_snapshot",
+      "id": "res-port-calder-bulletin-2027-01-first",
+      "revision": 1,
+      "predecessor": null,
+      "data_origin": "synthetic",
+      "resource_type": "statistical_bulletin_excerpt",
+      "locator": "https://example.org/synthetic/port-calder/bulletins/2027-01.csv",
+      "language": {
+        "unknown": "source_declares_no_language",
+        "note": "CSV excerpt; the header names are English words."
+      },
+      "source_version": "first_release",
+      "source_published_at": {
+        "date": "2027-02-15",
+        "precision": "day"
+      },
+      "captured_at": "2027-02-16T09:30:00Z",
+      "captured_assets": [
+        "bulletin_excerpt_csv"
+      ],
+      "not_captured": [
+        "full_bulletin"
+      ],
+      "content": {
+        "media_type": "text/csv; charset=utf-8",
+        "retained": true,
+        "byte_length": 49,
+        "digest": "sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77"
+      },
+      "recorded_by": "recorder:example-resolver",
+      "recorded_at": "2027-02-16T09:45:00Z"
+    }
+  },
+  "sources_base64": {
+    "res-harbor-weekly-e42-transcript": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+    "res-port-calder-bulletin-2027-01-first": "bW9udGgsY29udGFpbmVyX3RldSxyZWxlYXNlCjIwMjctMDEsMzg2NTAwLGZpcnN0Cg=="
+  },
+  "cases": [
+    {
+      "id": "fixture-digests",
+      "kind": "verify",
+      "description": "Every fixture record verifies against its recorded digest; references resolve and match.",
+      "records": [
+        "asr-harbor-weekly-e42-ilsley-freight",
+        "fc-lantern-port-calder-teu-2027-01",
+        "int-ilsley-freight-analyst-1",
+        "out-port-calder-teu-2027-01",
+        "q-port-calder-teu-2027-01",
+        "res-harbor-weekly-e42-transcript",
+        "res-port-calder-bulletin-2027-01-first"
+      ],
+      "expect": {
+        "record_identity": "match",
+        "references": "match",
+        "codes": []
+      }
+    },
+    {
+      "id": "I7-quote-character",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource": {
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "digest": "sha256:6a076f6dfcb8ef378365ba5d45a6d3b63ef80453c1bb156325de6a6449102040"
+        },
+        "quote": {
+          "exact": "Freighr disruption could intensify next winter if the canal closes.",
+          "verbatim": true,
+          "language": "en",
+          "translation": null
+        },
+        "selector": {
+          "text_quote": {
+            "exact": "Freight disruption could intensify next winter if the canal closes.",
+            "prefix": "g volumes should look ordinary. ",
+            "suffix": " Nobody can put a date on that.\n"
+          },
+          "text_position": {
+            "start": 407,
+            "end": 474
+          },
+          "media_time": {
+            "unknown": "caption_timing_not_retained"
+          }
+        },
+        "attributed_to": {
+          "name": "Rowan Ilsley (fictional)",
+          "basis": "transcript_speaker_label"
+        },
+        "assertion_kind": "conditional_scenario",
+        "stated_probability": null,
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:20:00Z"
+      },
+      "expected_digest": "sha256:621d458ce34d2595d6a8c9508a643ca0d82bee1117ea4044b277e00099bffe63",
+      "expect": {
+        "record_identity": "mismatch",
+        "codes": [
+          "record_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I7-source-crlf",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpDQpPcmlnaW5hbCBzeW50aGV0aWMgdHJhbnNjcmlwdCBmb3IgQ29tdXZpYSBTREsgZml4dHVyZXMuIEFsbCBwZW9wbGUsIHBsYWNlcyBhbmQgb3JnYW5pc2F0aW9ucyBhcmUgZmljdGlvbmFsLg0KU3BlYWtlciBsYWJlbHMgd2VyZSB0eXBlZCBieSB0aGUgcmVjb3JkZXIuIENhcHRpb24gdGltaW5nIHdhcyBub3QgcmV0YWluZWQuDQoNCkhPU1Q6IFRoZSBNZXJpZGlhbiBDYW5hbCBhdXRob3JpdHkgc2F5cyBtYWludGVuYW5jZSBpcyBvbiBzY2hlZHVsZS4gV2hlcmUgZG8geW91IGV4cGVjdCBjb250YWluZXIgdHJhZmZpYyB0byBnbz8NClJPV0FOIElMU0xFWTogU3ByaW5nIHZvbHVtZXMgc2hvdWxkIGxvb2sgb3JkaW5hcnkuIEZyZWlnaHQgZGlzcnVwdGlvbiBjb3VsZCBpbnRlbnNpZnkgbmV4dCB3aW50ZXIgaWYgdGhlIGNhbmFsIGNsb3Nlcy4gTm9ib2R5IGNhbiBwdXQgYSBkYXRlIG9uIHRoYXQuDQpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLg0K",
+      "expect": {
+        "content_identity": "mismatch",
+        "codes": [
+          "content_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I7-source-extra-final-newline",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgoK",
+      "expect": {
+        "content_identity": "mismatch",
+        "codes": [
+          "content_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I7-source-added-bom",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "77u/SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "mismatch",
+        "codes": [
+          "content_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I7-source-exact",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "match",
+        "codes": []
+      }
+    },
+    {
+      "id": "R3-byte-length-integral-float-match",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530.0,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "match",
+        "codes": []
+      }
+    },
+    {
+      "id": "R3-byte-length-integral-float-compared",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 531.0,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "mismatch",
+        "codes": [
+          "content_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I8-wrong-linkage",
+      "kind": "verify",
+      "description": "(id, revision) resolves, but the digest belongs to a different body.",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "source_assertion",
+        "id": "asr-harbor-weekly-e42-ilsley-freight",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource": {
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "digest": "sha256:0a1b806ad499bdc75a32ba451cbd8bc40651f9b88e119a83b6dec6b678816e58"
+        },
+        "quote": {
+          "exact": "Freight disruption could intensify next winter if the canal closes.",
+          "verbatim": true,
+          "language": "en",
+          "translation": null
+        },
+        "selector": {
+          "text_quote": {
+            "exact": "Freight disruption could intensify next winter if the canal closes.",
+            "prefix": "g volumes should look ordinary. ",
+            "suffix": " Nobody can put a date on that.\n"
+          },
+          "text_position": {
+            "start": 407,
+            "end": 474
+          },
+          "media_time": {
+            "unknown": "caption_timing_not_retained"
+          }
+        },
+        "attributed_to": {
+          "name": "Rowan Ilsley (fictional)",
+          "basis": "transcript_speaker_label"
+        },
+        "assertion_kind": "conditional_scenario",
+        "stated_probability": null,
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:20:00Z"
+      },
+      "records": [
+        "asr-harbor-weekly-e42-ilsley-freight",
+        "fc-lantern-port-calder-teu-2027-01",
+        "int-ilsley-freight-analyst-1",
+        "out-port-calder-teu-2027-01",
+        "q-port-calder-teu-2027-01",
+        "res-harbor-weekly-e42-transcript",
+        "res-port-calder-bulletin-2027-01-first"
+      ],
+      "expect": {
+        "references": {
+          "/resource": "mismatch"
+        },
+        "codes": [
+          "reference_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I9-locator-hash-as-content-digest",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:019b10b3b701c573395ff3fa4c5c7382623c2c0be9606178902576ad3e9a3cbf"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "mismatch",
+        "codes": [
+          "content_digest_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "I9-metadata-only-snapshot",
+      "kind": "verify",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": false,
+          "byte_length": {
+            "unknown": "bytes_not_retained"
+          },
+          "digest": {
+            "unknown": "bytes_not_retained"
+          }
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "content_base64": "SGFyYm9yIExvZ2lzdGljcyBXZWVrbHksIGVwaXNvZGUgNDIgKGZpY3Rpb25hbCBwcm9ncmFtbWUpCk9yaWdpbmFsIHN5bnRoZXRpYyB0cmFuc2NyaXB0IGZvciBDb211dmlhIFNESyBmaXh0dXJlcy4gQWxsIHBlb3BsZSwgcGxhY2VzIGFuZCBvcmdhbmlzYXRpb25zIGFyZSBmaWN0aW9uYWwuClNwZWFrZXIgbGFiZWxzIHdlcmUgdHlwZWQgYnkgdGhlIHJlY29yZGVyLiBDYXB0aW9uIHRpbWluZyB3YXMgbm90IHJldGFpbmVkLgoKSE9TVDogVGhlIE1lcmlkaWFuIENhbmFsIGF1dGhvcml0eSBzYXlzIG1haW50ZW5hbmNlIGlzIG9uIHNjaGVkdWxlLiBXaGVyZSBkbyB5b3UgZXhwZWN0IGNvbnRhaW5lciB0cmFmZmljIHRvIGdvPwpST1dBTiBJTFNMRVk6IFNwcmluZyB2b2x1bWVzIHNob3VsZCBsb29rIG9yZGluYXJ5LiBGcmVpZ2h0IGRpc3J1cHRpb24gY291bGQgaW50ZW5zaWZ5IG5leHQgd2ludGVyIGlmIHRoZSBjYW5hbCBjbG9zZXMuIE5vYm9keSBjYW4gcHV0IGEgZGF0ZSBvbiB0aGF0LgpIT1NUOiBUaGFuayB5b3UsIFJvd2FuLgo=",
+      "expect": {
+        "content_identity": "unavailable",
+        "codes": [],
+        "valid": true
+      }
+    },
+    {
+      "id": "I9-identities-distinct",
+      "kind": "distinct_identities",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "locator_hash": "sha256:019b10b3b701c573395ff3fa4c5c7382623c2c0be9606178902576ad3e9a3cbf",
+      "description": "Locator hash, content digest and record digest are three different values."
+    },
+    {
+      "id": "I11-marker-replaced-by-value",
+      "kind": "digest_differs",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "other": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": "1",
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      }
+    },
+    {
+      "id": "I11-marker-round-trip",
+      "kind": "round_trip",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "expect": {
+        "pointer": "/source_version",
+        "value": {
+          "unknown": "source_declares_no_version"
+        }
+      }
+    },
+    {
+      "id": "I12-revision-conflict",
+      "kind": "revision_conflicts",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "transcript",
+          "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+          "language": "en",
+          "source_version": {
+            "unknown": "source_declares_no_version"
+          },
+          "source_published_at": {
+            "date": "2026-01-14",
+            "precision": "day"
+          },
+          "captured_at": "2026-02-03T15:04:05Z",
+          "captured_assets": [
+            "transcript_text"
+          ],
+          "not_captured": [
+            "audio",
+            "video",
+            "caption_timing"
+          ],
+          "content": {
+            "media_type": "text/plain; charset=utf-8",
+            "retained": true,
+            "byte_length": 530,
+            "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+          },
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:10:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "transcript",
+          "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+          "language": "en-GB",
+          "source_version": {
+            "unknown": "source_declares_no_version"
+          },
+          "source_published_at": {
+            "date": "2026-01-14",
+            "precision": "day"
+          },
+          "captured_at": "2026-02-03T15:04:05Z",
+          "captured_assets": [
+            "transcript_text"
+          ],
+          "not_captured": [
+            "audio",
+            "video",
+            "caption_timing"
+          ],
+          "content": {
+            "media_type": "text/plain; charset=utf-8",
+            "retained": true,
+            "byte_length": 530,
+            "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+          },
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:10:00Z"
+        }
+      ],
+      "expect": {
+        "codes": [
+          "revision_conflict"
+        ]
+      }
+    },
+    {
+      "id": "I12-same-body-twice",
+      "kind": "revision_conflicts",
+      "records": [
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "transcript",
+          "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+          "language": "en",
+          "source_version": {
+            "unknown": "source_declares_no_version"
+          },
+          "source_published_at": {
+            "date": "2026-01-14",
+            "precision": "day"
+          },
+          "captured_at": "2026-02-03T15:04:05Z",
+          "captured_assets": [
+            "transcript_text"
+          ],
+          "not_captured": [
+            "audio",
+            "video",
+            "caption_timing"
+          ],
+          "content": {
+            "media_type": "text/plain; charset=utf-8",
+            "retained": true,
+            "byte_length": 530,
+            "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+          },
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:10:00Z"
+        },
+        {
+          "schema": "comuvia/0.1",
+          "record_type": "resource_snapshot",
+          "id": "res-harbor-weekly-e42-transcript",
+          "revision": 1,
+          "predecessor": null,
+          "data_origin": "synthetic",
+          "resource_type": "transcript",
+          "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+          "language": "en",
+          "source_version": {
+            "unknown": "source_declares_no_version"
+          },
+          "source_published_at": {
+            "date": "2026-01-14",
+            "precision": "day"
+          },
+          "captured_at": "2026-02-03T15:04:05Z",
+          "captured_assets": [
+            "transcript_text"
+          ],
+          "not_captured": [
+            "audio",
+            "video",
+            "caption_timing"
+          ],
+          "content": {
+            "media_type": "text/plain; charset=utf-8",
+            "retained": true,
+            "byte_length": 530,
+            "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+          },
+          "recorded_by": "recorder:example-transcriber",
+          "recorded_at": "2026-02-03T15:10:00Z"
+        }
+      ],
+      "expect": {
+        "codes": []
+      }
+    },
+    {
+      "id": "day-precision-round-trip",
+      "kind": "round_trip",
+      "description": "A day-precision value stays a day-precision object; it is never expanded to midnight.",
+      "record": {
+        "schema": "comuvia/0.1",
+        "record_type": "resource_snapshot",
+        "id": "res-harbor-weekly-e42-transcript",
+        "revision": 1,
+        "predecessor": null,
+        "data_origin": "synthetic",
+        "resource_type": "transcript",
+        "locator": "https://example.org/synthetic/harbor-weekly/episode-42/transcript.txt",
+        "language": "en",
+        "source_version": {
+          "unknown": "source_declares_no_version"
+        },
+        "source_published_at": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "captured_at": "2026-02-03T15:04:05Z",
+        "captured_assets": [
+          "transcript_text"
+        ],
+        "not_captured": [
+          "audio",
+          "video",
+          "caption_timing"
+        ],
+        "content": {
+          "media_type": "text/plain; charset=utf-8",
+          "retained": true,
+          "byte_length": 530,
+          "digest": "sha256:604226cc5ad7c6b0f67408802241504ddc56de6f6ffd892ce6fe355ec6f07fe9"
+        },
+        "recorded_by": "recorder:example-transcriber",
+        "recorded_at": "2026-02-03T15:10:00Z"
+      },
+      "expect": {
+        "pointer": "/source_published_at",
+        "value": {
+          "date": "2026-01-14",
+          "precision": "day"
+        },
+        "canonical_contains": "\"source_published_at\":{\"date\":\"2026-01-14\",\"precision\":\"day\"}"
+      }
+    }
+  ]
+}
