@@ -1,8 +1,8 @@
 # comuvia changelog
 
-## 0.1.0 — release candidate (not yet published)
+## 0.1.0 — 2026-10-01
 
-First release.
+First release, published on PyPI on 2026-10-01 from tag `v0.1.0`. The copy of this file inside the 0.1.0 source distribution was written before the upload and still calls this version a release candidate.
 
 - **Records.** Nine `comuvia/0.1` record types with packaged JSON Schemas: `resource_snapshot`, `source_assertion`, `interpretation`, `assessment`, `question`, `forecast`, `outcome`, `evaluation` and `artifact_descriptor`. Unknown and withheld markers, day-precision values, required `limitations` codes, and namespaced `extensions`.
 - **Strict parsing and validation** with named refusal codes, including a fixed nesting limit of 64 and refusal of integer literals that binary64 would change.

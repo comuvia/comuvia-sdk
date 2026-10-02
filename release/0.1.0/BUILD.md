@@ -1,6 +1,6 @@
 # Building the 0.1.0 distributions
 
-The four 0.1.0 files are byte-reproducible from a checkout of this repository. [`SHA256SUMS`](SHA256SUMS) lists their approved SHA-256 digests.
+The four 0.1.0 files are byte-reproducible from a checkout of tag `v0.1.0` of this repository. [`SHA256SUMS`](SHA256SUMS) lists their approved SHA-256 digests. Later commits can change files that the source distributions include, such as the package changelogs, so build from the tag.
 
 ## The recipe
 

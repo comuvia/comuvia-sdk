@@ -17,7 +17,9 @@ Each package's two files are built only from its own directory and the recipe. C
 | `comuvia` | `packages/comuvia` | `e2ca578ee67e943a90b472c5e66566f2e2f5aadc` | `comuvia-0.1.0-py3-none-any.whl`, `comuvia-0.1.0.tar.gz` |
 | `foreglass` | `packages/foreglass` | `558ead19f111a7341649dfdb6d68e797062e2e27` | `foreglass-0.1.0-py3-none-any.whl`, `foreglass-0.1.0.tar.gz` |
 
-To check a checkout, compare `git rev-parse HEAD:packages/comuvia` and `git rev-parse HEAD:packages/foreglass` with the table. Then rebuild as in [`BUILD.md`](BUILD.md) and compare the files with `SHA256SUMS`. The public commit and tag of the release are recorded after publication, in the release notes, not in this directory.
+To check the release source, compare `git rev-parse v0.1.0:packages/comuvia` and `git rev-parse v0.1.0:packages/foreglass` with the table. Later commits on `main` update the package changelogs, so their trees differ. Then check out tag `v0.1.0`, rebuild as in [`BUILD.md`](BUILD.md) and compare the files with `SHA256SUMS`.
+
+Both packages were published on PyPI on 2026-10-01 from tag `v0.1.0`, which points to commit `4d9584568040e570c4f8ac1714b8f7fe1b341ebb`. The upload used the release workflow's Trusted Publishing, and each file carries a provenance attestation that names that workflow.
 
 - **`comuvia`** has no runtime dependencies. The wheel holds `src/comuvia` (code, the ten JSON Schemas and the `binary-brier-v1` rule) and metadata from `pyproject.toml` and `README.md`. The sdist adds `tests/`, `CHANGELOG.md` and `LICENSE`.
 - **`foreglass`** depends on `comuvia>=0.1.0,<0.2` and was tested with the `comuvia` 0.1.0 wheel listed in `SHA256SUMS`. Its sdist includes its tests, a synthetic ForeGlass-format fixture and a throwaway test CA used only by the transport tests.

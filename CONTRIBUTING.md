@@ -26,6 +26,12 @@ python -I tools/package_smoke.py check --dist <that directory>/dist --work <anot
 
 `check` runs both packages' tests, tutorials A, B and C, and a command-line scenario, with an audit hook that refuses network events.
 
+The repository tools have their own tests, which need only `git`:
+
+```sh
+python -I -m unittest discover -s tools/tests
+```
+
 ## Content
 
 - Fixtures and test data are synthetic. Do not add real personal data, third-party text or data, or credentials.

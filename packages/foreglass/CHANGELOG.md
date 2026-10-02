@@ -1,8 +1,8 @@
 # foreglass changelog
 
-## 0.1.0 — release candidate (not yet published)
+## 0.1.0 — 2026-10-01
 
-First release. Depends only on `comuvia>=0.1.0,<0.2`. Apache-2.0.
+First release, published on PyPI on 2026-10-01 from tag `v0.1.0`. The copy of this file inside the 0.1.0 source distribution was written before the upload and still calls this version a release candidate. Depends only on `comuvia>=0.1.0,<0.2`. Apache-2.0.
 
 - **`PublicClient`.** Explicit, bounded reads of the documented public ForeGlass artifacts only, with the standard-library `HttpsTransport` (verified TLS; redirects returned, not followed) and an injectable transport:
   - https, host and port allow-lists, and at most 3 re-checked redirects;
