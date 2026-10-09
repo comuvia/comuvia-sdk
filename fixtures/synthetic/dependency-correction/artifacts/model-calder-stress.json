@@ -1,0 +1,5 @@
+{
+  "model": "calder-stress",
+  "version": "1",
+  "rule": "stressed_annual = annual * min(shock_multiplier)"
+}

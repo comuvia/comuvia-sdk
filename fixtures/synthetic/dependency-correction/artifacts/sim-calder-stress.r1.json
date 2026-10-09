@@ -1,0 +1,7 @@
+{
+  "measure": "container throughput under the stress path, annual",
+  "unit": "TEU",
+  "period": "2026",
+  "stressed_annual_teu": 369610,
+  "conditional_on": "synth-shock-path"
+}

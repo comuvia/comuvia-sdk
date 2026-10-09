@@ -1,0 +1,57 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "rule-point-error",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 844,
+    "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585"
+  },
+  "content_schema": "point-error-rule/1",
+  "origin": {
+    "name": "Example point-forecast error workflow (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-03-01T09:00:00Z",
+  "units": {
+    "unknown": "not_applicable",
+    "note": "holds no data values"
+  },
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:rule-point-error:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "none",
+      "meaning": {
+        "measure": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "unit": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "period": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "geography": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        }
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-point-error",
+  "recorded_at": "2027-03-01T09:00:00Z"
+}

@@ -12,6 +12,7 @@ SHA256SUMS text eol=lf
 .gitignore text eol=lf
 # Retained source bytes are content-digest inputs: never convert them.
 fixtures/**/source/** -text -eol
+fixtures/**/artifacts/** -text -eol
 # Provider-format test bytes (CRLF ledger) are retained exactly.
 packages/*/tests/vectors/**/source/** -text -eol
 # License texts are retained byte-for-byte (LF).

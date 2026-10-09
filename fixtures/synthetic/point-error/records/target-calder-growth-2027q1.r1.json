@@ -1,0 +1,44 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "target-calder-growth-2027q1",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 355,
+    "digest": "sha256:bb97d128fc6f43660ea58165feca8802854acb82c2a7adaeb6b161649ab29439"
+  },
+  "content_schema": "point-target/1",
+  "origin": {
+    "name": "Example point-forecast error workflow (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-03-01T09:00:00Z",
+  "units": [
+    "percent"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:target-calder-growth-2027q1:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "none",
+      "meaning": {
+        "measure": "real output growth, seasonally adjusted annual rate",
+        "unit": "percent",
+        "period": "2027-Q1",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-point-error",
+  "recorded_at": "2027-03-01T09:00:00Z"
+}

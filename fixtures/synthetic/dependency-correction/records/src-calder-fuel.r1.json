@@ -1,0 +1,47 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "src-calder-fuel",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource_type": "statistical_table",
+  "locator": "https://example.org/synthetic/port-calder/src-calder-fuel.csv",
+  "language": {
+    "unknown": "source_declares_no_language",
+    "note": "CSV; the header names are English words."
+  },
+  "source_version": "first_release",
+  "source_published_at": {
+    "date": "2027-01-20",
+    "precision": "day"
+  },
+  "captured_at": "2027-01-20T10:00:00Z",
+  "captured_assets": [
+    "monthly_csv"
+  ],
+  "not_captured": [
+    "full_publication"
+  ],
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "retained": true,
+    "byte_length": 93,
+    "digest": "sha256:cac24bd0deceacd0d713b6c52c746352e6f0f687c3e7d7b78240157693482fa7"
+  },
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "observed",
+      "meaning": {
+        "measure": "bunker fuel delivered, monthly flow",
+        "unit": "tonnes",
+        "period": "2026-01/2026-03",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

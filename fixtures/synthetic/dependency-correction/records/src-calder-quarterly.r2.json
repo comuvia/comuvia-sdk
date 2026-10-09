@@ -1,0 +1,52 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "src-calder-quarterly",
+  "revision": 2,
+  "predecessor": {
+    "record_type": "resource_snapshot",
+    "id": "src-calder-quarterly",
+    "revision": 1,
+    "digest": "sha256:a46be8d9a58b6c21e18be7f9c1dad47571088e011fee6021a8cb8571e89af0ae"
+  },
+  "data_origin": "synthetic",
+  "resource_type": "statistical_table",
+  "locator": "https://example.org/synthetic/port-calder/src-calder-quarterly.csv",
+  "language": {
+    "unknown": "source_declares_no_language",
+    "note": "CSV; the header names are English words."
+  },
+  "source_version": "revised_release_q3",
+  "source_published_at": {
+    "date": "2027-02-10",
+    "precision": "day"
+  },
+  "captured_at": "2027-02-10T15:30:00Z",
+  "captured_assets": [
+    "quarterly_csv"
+  ],
+  "not_captured": [
+    "full_publication"
+  ],
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "retained": true,
+    "byte_length": 120,
+    "digest": "sha256:024c6db7905277d180cae7fd9f79cbb60307c602a7fd0df0d3e0dfb96fc26eec"
+  },
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "observed",
+      "meaning": {
+        "measure": "container throughput, quarterly flow",
+        "unit": "TEU",
+        "period": "2026-Q1/2026-Q4",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-02-10T15:30:00Z"
+}

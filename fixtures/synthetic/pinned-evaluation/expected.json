@@ -1,0 +1,333 @@
+{
+  "fixture": "pinned-evaluation",
+  "status": "example",
+  "note": "Expected results for the pinned-evaluation example (tutorial H). Fictional providers and values; issue dates are date-only.",
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "code-calder-scoring",
+        "revision": 1,
+        "digest": "sha256:4d1872cde5067c4fc3a10143e7a72c7e90449addaf3580fc9bd0e33d5dd9745b"
+      },
+      "result": "match",
+      "byte_length": 182,
+      "digest": "sha256:4f4c3338849eae5f9e1f0feadcc90d710e55b1070909ab7442f917dac1b37e23"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "manifest-calder-outcome",
+        "revision": 1,
+        "digest": "sha256:2cf04863ba4262aa333b571a22e6100a23fb811e4650bf449e7cab484048006b"
+      },
+      "result": "match",
+      "byte_length": 253,
+      "digest": "sha256:9a3bf4d224529e66c0e861bcb443a27d66428c04f8d1320424247fb3e7d58d62"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "protocol-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:fc422fe24f4c7d9d10f768b48ffaad4e6aa26bcd3bbc5169e1d5b2c2f4a1fd42"
+      },
+      "result": "match",
+      "byte_length": 436,
+      "digest": "sha256:1fbbac2834ad3e46e51c7a6ea27bf3d10615c89e3c4955533f14240332e2220f"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "report-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:478339e18d42219b97a2102c197c8f11351114f909a71f73664dfd761255f2b0"
+      },
+      "result": "match",
+      "byte_length": 107,
+      "digest": "sha256:8f91abb850382a0b917dc455c803cbf8d54c6ae42a5e0e43ae74a493475ecb15"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:efea3e78b541c9b952db375005f06265650a72f47c5aa39d6fee323089a5c3fd"
+      },
+      "result": "match",
+      "byte_length": 1474,
+      "digest": "sha256:b902e7130ccec300b193065e1dff348029ff0217e19610b9d7f4bbba1e8fe813"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 2,
+        "digest": "sha256:a9f496421363d3db3bbe24b3aaf1f26ec91b68a4715f2d4f73972d9c6150c5c0"
+      },
+      "result": "match",
+      "byte_length": 1474,
+      "digest": "sha256:52c28f37799788c1918baa7185712c6e44ee62f9fff3a93b6582989ce3f192a0"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "fc-kestrel-calder-growth",
+        "revision": 1,
+        "digest": "sha256:08ef658f316559b806d73fda309590ed5c518b773fc2590d9a283a25eebffac8"
+      },
+      "result": "match",
+      "byte_length": 120,
+      "digest": "sha256:bba9f80a24aec4629e1d81d33ac76825d01383073720e1970dfbdce479de93a0"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "fc-wren-calder-growth",
+        "revision": 1,
+        "digest": "sha256:761e5bb9454174fd8e7804ef73fb9cf715ebd1115158ed963121eb2e7c2d1e36"
+      },
+      "result": "match",
+      "byte_length": 98,
+      "digest": "sha256:8411ddf34b32d7df9a30fa62f26f53b8ff7f4f87163ff96647f8a42bff636c7f"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 1,
+        "digest": "sha256:7c9e2f2a8961898d68a72c289d4000544eaa06cfb053244ef732655d7480f6c0"
+      },
+      "result": "match",
+      "byte_length": 191,
+      "digest": "sha256:47a26dcd325c351f79a5fc4847563bb8753e7a190bc19be282a8432814d6fb9b"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 2,
+        "digest": "sha256:767f2834c1ecd95675ff3b25b688dd331b00f3841202f4cf614886e860a43a4d"
+      },
+      "result": "match",
+      "byte_length": 277,
+      "digest": "sha256:cf2dd7e2b7cc4b66481613d6f23b56a366600c3ac4e9301289162b81a71b659d"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "vintages-calder-2027q1",
+        "revision": 1,
+        "digest": "sha256:fe386e547a9238bd05e5f3fe19628966b1192e6a6594830a4b930b0d79d5d57c"
+      },
+      "result": "match",
+      "byte_length": 119,
+      "digest": "sha256:a55c575bd2bf80f9e773275978baf5eff52dc9a3ceb0448c50660cffca4368de"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "code-calder-scoring",
+        "revision": 1,
+        "digest": "sha256:4d1872cde5067c4fc3a10143e7a72c7e90449addaf3580fc9bd0e33d5dd9745b"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "manifest-calder-outcome",
+        "revision": 1,
+        "digest": "sha256:2cf04863ba4262aa333b571a22e6100a23fb811e4650bf449e7cab484048006b"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "protocol-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:fc422fe24f4c7d9d10f768b48ffaad4e6aa26bcd3bbc5169e1d5b2c2f4a1fd42"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "report-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:478339e18d42219b97a2102c197c8f11351114f909a71f73664dfd761255f2b0"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:efea3e78b541c9b952db375005f06265650a72f47c5aa39d6fee323089a5c3fd"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 2,
+        "digest": "sha256:a9f496421363d3db3bbe24b3aaf1f26ec91b68a4715f2d4f73972d9c6150c5c0"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "fc-kestrel-calder-growth",
+        "revision": 1,
+        "digest": "sha256:08ef658f316559b806d73fda309590ed5c518b773fc2590d9a283a25eebffac8"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "fc-wren-calder-growth",
+        "revision": 1,
+        "digest": "sha256:761e5bb9454174fd8e7804ef73fb9cf715ebd1115158ed963121eb2e7c2d1e36"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 1,
+        "digest": "sha256:7c9e2f2a8961898d68a72c289d4000544eaa06cfb053244ef732655d7480f6c0"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 2,
+        "digest": "sha256:767f2834c1ecd95675ff3b25b688dd331b00f3841202f4cf614886e860a43a4d"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "vintages-calder-2027q1",
+        "revision": 1,
+        "digest": "sha256:fe386e547a9238bd05e5f3fe19628966b1192e6a6594830a4b930b0d79d5d57c"
+      },
+      "result": "match"
+    }
+  ],
+  "expectation": {
+    "entries": [
+      {
+        "record_type": "artifact_descriptor",
+        "id": "code-calder-scoring",
+        "revision": 1,
+        "digest": "sha256:4d1872cde5067c4fc3a10143e7a72c7e90449addaf3580fc9bd0e33d5dd9745b"
+      },
+      {
+        "record_type": "artifact_descriptor",
+        "id": "manifest-calder-outcome",
+        "revision": 1,
+        "digest": "sha256:2cf04863ba4262aa333b571a22e6100a23fb811e4650bf449e7cab484048006b"
+      },
+      {
+        "record_type": "artifact_descriptor",
+        "id": "protocol-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:fc422fe24f4c7d9d10f768b48ffaad4e6aa26bcd3bbc5169e1d5b2c2f4a1fd42"
+      },
+      {
+        "record_type": "artifact_descriptor",
+        "id": "report-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:478339e18d42219b97a2102c197c8f11351114f909a71f73664dfd761255f2b0"
+      },
+      {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 1,
+        "digest": "sha256:efea3e78b541c9b952db375005f06265650a72f47c5aa39d6fee323089a5c3fd"
+      },
+      {
+        "record_type": "artifact_descriptor",
+        "id": "result-calder-nowcast",
+        "revision": 2,
+        "digest": "sha256:a9f496421363d3db3bbe24b3aaf1f26ec91b68a4715f2d4f73972d9c6150c5c0"
+      },
+      {
+        "record_type": "resource_snapshot",
+        "id": "fc-kestrel-calder-growth",
+        "revision": 1,
+        "digest": "sha256:08ef658f316559b806d73fda309590ed5c518b773fc2590d9a283a25eebffac8"
+      },
+      {
+        "record_type": "resource_snapshot",
+        "id": "fc-wren-calder-growth",
+        "revision": 1,
+        "digest": "sha256:761e5bb9454174fd8e7804ef73fb9cf715ebd1115158ed963121eb2e7c2d1e36"
+      },
+      {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 1,
+        "digest": "sha256:7c9e2f2a8961898d68a72c289d4000544eaa06cfb053244ef732655d7480f6c0"
+      },
+      {
+        "record_type": "resource_snapshot",
+        "id": "release-calder-2027q1-advance",
+        "revision": 2,
+        "digest": "sha256:767f2834c1ecd95675ff3b25b688dd331b00f3841202f4cf614886e860a43a4d"
+      },
+      {
+        "record_type": "resource_snapshot",
+        "id": "vintages-calder-2027q1",
+        "revision": 1,
+        "digest": "sha256:fe386e547a9238bd05e5f3fe19628966b1192e6a6594830a4b930b0d79d5d57c"
+      }
+    ],
+    "latest": {
+      "artifact_descriptor/code-calder-scoring": 1,
+      "artifact_descriptor/manifest-calder-outcome": 1,
+      "artifact_descriptor/protocol-calder-nowcast": 1,
+      "artifact_descriptor/report-calder-nowcast": 1,
+      "artifact_descriptor/result-calder-nowcast": 2,
+      "resource_snapshot/fc-kestrel-calder-growth": 1,
+      "resource_snapshot/fc-wren-calder-growth": 1,
+      "resource_snapshot/release-calder-2027q1-advance": 2,
+      "resource_snapshot/vintages-calder-2027q1": 1
+    }
+  },
+  "embedded": {
+    "result_r1": {
+      "match": 6,
+      "mismatch": 0,
+      "missing": 0,
+      "malformed": 0,
+      "exempt": 0
+    },
+    "result_r2": {
+      "match": 6,
+      "mismatch": 0,
+      "missing": 0,
+      "malformed": 0,
+      "exempt": 0
+    },
+    "outcome_manifest": {
+      "match": 1,
+      "mismatch": 0,
+      "missing": 0,
+      "malformed": 0,
+      "exempt": 0
+    }
+  }
+}

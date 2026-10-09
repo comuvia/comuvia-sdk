@@ -1,0 +1,613 @@
+{
+  "fixture": "dependency-correction",
+  "status": "example_profile",
+  "note": "Expected results for the org.comuvia.dependencies/v1 example profile (tutorial D). comuvia core identity and the example helper reproduce them.",
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "chart-calder-quarterly",
+        "revision": 1,
+        "digest": "sha256:c7eceb55a47eab88152e5833bbfc68f7d9105ecdc1cb04b5cb506d3668fe5d9b"
+      },
+      "result": "match",
+      "byte_length": 304,
+      "digest": "sha256:bfd4e3fd85f4ea452b5a0e9f01ddad128ba48ce5fd83e08bcddc13c9005d01b1"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "method-annual-sum",
+        "revision": 1,
+        "digest": "sha256:ca1c9ac5e2ef375a2b86e98ab01c6ea047db3c8db0b7211eef65c6c928510129"
+      },
+      "result": "match",
+      "byte_length": 106,
+      "digest": "sha256:0f87e34deb046bb50bd1f482b92b76a4dd970f95f4a9e5189aa78b6f2ed8108d"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "model-calder-stress",
+        "revision": 1,
+        "digest": "sha256:a8131026181bf254b30878ca7974e1dcef49ed2c023ccbc0dc13a5baf46899a7"
+      },
+      "result": "match",
+      "byte_length": 111,
+      "digest": "sha256:c1c30fc6c2a6836a5efa68c3a648d52e9520821e03173bfe3be908db34bd4b48"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "out-calder-fuel",
+        "revision": 1,
+        "digest": "sha256:39359287577d4b116a094b2a9f09b4a88bafcb2f2e58528e67ab3054fff59ae9"
+      },
+      "result": "match",
+      "byte_length": 124,
+      "digest": "sha256:dc8a1c4dbfb0709f6bcfc1425bebb1d00aaf209be87f3c5a3deed9bf82a29293"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "out-calder-mixed",
+        "revision": 1,
+        "digest": "sha256:ae4ba64aa01caa50f39a1551a19326e7fc867f4d819540ea9104ac719d456808"
+      },
+      "result": "match",
+      "byte_length": 175,
+      "digest": "sha256:d3a21e0152c6772f58a482d542a0226765cab0f617ac4fb5410540e0217d00ef"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-annual",
+        "revision": 1,
+        "digest": "sha256:a9f423d1623d56d3e6e19112d029a9e2af9fcda9465ece53967b962a2aa86c8a"
+      },
+      "result": "match",
+      "byte_length": 143,
+      "digest": "sha256:1ff02afc742f9bf485c64c6604cba5af5a9edda46bbe419af9cab56e44e36f1d"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-annual",
+        "revision": 2,
+        "digest": "sha256:eaf8f908e35cfc92c99e5f7d8d60ae0935300b595452314ab4a08bdc72e06fa3"
+      },
+      "result": "match",
+      "byte_length": 145,
+      "digest": "sha256:6e5f278e76e52a1469d2a88e1eebc6f4a9eacf37f99b98845d77ca4464e3a188"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "sim-calder-stress",
+        "revision": 1,
+        "digest": "sha256:fbcca96b4475a2f6da8eedb7f9b802c9f917e53b79c02ee9e131a7549643676b"
+      },
+      "result": "match",
+      "byte_length": 180,
+      "digest": "sha256:eb1a6abd3102ac6c198a710e4e9677521aed077dfb1eed1e637778c21435310a"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "sim-calder-stress",
+        "revision": 2,
+        "digest": "sha256:ac56d46780714a3d7c590aee216e157793daac90f99d8bd913ee29dd19ee1f76"
+      },
+      "result": "match",
+      "byte_length": 180,
+      "digest": "sha256:8cb8b6cd4010c544d7fbd8519dcf5f0777590de84b3f4a2034f4dde7134481c5"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "synth-shock-path",
+        "revision": 1,
+        "digest": "sha256:09e5f061a5804cb53645bf1e523924cf0129f93e93d1b7a7e2ab49106b8fd1d2"
+      },
+      "result": "match",
+      "byte_length": 77,
+      "digest": "sha256:3219b76a2d5e0d1ec202db10b703e0dec886970fcd7b521363a95e2841d96341"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-fuel",
+        "revision": 1,
+        "digest": "sha256:64527a7fe31b49a40f033381abb529de227ac5b926fe3e142d7be0fc902b72ed"
+      },
+      "result": "match",
+      "byte_length": 93,
+      "digest": "sha256:cac24bd0deceacd0d713b6c52c746352e6f0f687c3e7d7b78240157693482fa7"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-quarterly",
+        "revision": 1,
+        "digest": "sha256:a46be8d9a58b6c21e18be7f9c1dad47571088e011fee6021a8cb8571e89af0ae"
+      },
+      "result": "match",
+      "byte_length": 112,
+      "digest": "sha256:72d57c2edfc62a8ae5e6efb605709eac9d331dc2094a27fbf6ee6cdcea319441"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-quarterly",
+        "revision": 2,
+        "digest": "sha256:df3b1d5de8d4af687fff9a1b3e19f13cc1463f609a1533f1fd0ec2e9e2e853da"
+      },
+      "result": "match",
+      "byte_length": 120,
+      "digest": "sha256:024c6db7905277d180cae7fd9f79cbb60307c602a7fd0df0d3e0dfb96fc26eec"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "chart-calder-quarterly",
+        "revision": 1,
+        "digest": "sha256:c7eceb55a47eab88152e5833bbfc68f7d9105ecdc1cb04b5cb506d3668fe5d9b"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "method-annual-sum",
+        "revision": 1,
+        "digest": "sha256:ca1c9ac5e2ef375a2b86e98ab01c6ea047db3c8db0b7211eef65c6c928510129"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "model-calder-stress",
+        "revision": 1,
+        "digest": "sha256:a8131026181bf254b30878ca7974e1dcef49ed2c023ccbc0dc13a5baf46899a7"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "out-calder-fuel",
+        "revision": 1,
+        "digest": "sha256:39359287577d4b116a094b2a9f09b4a88bafcb2f2e58528e67ab3054fff59ae9"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "out-calder-mixed",
+        "revision": 1,
+        "digest": "sha256:ae4ba64aa01caa50f39a1551a19326e7fc867f4d819540ea9104ac719d456808"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-annual",
+        "revision": 1,
+        "digest": "sha256:a9f423d1623d56d3e6e19112d029a9e2af9fcda9465ece53967b962a2aa86c8a"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-annual",
+        "revision": 2,
+        "digest": "sha256:eaf8f908e35cfc92c99e5f7d8d60ae0935300b595452314ab4a08bdc72e06fa3"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "sim-calder-stress",
+        "revision": 1,
+        "digest": "sha256:fbcca96b4475a2f6da8eedb7f9b802c9f917e53b79c02ee9e131a7549643676b"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "sim-calder-stress",
+        "revision": 2,
+        "digest": "sha256:ac56d46780714a3d7c590aee216e157793daac90f99d8bd913ee29dd19ee1f76"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "synth-shock-path",
+        "revision": 1,
+        "digest": "sha256:09e5f061a5804cb53645bf1e523924cf0129f93e93d1b7a7e2ab49106b8fd1d2"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-fuel",
+        "revision": 1,
+        "digest": "sha256:64527a7fe31b49a40f033381abb529de227ac5b926fe3e142d7be0fc902b72ed"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-quarterly",
+        "revision": 1,
+        "digest": "sha256:a46be8d9a58b6c21e18be7f9c1dad47571088e011fee6021a8cb8571e89af0ae"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-quarterly",
+        "revision": 2,
+        "digest": "sha256:df3b1d5de8d4af687fff9a1b3e19f13cc1463f609a1533f1fd0ec2e9e2e853da"
+      },
+      "result": "match"
+    }
+  ],
+  "impact_of_source_correction": {
+    "profile": "org.comuvia.dependencies/v1",
+    "changed": {
+      "record_type": "resource_snapshot",
+      "id": "src-calder-quarterly",
+      "revision": 2,
+      "digest": "sha256:df3b1d5de8d4af687fff9a1b3e19f13cc1463f609a1533f1fd0ec2e9e2e853da"
+    },
+    "superseded": [
+      {
+        "record_type": "resource_snapshot",
+        "id": "src-calder-quarterly",
+        "revision": 1
+      }
+    ],
+    "change": {
+      "content_changed": true,
+      "meaning_changed": false,
+      "dependencies_changed": false,
+      "changed_fields": [
+        "captured_at",
+        "content",
+        "recorded_at",
+        "source_published_at",
+        "source_version"
+      ]
+    },
+    "records": [
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "chart-calder-quarterly",
+          "revision": 1
+        },
+        "digest": "sha256:c7eceb55a47eab88152e5833bbfc68f7d9105ecdc1cb04b5cb506d3668fe5d9b",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "resource_snapshot",
+              "id": "src-calder-quarterly",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": false,
+        "status": "affected",
+        "path": [
+          {
+            "record_type": "artifact_descriptor",
+            "id": "chart-calder-quarterly",
+            "revision": 1
+          },
+          {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-quarterly",
+            "revision": 1
+          }
+        ],
+        "latest": {
+          "record_type": "artifact_descriptor",
+          "id": "chart-calder-quarterly",
+          "revision": 1
+        },
+        "latest_status": "affected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "method-annual-sum",
+          "revision": 1
+        },
+        "digest": "sha256:ca1c9ac5e2ef375a2b86e98ab01c6ea047db3c8db0b7211eef65c6c928510129",
+        "edges": [],
+        "synthetic_in_closure": false,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "model-calder-stress",
+          "revision": 1
+        },
+        "digest": "sha256:a8131026181bf254b30878ca7974e1dcef49ed2c023ccbc0dc13a5baf46899a7",
+        "edges": [],
+        "synthetic_in_closure": false,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "out-calder-fuel",
+          "revision": 1
+        },
+        "digest": "sha256:39359287577d4b116a094b2a9f09b4a88bafcb2f2e58528e67ab3054fff59ae9",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "resource_snapshot",
+              "id": "src-calder-fuel",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": false,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "out-calder-mixed",
+          "revision": 1
+        },
+        "digest": "sha256:ae4ba64aa01caa50f39a1551a19326e7fc867f4d819540ea9104ac719d456808",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "resource_snapshot",
+              "id": "src-calder-fuel",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": false,
+        "status": "unknown",
+        "reasons": [
+          "partial_coverage"
+        ]
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "res-calder-annual",
+          "revision": 1
+        },
+        "digest": "sha256:a9f423d1623d56d3e6e19112d029a9e2af9fcda9465ece53967b962a2aa86c8a",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "resource_snapshot",
+              "id": "src-calder-quarterly",
+              "revision": 1
+            },
+            "state": "match"
+          },
+          {
+            "role": "method",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "method-annual-sum",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": false,
+        "status": "affected",
+        "path": [
+          {
+            "record_type": "artifact_descriptor",
+            "id": "res-calder-annual",
+            "revision": 1
+          },
+          {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-quarterly",
+            "revision": 1
+          }
+        ],
+        "latest": {
+          "record_type": "artifact_descriptor",
+          "id": "res-calder-annual",
+          "revision": 2
+        },
+        "latest_status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "res-calder-annual",
+          "revision": 2
+        },
+        "digest": "sha256:eaf8f908e35cfc92c99e5f7d8d60ae0935300b595452314ab4a08bdc72e06fa3",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "resource_snapshot",
+              "id": "src-calder-quarterly",
+              "revision": 2
+            },
+            "state": "match"
+          },
+          {
+            "role": "method",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "method-annual-sum",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": false,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "sim-calder-stress",
+          "revision": 1
+        },
+        "digest": "sha256:fbcca96b4475a2f6da8eedb7f9b802c9f917e53b79c02ee9e131a7549643676b",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "res-calder-annual",
+              "revision": 1
+            },
+            "state": "match"
+          },
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "synth-shock-path",
+              "revision": 1
+            },
+            "state": "match"
+          },
+          {
+            "role": "method",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "model-calder-stress",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": true,
+        "status": "affected",
+        "path": [
+          {
+            "record_type": "artifact_descriptor",
+            "id": "sim-calder-stress",
+            "revision": 1
+          },
+          {
+            "record_type": "artifact_descriptor",
+            "id": "res-calder-annual",
+            "revision": 1
+          },
+          {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-quarterly",
+            "revision": 1
+          }
+        ],
+        "latest": {
+          "record_type": "artifact_descriptor",
+          "id": "sim-calder-stress",
+          "revision": 2
+        },
+        "latest_status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "sim-calder-stress",
+          "revision": 2
+        },
+        "digest": "sha256:ac56d46780714a3d7c590aee216e157793daac90f99d8bd913ee29dd19ee1f76",
+        "edges": [
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "res-calder-annual",
+              "revision": 2
+            },
+            "state": "match"
+          },
+          {
+            "role": "data_input",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "synth-shock-path",
+              "revision": 1
+            },
+            "state": "match"
+          },
+          {
+            "role": "method",
+            "target": {
+              "record_type": "artifact_descriptor",
+              "id": "model-calder-stress",
+              "revision": 1
+            },
+            "state": "match"
+          }
+        ],
+        "synthetic_in_closure": true,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "artifact_descriptor",
+          "id": "synth-shock-path",
+          "revision": 1
+        },
+        "digest": "sha256:09e5f061a5804cb53645bf1e523924cf0129f93e93d1b7a7e2ab49106b8fd1d2",
+        "edges": [],
+        "synthetic_in_closure": true,
+        "status": "unaffected"
+      },
+      {
+        "record": {
+          "record_type": "resource_snapshot",
+          "id": "src-calder-fuel",
+          "revision": 1
+        },
+        "digest": "sha256:64527a7fe31b49a40f033381abb529de227ac5b926fe3e142d7be0fc902b72ed",
+        "edges": [],
+        "synthetic_in_closure": false,
+        "status": "unaffected"
+      }
+    ],
+    "coverage": "partial",
+    "limitations": [
+      "A declared dependency does not prove causation, completeness or correctness.",
+      "Digests prove byte and record identity, not truth.",
+      "No independent time evidence: declared times are as recorded.",
+      "Coverage is the producer's statement; omitted inputs cannot be detected."
+    ]
+  }
+}

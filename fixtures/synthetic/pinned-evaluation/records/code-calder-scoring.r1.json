@@ -1,0 +1,57 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "code-calder-scoring",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "text/x-python; charset=utf-8",
+    "byte_length": 182,
+    "digest": "sha256:4f4c3338849eae5f9e1f0feadcc90d710e55b1070909ab7442f917dac1b37e23"
+  },
+  "content_schema": "example-code/1",
+  "origin": {
+    "name": "Example pinned evaluation (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-05-02T10:00:00Z",
+  "units": {
+    "unknown": "not_applicable",
+    "note": "holds no data values"
+  },
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:code-calder-scoring:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "none",
+      "meaning": {
+        "measure": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "unit": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "period": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "geography": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        }
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-05-02T10:00:00Z"
+}

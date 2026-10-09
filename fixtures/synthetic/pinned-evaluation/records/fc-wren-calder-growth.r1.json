@@ -1,0 +1,47 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "fc-wren-calder-growth",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource_type": "statistical_table",
+  "locator": "https://example.org/synthetic/calder/wren-forecasts.csv",
+  "language": {
+    "unknown": "source_declares_no_language",
+    "note": "fictional example"
+  },
+  "source_version": "archive_2027_04_15",
+  "source_published_at": {
+    "date": "2027-04-15",
+    "precision": "day"
+  },
+  "captured_at": "2027-05-02T10:00:00Z",
+  "captured_assets": [
+    "wren_forecasts"
+  ],
+  "not_captured": [
+    "full_site"
+  ],
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "retained": true,
+    "byte_length": 98,
+    "digest": "sha256:8411ddf34b32d7df9a30fa62f26f53b8ff7f4f87163ff96647f8a42bff636c7f"
+  },
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "observed",
+      "meaning": {
+        "measure": "real output growth, annual rate",
+        "unit": "percent",
+        "period": "2027-Q1 forecasts",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-05-02T10:00:00Z"
+}

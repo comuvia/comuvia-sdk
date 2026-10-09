@@ -1,0 +1,62 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "review-calder-fees-edition-1",
+  "revision": 2,
+  "predecessor": {
+    "record_type": "artifact_descriptor",
+    "id": "review-calder-fees-edition-1",
+    "revision": 1,
+    "digest": "sha256:14c0390f0320c70bc4369a4379d87314498d05221f16c1f2bc4b4a8f365eb9ff"
+  },
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 1024,
+    "digest": "sha256:3d4940bd6250017439107ae176a02d4a7ef7aa377ef5791592fe92a4eeb39dbf"
+  },
+  "content_schema": "edition-review/1",
+  "origin": {
+    "name": "Example edition review workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-02-03T15:00:00Z",
+  "units": {
+    "unknown": "not_applicable",
+    "note": "holds no data values"
+  },
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:review-calder-fees-edition-1:r2",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "none",
+      "meaning": {
+        "measure": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "unit": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "period": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "geography": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        }
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-edition-review",
+  "recorded_at": "2027-02-03T15:00:00Z"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "report-calder-nowcast",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "text/plain; charset=utf-8",
+    "byte_length": 107,
+    "digest": "sha256:8f91abb850382a0b917dc455c803cbf8d54c6ae42a5e0e43ae74a493475ecb15"
+  },
+  "content_schema": "example-report/1",
+  "origin": {
+    "name": "Example pinned evaluation (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-05-03T10:00:00Z",
+  "units": {
+    "unknown": "not_applicable",
+    "note": "holds no data values"
+  },
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:report-calder-nowcast:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "unit": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "period": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        },
+        "geography": {
+          "unknown": "not_applicable",
+          "note": "holds no data values"
+        }
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "result-calder-nowcast",
+            "revision": 1,
+            "digest": "sha256:efea3e78b541c9b952db375005f06265650a72f47c5aa39d6fee323089a5c3fd"
+          },
+          "selection": "rows"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-05-03T10:00:00Z"
+}

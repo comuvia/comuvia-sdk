@@ -1,0 +1,509 @@
+{
+  "fixture": "point-error",
+  "status": "example",
+  "note": "Expected results for the point-error example (tutorial F). Example-level arithmetic; not a comuvia scoring rule and not evidence of provider skill.",
+  "rule": {
+    "canonical": "{\"absolute_error\":\"|forecast - outcome|\",\"aggregate\":\"none\",\"applies_to\":{\"output_kind\":\"point\"},\"arithmetic\":\"exact decimal; plain decimal strings, no exponent, no trailing zeros, never -0\",\"eligibility\":[\"content_digest_mismatch\",\"malformed_input\",\"rule_unavailable\",\"unsupported_output_kind\",\"conditional_not_scored\",\"target_mismatch\",\"measure_mismatch\",\"unit_mismatch\",\"missing_unit\",\"period_mismatch\",\"missing_cutoff\",\"impossible_time_order\",\"post_outcome_forecast\",\"missing_outcome\",\"unresolved_outcome\",\"outcome_edition_mismatch\",\"malformed_value\"],\"error_unit\":\"percentage points if the target unit is percent; otherwise the target unit\",\"rule\":\"point-error\",\"signed_error\":\"forecast - outcome\",\"squared_error\":\"(forecast - outcome)^2\",\"squared_unit\":\"the error unit, squared\",\"status\":\"example; not a comuvia scoring rule\",\"version\":1}",
+    "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585"
+  },
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:49ba64e270b51a7012cf156fdb7bebd05b74a7a3c28ffcfe50f8c20e884f571d"
+      },
+      "result": "match",
+      "byte_length": 880,
+      "digest": "sha256:8fb412ef3de2708b6a4f2d6c3ec28e1a6bc8c91921395560f645ab28dcac7e3b"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:e9f419e4fe7e6abfb75d67e0c895562983a0fbb1fa4f919269c8710b709df1ae"
+      },
+      "result": "match",
+      "byte_length": 880,
+      "digest": "sha256:4a5fb00906d799df0234ebb1a8e5d6b347a38b5f7184b659e6645343ed18d628"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:901467893cd6835eeb32c557b05138ad8ccb26be075e8c516abad5b58160e8b3"
+      },
+      "result": "match",
+      "byte_length": 881,
+      "digest": "sha256:a9a79efc007fdb8e09aa521937b43eb5f0251cc9fe1730a03b65d95bc5695b6b"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:6df462cad24c84c43d102e3620500c7eb14a1c67f933250f29a25228f6f75a9c"
+      },
+      "result": "match",
+      "byte_length": 881,
+      "digest": "sha256:1a62ce63bebf9a2af8ca93b0f034f39ff1c6ac6fde54a3f4fa034524fd2188ed"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:0911bbad8cbc8fe90a7894678f57d82c88b62bf8facb9de9172b74984467a5c3"
+      },
+      "result": "match",
+      "byte_length": 881,
+      "digest": "sha256:214ea9428ad55a0ce4095367523084390706ff886805c737c1b50bf7488922de"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:af71164d92d94552a224f42077a62dbf5cafa1aae42490ab8b1e070afc74afab"
+      },
+      "result": "match",
+      "byte_length": 873,
+      "digest": "sha256:c5eb1bdbafb87fe752735c9f074c19e8eefdf1eba7cc625d24c4a29a2cc64ff7"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-alder-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:5907b9ba8bd7abaadab4fe8dbd6545624c4cc66db126d6adec0653afa3510a48"
+      },
+      "result": "match",
+      "byte_length": 331,
+      "digest": "sha256:243f7bb759daa7c91e960855289b005768fd55ac24bfd9ee4d2a998686849964"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-birch-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:be6f0d2572c9838cb539e9d2a3813f3baf69efc5f5855389f1e6cf5b4ea9a656"
+      },
+      "result": "match",
+      "byte_length": 341,
+      "digest": "sha256:31f8caf2ed258765613ea27a4feca998e445ce691a2842569eab775d16a544eb"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-cedar-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:d024235b2f56cdba6ae11cc54898b39902153f1afec969793ad73be97139e8be"
+      },
+      "result": "match",
+      "byte_length": 331,
+      "digest": "sha256:c15cde739d6e1a6c1e87993b48a5ddb8f0e79953e4dbfe47c46b83d51cdcfd0a"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "outcome-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a"
+      },
+      "result": "match",
+      "byte_length": 306,
+      "digest": "sha256:cc1a4e47a08eb6c531fc5f96a4acc2351843febbe51cc6123e4a1fa87f9ff156"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "outcome-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:297446252ee653fb95d88f75c6c900cebe9511d6963563fe910d3f2ed990a24b"
+      },
+      "result": "match",
+      "byte_length": 306,
+      "digest": "sha256:452cfff5bcba698c49f21841c0f8d2c860d85c994f7825f0030a463bb7596275"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "rule-point-error",
+        "revision": 1,
+        "digest": "sha256:53c5facc15a057b7902e6b45703073469cf7f140e927d00fb682824f7d0da388"
+      },
+      "result": "match",
+      "byte_length": 844,
+      "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "target-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21"
+      },
+      "result": "match",
+      "byte_length": 355,
+      "digest": "sha256:bb97d128fc6f43660ea58165feca8802854acb82c2a7adaeb6b161649ab29439"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:49ba64e270b51a7012cf156fdb7bebd05b74a7a3c28ffcfe50f8c20e884f571d"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:e9f419e4fe7e6abfb75d67e0c895562983a0fbb1fa4f919269c8710b709df1ae"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:901467893cd6835eeb32c557b05138ad8ccb26be075e8c516abad5b58160e8b3"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:6df462cad24c84c43d102e3620500c7eb14a1c67f933250f29a25228f6f75a9c"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:0911bbad8cbc8fe90a7894678f57d82c88b62bf8facb9de9172b74984467a5c3"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:af71164d92d94552a224f42077a62dbf5cafa1aae42490ab8b1e070afc74afab"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-alder-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:5907b9ba8bd7abaadab4fe8dbd6545624c4cc66db126d6adec0653afa3510a48"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-birch-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:be6f0d2572c9838cb539e9d2a3813f3baf69efc5f5855389f1e6cf5b4ea9a656"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "fc-cedar-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:d024235b2f56cdba6ae11cc54898b39902153f1afec969793ad73be97139e8be"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "outcome-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "outcome-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:297446252ee653fb95d88f75c6c900cebe9511d6963563fe910d3f2ed990a24b"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "rule-point-error",
+        "revision": 1,
+        "digest": "sha256:53c5facc15a057b7902e6b45703073469cf7f140e927d00fb682824f7d0da388"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "target-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21"
+      },
+      "result": "match"
+    }
+  ],
+  "results": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:49ba64e270b51a7012cf156fdb7bebd05b74a7a3c28ffcfe50f8c20e884f571d"
+      },
+      "result": {
+        "absolute_error": "0.4",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:5907b9ba8bd7abaadab4fe8dbd6545624c4cc66db126d6adec0653afa3510a48",
+          "id": "fc-alder-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "0.4",
+        "squared_error": "0.16",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-alder-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:e9f419e4fe7e6abfb75d67e0c895562983a0fbb1fa4f919269c8710b709df1ae"
+      },
+      "result": {
+        "absolute_error": "0.5",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:5907b9ba8bd7abaadab4fe8dbd6545624c4cc66db126d6adec0653afa3510a48",
+          "id": "fc-alder-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:297446252ee653fb95d88f75c6c900cebe9511d6963563fe910d3f2ed990a24b",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 2
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "0.5",
+        "squared_error": "0.25",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:901467893cd6835eeb32c557b05138ad8ccb26be075e8c516abad5b58160e8b3"
+      },
+      "result": {
+        "absolute_error": "0.6",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:be6f0d2572c9838cb539e9d2a3813f3baf69efc5f5855389f1e6cf5b4ea9a656",
+          "id": "fc-birch-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "-0.6",
+        "squared_error": "0.36",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-birch-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:6df462cad24c84c43d102e3620500c7eb14a1c67f933250f29a25228f6f75a9c"
+      },
+      "result": {
+        "absolute_error": "0.5",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:be6f0d2572c9838cb539e9d2a3813f3baf69efc5f5855389f1e6cf5b4ea9a656",
+          "id": "fc-birch-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:297446252ee653fb95d88f75c6c900cebe9511d6963563fe910d3f2ed990a24b",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 2
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "-0.5",
+        "squared_error": "0.25",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 1,
+        "digest": "sha256:0911bbad8cbc8fe90a7894678f57d82c88b62bf8facb9de9172b74984467a5c3"
+      },
+      "result": {
+        "absolute_error": "0.1",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:d024235b2f56cdba6ae11cc54898b39902153f1afec969793ad73be97139e8be",
+          "id": "fc-cedar-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "-0.1",
+        "squared_error": "0.01",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "err-cedar-calder-growth-2027q1",
+        "revision": 2,
+        "digest": "sha256:af71164d92d94552a224f42077a62dbf5cafa1aae42490ab8b1e070afc74afab"
+      },
+      "result": {
+        "absolute_error": "0",
+        "error_unit": "percentage points",
+        "forecast": {
+          "digest": "sha256:d024235b2f56cdba6ae11cc54898b39902153f1afec969793ad73be97139e8be",
+          "id": "fc-cedar-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        },
+        "note": "Synthetic example arithmetic; not evidence of provider skill.",
+        "outcome": {
+          "digest": "sha256:297446252ee653fb95d88f75c6c900cebe9511d6963563fe910d3f2ed990a24b",
+          "id": "outcome-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 2
+        },
+        "rule": {
+          "digest": "sha256:185c52053a59e83a69c28b9f7030cc5a8bc4c3d5e807887c09281b0109392585",
+          "rule": "point-error",
+          "version": 1
+        },
+        "signed_error": "0",
+        "squared_error": "0",
+        "squared_unit": "percentage points squared",
+        "target": {
+          "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21",
+          "id": "target-calder-growth-2027q1",
+          "record_type": "artifact_descriptor",
+          "revision": 1
+        }
+      }
+    }
+  ]
+}

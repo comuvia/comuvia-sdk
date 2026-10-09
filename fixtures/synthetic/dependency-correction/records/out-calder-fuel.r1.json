@@ -1,0 +1,55 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "out-calder-fuel",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 124,
+    "digest": "sha256:dc8a1c4dbfb0709f6bcfc1425bebb1d00aaf209be87f3c5a3deed9bf82a29293"
+  },
+  "content_schema": "example-fuel-total/1",
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-01-20T10:00:00Z",
+  "units": [
+    "tonnes"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:out-calder-fuel:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "bunker fuel delivered, quarterly flow",
+        "unit": "tonnes",
+        "period": "2026-Q1",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-fuel",
+            "revision": 1,
+            "digest": "sha256:64527a7fe31b49a40f033381abb529de227ac5b926fe3e142d7be0fc902b72ed"
+          },
+          "selection": "all three months"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

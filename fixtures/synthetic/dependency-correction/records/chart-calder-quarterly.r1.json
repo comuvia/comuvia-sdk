@@ -1,0 +1,57 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "chart-calder-quarterly",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "image/svg+xml",
+    "byte_length": 304,
+    "digest": "sha256:bfd4e3fd85f4ea452b5a0e9f01ddad128ba48ce5fd83e08bcddc13c9005d01b1"
+  },
+  "content_schema": {
+    "unknown": "no_declared_schema"
+  },
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-01-20T10:00:00Z",
+  "units": [
+    "TEU"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:chart-calder-quarterly:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "container throughput, quarterly flow",
+        "unit": "TEU",
+        "period": "2026-Q1/2026-Q4",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-quarterly",
+            "revision": 1,
+            "digest": "sha256:a46be8d9a58b6c21e18be7f9c1dad47571088e011fee6021a8cb8571e89af0ae"
+          },
+          "selection": "all four quarters"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

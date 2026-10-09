@@ -122,4 +122,4 @@ assert comuvia.validate(first) == [] and comuvia.validate(corrected) == []
 assert corrected["predecessor"]["digest"] == comuvia.record_digest(first)
 ```
 
-A correction is a new revision, never an edit of the earlier record. [Tutorial B](../tutorials/B-declared-probability-forecast.md) corrects an outcome this way.
+A correction is a new revision, never an edit of the earlier record. [Tutorial B](../tutorials/B-declared-probability-forecast.md) corrects an outcome this way. [Tutorial E](../tutorials/E-authoring-and-revising-records.md) turns these two helpers into an example module that also refuses missing provenance and protected fields, and finds stale pins.

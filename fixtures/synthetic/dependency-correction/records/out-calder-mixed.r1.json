@@ -1,0 +1,55 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "out-calder-mixed",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 175,
+    "digest": "sha256:d3a21e0152c6772f58a482d542a0226765cab0f617ac4fb5410540e0217d00ef"
+  },
+  "content_schema": "example-fuel-per-call/1",
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-01-20T10:00:00Z",
+  "units": [
+    "tonnes per call"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:out-calder-mixed:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "bunker fuel per vessel call",
+        "unit": "tonnes per call",
+        "period": "2026-Q1",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "partial",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-fuel",
+            "revision": 1,
+            "digest": "sha256:64527a7fe31b49a40f033381abb529de227ac5b926fe3e142d7be0fc902b72ed"
+          },
+          "selection": "all three months"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

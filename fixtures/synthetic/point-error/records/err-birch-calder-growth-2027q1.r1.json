@@ -1,0 +1,86 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "err-birch-calder-growth-2027q1",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 881,
+    "digest": "sha256:a9a79efc007fdb8e09aa521937b43eb5f0251cc9fe1730a03b65d95bc5695b6b"
+  },
+  "content_schema": "point-error-result/1",
+  "origin": {
+    "name": "Example point-forecast error workflow (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-04-28T14:00:00Z",
+  "units": [
+    "percentage points",
+    "percentage points squared"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:err-birch-calder-growth-2027q1:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "point-forecast error",
+        "unit": "percentage points",
+        "period": "2027-Q1",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "fc-birch-calder-growth-2027q1",
+            "revision": 1,
+            "digest": "sha256:be6f0d2572c9838cb539e9d2a3813f3baf69efc5f5855389f1e6cf5b4ea9a656"
+          },
+          "selection": "value"
+        },
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "outcome-calder-growth-2027q1",
+            "revision": 1,
+            "digest": "sha256:96e2fbc6ac817002700a22b3e0d92f0a632a5a14b6f4111c11b4a1fc80c5187a"
+          },
+          "selection": "value"
+        },
+        {
+          "role": "method",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "rule-point-error",
+            "revision": 1,
+            "digest": "sha256:53c5facc15a057b7902e6b45703073469cf7f140e927d00fb682824f7d0da388"
+          },
+          "selection": "whole rule"
+        },
+        {
+          "role": "assumption",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "target-calder-growth-2027q1",
+            "revision": 1,
+            "digest": "sha256:25623b1c7021d24e61e525c32ea3180ffdb365484d30fdd3f89fa7828d10cd21"
+          },
+          "selection": "whole target"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-point-error",
+  "recorded_at": "2027-04-28T14:00:00Z"
+}

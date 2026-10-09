@@ -1,0 +1,55 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "manifest-calder-outcome",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 253,
+    "digest": "sha256:9a3bf4d224529e66c0e861bcb443a27d66428c04f8d1320424247fb3e7d58d62"
+  },
+  "content_schema": "example-outcome-manifest/1",
+  "origin": {
+    "name": "Example pinned evaluation (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-05-02T10:00:00Z",
+  "units": [
+    "percent"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:manifest-calder-outcome:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "real output growth, annual rate",
+        "unit": "percent",
+        "period": "2027-Q1",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "release-calder-2027q1-advance",
+            "revision": 1,
+            "digest": "sha256:7c9e2f2a8961898d68a72c289d4000544eaa06cfb053244ef732655d7480f6c0"
+          },
+          "selection": "release value and date"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-05-02T10:00:00Z"
+}

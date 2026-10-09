@@ -1,0 +1,100 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "result-calder-nowcast",
+  "revision": 2,
+  "predecessor": {
+    "record_type": "artifact_descriptor",
+    "id": "result-calder-nowcast",
+    "revision": 1,
+    "digest": "sha256:efea3e78b541c9b952db375005f06265650a72f47c5aa39d6fee323089a5c3fd"
+  },
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 1474,
+    "digest": "sha256:52c28f37799788c1918baa7185712c6e44ee62f9fff3a93b6582989ce3f192a0"
+  },
+  "content_schema": "example-consumer-result/1",
+  "origin": {
+    "name": "Example pinned evaluation (fictional)",
+    "locator": "https://example.org/synthetic/calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-05-04T10:00:00Z",
+  "units": [
+    "percentage points"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:calder:result-calder-nowcast:r2",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "signed forecast error",
+        "unit": "percentage points",
+        "period": "2027-Q1",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "manifest-calder-outcome",
+            "revision": 1,
+            "digest": "sha256:2cf04863ba4262aa333b571a22e6100a23fb811e4650bf449e7cab484048006b"
+          },
+          "selection": "value"
+        },
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "fc-kestrel-calder-growth",
+            "revision": 1,
+            "digest": "sha256:08ef658f316559b806d73fda309590ed5c518b773fc2590d9a283a25eebffac8"
+          },
+          "selection": "selected row"
+        },
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "fc-wren-calder-growth",
+            "revision": 1,
+            "digest": "sha256:761e5bb9454174fd8e7804ef73fb9cf715ebd1115158ed963121eb2e7c2d1e36"
+          },
+          "selection": "selected row"
+        },
+        {
+          "role": "method",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "code-calder-scoring",
+            "revision": 1,
+            "digest": "sha256:4d1872cde5067c4fc3a10143e7a72c7e90449addaf3580fc9bd0e33d5dd9745b"
+          },
+          "selection": "signed_error"
+        },
+        {
+          "role": "assumption",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "protocol-calder-nowcast",
+            "revision": 1,
+            "digest": "sha256:fc422fe24f4c7d9d10f768b48ffaad4e6aa26bcd3bbc5169e1d5b2c2f4a1fd42"
+          },
+          "selection": "whole protocol"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-05-04T10:00:00Z"
+}

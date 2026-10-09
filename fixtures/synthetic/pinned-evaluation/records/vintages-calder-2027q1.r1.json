@@ -1,0 +1,47 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "resource_snapshot",
+  "id": "vintages-calder-2027q1",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "resource_type": "statistical_table",
+  "locator": "https://example.org/synthetic/calder/calder-vintages.csv",
+  "language": {
+    "unknown": "source_declares_no_language",
+    "note": "fictional example"
+  },
+  "source_version": "vintage_table_2027_07_01",
+  "source_published_at": {
+    "date": "2027-07-01",
+    "precision": "day"
+  },
+  "captured_at": "2027-07-01T10:00:00Z",
+  "captured_assets": [
+    "calder_vintages"
+  ],
+  "not_captured": [
+    "full_site"
+  ],
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "retained": true,
+    "byte_length": 119,
+    "digest": "sha256:a55c575bd2bf80f9e773275978baf5eff52dc9a3ceb0448c50660cffca4368de"
+  },
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "observed",
+      "meaning": {
+        "measure": "real output growth, annual rate",
+        "unit": "percent",
+        "period": "2027-Q1",
+        "geography": "Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-pinned-evaluation",
+  "recorded_at": "2027-07-01T10:00:00Z"
+}

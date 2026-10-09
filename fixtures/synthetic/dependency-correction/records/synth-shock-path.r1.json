@@ -1,0 +1,44 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "synth-shock-path",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "text/csv; charset=utf-8",
+    "byte_length": 77,
+    "digest": "sha256:3219b76a2d5e0d1ec202db10b703e0dec886970fcd7b521363a95e2841d96341"
+  },
+  "content_schema": "quarter,shock_multiplier",
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-01-20T10:00:00Z",
+  "units": [
+    "multiplier"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:synth-shock-path:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "synthetic",
+      "meaning": {
+        "measure": "throughput shock multiplier",
+        "unit": "multiplier",
+        "period": "2026-Q1/2026-Q4",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": []
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

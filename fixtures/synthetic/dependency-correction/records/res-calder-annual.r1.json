@@ -1,0 +1,65 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "res-calder-annual",
+  "revision": 1,
+  "predecessor": null,
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 143,
+    "digest": "sha256:1ff02afc742f9bf485c64c6604cba5af5a9edda46bbe419af9cab56e44e36f1d"
+  },
+  "content_schema": "example-annual-result/1",
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-01-20T10:00:00Z",
+  "units": [
+    "TEU"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:res-calder-annual:r1",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "container throughput, annual flow",
+        "unit": "TEU",
+        "period": "2026",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "resource_snapshot",
+            "id": "src-calder-quarterly",
+            "revision": 1,
+            "digest": "sha256:a46be8d9a58b6c21e18be7f9c1dad47571088e011fee6021a8cb8571e89af0ae"
+          },
+          "selection": "all four quarters"
+        },
+        {
+          "role": "method",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "method-annual-sum",
+            "revision": 1,
+            "digest": "sha256:ca1c9ac5e2ef375a2b86e98ab01c6ea047db3c8db0b7211eef65c6c928510129"
+          },
+          "selection": "whole document"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-01-20T10:00:00Z"
+}

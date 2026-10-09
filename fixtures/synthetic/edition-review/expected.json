@@ -1,0 +1,478 @@
+{
+  "fixture": "edition-review",
+  "status": "example",
+  "note": "Expected results for the edition-review example (tutorial G). Every approval here is FICTIONAL; none is an owner's approval.",
+  "content_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "article-calder-fees",
+        "revision": 1,
+        "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4"
+      },
+      "result": "match",
+      "byte_length": 149,
+      "digest": "sha256:f99d4347af1af89b82d1031f250e6c67072ee69ad44d74f26b2c6debbb4f622a"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "article-calder-fees",
+        "revision": 2,
+        "digest": "sha256:22cce38efbc429062c0a471aea83b6a3480dd511ea0526ee8d933304d165920a"
+      },
+      "result": "match",
+      "byte_length": 193,
+      "digest": "sha256:75d529eba5f7415061d6deb37af8a1a2a56334e9e6e0cfe72b87abfc375ae17e"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "captions-calder-fees",
+        "revision": 1,
+        "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c"
+      },
+      "result": "match",
+      "byte_length": 70,
+      "digest": "sha256:966b0c042f9b250642ae5028167f871fcf04874a019004dac93fd40a3aa4f57f"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "claims-calder-fees",
+        "revision": 1,
+        "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c"
+      },
+      "result": "match",
+      "byte_length": 200,
+      "digest": "sha256:6aeccf88693e6f08fb1dfda266c4a004feea6a5790fc52e360e912642c97d7ef"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "claims-calder-fees",
+        "revision": 2,
+        "digest": "sha256:7a1258ed06941aa39df3b32c7b28eb9dc529c4de63c566f04a79b28575c811ac"
+      },
+      "result": "match",
+      "byte_length": 200,
+      "digest": "sha256:1cb11431cb80d952a6a161ee6ee8fa8afb26a92e2c9a44a52fae3fe708f4e59a"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "contribution-calder-fees-draft",
+        "revision": 1,
+        "digest": "sha256:26e56b6d1a9eb56473414a98c3b684652954fea6cf7983c2691f5a3d93c0b227"
+      },
+      "result": "match",
+      "byte_length": 585,
+      "digest": "sha256:19c2701ce5bde0570066c34e102f5ce5c0e0566b50616fd8993053c33faa8c55"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-fee-2026",
+        "revision": 1,
+        "digest": "sha256:8b093fd9f55bf89975edfb46960127004856a39ca51a8a5d48d6a5ca981cf478"
+      },
+      "result": "match",
+      "byte_length": 128,
+      "digest": "sha256:87cfc35c63f0a96154893b19b4c863bc8b232963ce1349554b2dd7f44589eca0"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-fee-2026",
+        "revision": 2,
+        "digest": "sha256:d0db2a42f500554cd765ad0c5e995e1c12cc7dd796358b678602d7ff83689878"
+      },
+      "result": "match",
+      "byte_length": 128,
+      "digest": "sha256:72b99359a3c43ae37c5f43d2cea4730ea15a259308a7df6ad76c47ded0754d49"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-1",
+        "revision": 1,
+        "digest": "sha256:14c0390f0320c70bc4369a4379d87314498d05221f16c1f2bc4b4a8f365eb9ff"
+      },
+      "result": "match",
+      "byte_length": 1020,
+      "digest": "sha256:3c7e075be58a50e2392dcc7e20e4320613f395c77dd500eea709295f5b57f2d4"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-1",
+        "revision": 2,
+        "digest": "sha256:d195476e58c129b25bf750b661b7b139c8ea0a0f993fc22cf09a8b2e68878b6f"
+      },
+      "result": "match",
+      "byte_length": 1024,
+      "digest": "sha256:3d4940bd6250017439107ae176a02d4a7ef7aa377ef5791592fe92a4eeb39dbf"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-2",
+        "revision": 1,
+        "digest": "sha256:b0c0593b3f6254bf2c4c17d1ff29a012b30057421dde304038a43491a05f4701"
+      },
+      "result": "match",
+      "byte_length": 1020,
+      "digest": "sha256:1e313dbf007617315bd38a8a601566b5e50c435b9679c077c3996f585112476c"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "summary-calder-fees",
+        "revision": 1,
+        "digest": "sha256:0fc51ba3a5fdea66ae87d2b06a08e9cafcda20b32e426cabb8d5179c5cfee733"
+      },
+      "result": "match",
+      "byte_length": 198,
+      "digest": "sha256:3feef901fe7daf6ce43c8720ccfde9494259a516602f63ba2effdb4fa864d5d5"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "summary-calder-fees",
+        "revision": 2,
+        "digest": "sha256:f20d683c4fb6e9ab96fd4e5d69f0327eb9cfd8c288f761d9da442ee639c7e450"
+      },
+      "result": "match",
+      "byte_length": 214,
+      "digest": "sha256:b8000afafabdbc7251b851dc2bd68963c64c1da7dba7b1636a15a3fa7206b5b2"
+    }
+  ],
+  "record_identity": [
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "article-calder-fees",
+        "revision": 1,
+        "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "article-calder-fees",
+        "revision": 2,
+        "digest": "sha256:22cce38efbc429062c0a471aea83b6a3480dd511ea0526ee8d933304d165920a"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "captions-calder-fees",
+        "revision": 1,
+        "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "claims-calder-fees",
+        "revision": 1,
+        "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "claims-calder-fees",
+        "revision": 2,
+        "digest": "sha256:7a1258ed06941aa39df3b32c7b28eb9dc529c4de63c566f04a79b28575c811ac"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "contribution-calder-fees-draft",
+        "revision": 1,
+        "digest": "sha256:26e56b6d1a9eb56473414a98c3b684652954fea6cf7983c2691f5a3d93c0b227"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-fee-2026",
+        "revision": 1,
+        "digest": "sha256:8b093fd9f55bf89975edfb46960127004856a39ca51a8a5d48d6a5ca981cf478"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "res-calder-fee-2026",
+        "revision": 2,
+        "digest": "sha256:d0db2a42f500554cd765ad0c5e995e1c12cc7dd796358b678602d7ff83689878"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-1",
+        "revision": 1,
+        "digest": "sha256:14c0390f0320c70bc4369a4379d87314498d05221f16c1f2bc4b4a8f365eb9ff"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-1",
+        "revision": 2,
+        "digest": "sha256:d195476e58c129b25bf750b661b7b139c8ea0a0f993fc22cf09a8b2e68878b6f"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "review-calder-fees-edition-2",
+        "revision": 1,
+        "digest": "sha256:b0c0593b3f6254bf2c4c17d1ff29a012b30057421dde304038a43491a05f4701"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "summary-calder-fees",
+        "revision": 1,
+        "digest": "sha256:0fc51ba3a5fdea66ae87d2b06a08e9cafcda20b32e426cabb8d5179c5cfee733"
+      },
+      "result": "match"
+    },
+    {
+      "record": {
+        "record_type": "artifact_descriptor",
+        "id": "summary-calder-fees",
+        "revision": 2,
+        "digest": "sha256:f20d683c4fb6e9ab96fd4e5d69f0327eb9cfd8c288f761d9da442ee639c7e450"
+      },
+      "result": "match"
+    }
+  ],
+  "review_status": {
+    "edition_1_pending": {
+      "state": "current",
+      "status": "pending",
+      "covers": false,
+      "reasons": [],
+      "covers_reasons": [
+        "decision_pending"
+      ],
+      "members": [
+        {
+          "role": "article",
+          "pin": {
+            "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4",
+            "id": "article-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "captions",
+          "pin": {
+            "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c",
+            "id": "captions-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "claim_map",
+          "pin": {
+            "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c",
+            "id": "claims-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        }
+      ]
+    },
+    "edition_1_approved_local": {
+      "state": "current",
+      "status": "approved",
+      "covers": true,
+      "reasons": [],
+      "covers_reasons": [],
+      "members": [
+        {
+          "role": "article",
+          "pin": {
+            "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4",
+            "id": "article-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "captions",
+          "pin": {
+            "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c",
+            "id": "captions-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "claim_map",
+          "pin": {
+            "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c",
+            "id": "claims-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        }
+      ]
+    },
+    "edition_1_approved_public": {
+      "state": "current",
+      "status": "approved",
+      "covers": false,
+      "reasons": [],
+      "covers_reasons": [
+        "destination_not_approved"
+      ],
+      "members": [
+        {
+          "role": "article",
+          "pin": {
+            "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4",
+            "id": "article-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "captions",
+          "pin": {
+            "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c",
+            "id": "captions-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "claim_map",
+          "pin": {
+            "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c",
+            "id": "claims-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        }
+      ]
+    },
+    "case_1_edition_1_against_edition_2": {
+      "state": "stale",
+      "status": "approved",
+      "covers": false,
+      "reasons": [
+        "member_superseded",
+        "summary_superseded",
+        "edition_members_changed"
+      ],
+      "covers_reasons": [
+        "not_current"
+      ],
+      "members": [
+        {
+          "role": "article",
+          "pin": {
+            "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4",
+            "id": "article-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "superseded"
+        },
+        {
+          "role": "captions",
+          "pin": {
+            "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c",
+            "id": "captions-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "claim_map",
+          "pin": {
+            "digest": "sha256:7ffb0b703bc6b43d6d29de42bb86684302eb6b10c6bcd0775cbcf966f661189c",
+            "id": "claims-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "superseded"
+        }
+      ]
+    },
+    "case_1_edition_2": {
+      "state": "current",
+      "status": "pending",
+      "covers": false,
+      "reasons": [],
+      "covers_reasons": [
+        "decision_pending"
+      ],
+      "members": [
+        {
+          "role": "article",
+          "pin": {
+            "digest": "sha256:22cce38efbc429062c0a471aea83b6a3480dd511ea0526ee8d933304d165920a",
+            "id": "article-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 2
+          },
+          "state": "match"
+        },
+        {
+          "role": "captions",
+          "pin": {
+            "digest": "sha256:651c4bc986eb37b5b001999715e4849ff292c8c65c9423f704df538808b5db5c",
+            "id": "captions-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 1
+          },
+          "state": "match"
+        },
+        {
+          "role": "claim_map",
+          "pin": {
+            "digest": "sha256:7a1258ed06941aa39df3b32c7b28eb9dc529c4de63c566f04a79b28575c811ac",
+            "id": "claims-calder-fees",
+            "record_type": "artifact_descriptor",
+            "revision": 2
+          },
+          "state": "match"
+        }
+      ]
+    }
+  }
+}

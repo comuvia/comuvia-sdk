@@ -479,7 +479,7 @@ def command_check(args: argparse.Namespace) -> dict:
         if label == "core-only":
             report["environments"][label]["cli"] = cli_scenario(env, sdists["comuvia"], work)
         if args.tutorials:
-            names = ["tutorial_a_narrative.py", "tutorial_b_forecast.py"]
+            names = ["tutorial_a_narrative.py", "tutorial_b_forecast.py", "tutorial_d_dependencies.py", "tutorial_e_authoring.py", "tutorial_f_point_error.py", "tutorial_g_edition_review.py", "tutorial_h_pinned_evaluation.py"]
             if "foreglass" in present:
                 names.append("tutorial_c_foreglass.py")
             report["environments"][label]["tutorials"] = run_tutorials(

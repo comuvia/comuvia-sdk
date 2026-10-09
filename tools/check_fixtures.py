@@ -2,7 +2,12 @@
 
 Standard library plus the in-tree comuvia source; Python 3.11+. It checks:
 
-- each retained source file matches exactly one snapshot's content digest and byte length;
+- each retained source file matches exactly one snapshot's content digest and byte length
+  (``source/`` is optional when a fixture has no retained snapshot);
+- each file in an optional ``artifacts/`` directory matches exactly one artifact descriptor's
+  content digest and byte length, one to one;
+- a record file is named ``<id>.json``, or ``<id>.r<revision>.json`` when a fixture holds
+  several revisions;
 - every ``sha256:`` value in a record or expected.json is a real content digest or the record
   digest of a fixture record (no placeholders);
 - JSON files have no duplicate members, no NaN/Infinity and no BOM;
@@ -10,7 +15,8 @@ Standard library plus the in-tree comuvia source; Python 3.11+. It checks:
 - references resolve within the fixture and carry the target's record digest;
 - text selectors (quote, prefix, suffix, code-point position) match the decoded source;
 - every record is ``comuvia/0.1`` with ``data_origin: "synthetic"``;
-- Git stores source files unconverted (``text`` and ``eol`` unset), when run in a Git checkout.
+- Git stores source and artifact files unconverted (``text`` and ``eol`` unset), when run in a
+  Git checkout.
 """
 
 from __future__ import annotations
@@ -67,12 +73,17 @@ def check_fixture(directory: Path) -> list[str]:
     errors: list[str] = []
     sources = {
         "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest(): p
-        for p in sorted((directory / "source").iterdir())
+        for p in (sorted((directory / "source").iterdir()) if (directory / "source").is_dir() else [])
+    }
+    artifact_dir = directory / "artifacts"
+    artifacts = {
+        "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest(): p
+        for p in (sorted(artifact_dir.iterdir()) if artifact_dir.is_dir() else [])
     }
     records = {}
     for path in sorted((directory / "records").glob("*.json")):
         body = strict_load(path)
-        if path.stem != body["id"]:
+        if path.stem not in (body["id"], f"{body['id']}.r{body['revision']}"):
             errors.append(f"{path.name}: file name differs from id {body['id']}")
         if body.get("schema") != "comuvia/0.1" or body.get("data_origin") != "synthetic":
             errors.append(f"{path.name}: schema/data_origin")
@@ -84,8 +95,8 @@ def check_fixture(directory: Path) -> list[str]:
 
     for owner, value in [*((k[1], v) for k, v in records.items()), ("expected.json", expected)]:
         for text in walk_strings(value):
-            if text.startswith("sha256:") and text not in sources and text not in record_digests:
-                errors.append(f"{owner}: digest {text} is neither a source content digest nor a fixture record digest")
+            if text.startswith("sha256:") and text not in sources and text not in artifacts and text not in record_digests:
+                errors.append(f"{owner}: digest {text} is neither a source or artifact content digest nor a fixture record digest")
 
     snapshots = {}
     for body in records.values():
@@ -98,6 +109,17 @@ def check_fixture(directory: Path) -> list[str]:
                 snapshots[ref_key(body)] = source.read_bytes()
     if len(snapshots) != len(sources):
         errors.append("source files and retained snapshots are not one-to-one")
+
+    described = set()
+    for body in records.values():
+        if body["record_type"] == "artifact_descriptor" and artifacts:
+            artifact = artifacts.get(body["content"]["digest"])
+            if artifact is None or artifact.stat().st_size != body["content"]["byte_length"]:
+                errors.append(f"{body['id']} r{body['revision']}: content digest/length does not match an artifact file")
+            else:
+                described.add(body["content"]["digest"])
+    if described != set(artifacts):
+        errors.append("artifact files and artifact descriptors are not one-to-one")
 
     for body in records.values():
         for key in ("resource", "assertion", "question", "evidence"):
@@ -126,7 +148,7 @@ def check_fixture(directory: Path) -> list[str]:
             errors.append(f"expected.json: content identity entry for {entry['record']['id']}")
 
     if shutil.which("git") and (REPO / ".git").exists():
-        paths = [str(p.relative_to(REPO)) for p in sources.values()]
+        paths = [str(p.relative_to(REPO)) for p in [*sources.values(), *artifacts.values()]]
         attrs = subprocess.run(
             ["git", "check-attr", "text", "eol", "--", *paths],
             cwd=REPO, capture_output=True, text=True, check=True,

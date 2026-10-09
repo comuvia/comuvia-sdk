@@ -1,0 +1,60 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "article-calder-fees",
+  "revision": 2,
+  "predecessor": {
+    "record_type": "artifact_descriptor",
+    "id": "article-calder-fees",
+    "revision": 1,
+    "digest": "sha256:6d4761036568fb0b5a13b46b222364c32ab5988eec4a2406e3578bf20187a2c4"
+  },
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "text/markdown; charset=utf-8",
+    "byte_length": 193,
+    "digest": "sha256:75d529eba5f7415061d6deb37af8a1a2a56334e9e6e0cfe72b87abfc375ae17e"
+  },
+  "content_schema": "example-article/1",
+  "origin": {
+    "name": "Example edition review workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-02-05T09:00:00Z",
+  "units": [
+    "USD"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:article-calder-fees:r2",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "average port fee per vessel call",
+        "unit": "USD",
+        "period": "2026",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "claims-calder-fees",
+            "revision": 2,
+            "digest": "sha256:7a1258ed06941aa39df3b32c7b28eb9dc529c4de63c566f04a79b28575c811ac"
+          },
+          "selection": "c1, c2"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-edition-review",
+  "recorded_at": "2027-02-05T09:00:00Z"
+}

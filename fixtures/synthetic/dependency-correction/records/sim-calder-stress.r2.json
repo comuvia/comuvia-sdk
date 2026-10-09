@@ -1,0 +1,80 @@
+{
+  "schema": "comuvia/0.1",
+  "record_type": "artifact_descriptor",
+  "id": "sim-calder-stress",
+  "revision": 2,
+  "predecessor": {
+    "record_type": "artifact_descriptor",
+    "id": "sim-calder-stress",
+    "revision": 1,
+    "digest": "sha256:fbcca96b4475a2f6da8eedb7f9b802c9f917e53b79c02ee9e131a7549643676b"
+  },
+  "data_origin": "synthetic",
+  "content": {
+    "media_type": "application/json",
+    "byte_length": 180,
+    "digest": "sha256:8cb8b6cd4010c544d7fbd8519dcf5f0777590de84b3f4a2034f4dde7134481c5"
+  },
+  "content_schema": "example-stress-result/1",
+  "origin": {
+    "name": "Example dependency workflow (fictional)",
+    "locator": "https://example.org/synthetic/port-calder/"
+  },
+  "published_at": {
+    "unknown": "not_published",
+    "note": "internal example artifact"
+  },
+  "retrieved_at": "2027-02-10T15:30:00Z",
+  "units": [
+    "TEU"
+  ],
+  "rights_reference": "Original synthetic example content; Apache-2.0 with this repository.",
+  "access": "private",
+  "locator": "urn:example:port-calder:sim-calder-stress:r2",
+  "extensions": {
+    "org.comuvia.dependencies/v1": {
+      "value_origin": "derived",
+      "meaning": {
+        "measure": "container throughput under the stress path, annual",
+        "unit": "TEU",
+        "period": "2026",
+        "geography": "Port Calder (fictional)"
+      },
+      "coverage": "complete",
+      "depends_on": [
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "res-calder-annual",
+            "revision": 2,
+            "digest": "sha256:eaf8f908e35cfc92c99e5f7d8d60ae0935300b595452314ab4a08bdc72e06fa3"
+          },
+          "selection": "annual_teu"
+        },
+        {
+          "role": "data_input",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "synth-shock-path",
+            "revision": 1,
+            "digest": "sha256:09e5f061a5804cb53645bf1e523924cf0129f93e93d1b7a7e2ab49106b8fd1d2"
+          },
+          "selection": "minimum multiplier"
+        },
+        {
+          "role": "method",
+          "pin": {
+            "record_type": "artifact_descriptor",
+            "id": "model-calder-stress",
+            "revision": 1,
+            "digest": "sha256:a8131026181bf254b30878ca7974e1dcef49ed2c023ccbc0dc13a5baf46899a7"
+          },
+          "selection": "whole configuration"
+        }
+      ]
+    }
+  },
+  "recorded_by": "recorder:example-dependencies",
+  "recorded_at": "2027-02-10T15:30:00Z"
+}
