@@ -41,8 +41,28 @@ import zipfile
 from pathlib import Path
 
 PACKAGES = ("comuvia", "foreglass")
-# Both distributions are 0.1.0 release candidates: no upload guard, Apache-2.0.
-VERSIONS = {"comuvia": "0.1.0", "foreglass": "0.1.0"}
+
+
+def source_version(name: str) -> str | None:
+    """The package's ``__version__``, read from its source (no import); None outside a checkout."""
+    path = Path(__file__).resolve().parents[1] / "packages" / name / "src" / name / "__init__.py"
+    if not path.is_file():
+        return None
+    return re.search(r'^__version__ = "([^"]+)"$', path.read_text(encoding="utf-8"), re.M).group(1)
+
+
+def adopt_dist_versions(dist: Path) -> None:
+    """Outside a checkout (``check`` in a container), take each version from the one wheel in ``dist``."""
+    for name in PACKAGES:
+        if VERSIONS[name] is None:
+            wheels = sorted(dist.glob(f"{name}-*-py3-none-any.whl"))
+            if len(wheels) != 1:
+                raise SystemExit(f"{dist}: expected exactly one {name} wheel, found {[w.name for w in wheels]}")
+            VERSIONS[name] = wheels[0].name[len(name) + 1:-len("-py3-none-any.whl")]
+
+
+# Each distribution's version comes from its source __version__: no upload guard, Apache-2.0.
+VERSIONS = {name: source_version(name) for name in PACKAGES}
 GUARDED = {"comuvia": False, "foreglass": False}
 LICENSES = {"comuvia": ("Apache-2.0", ["LICENSE"]), "foreglass": ("Apache-2.0", ["LICENSE"])}
 # Unmodified Apache-2.0 text from https://www.apache.org/licenses/LICENSE-2.0.txt (fetched 2026-09-24).
@@ -60,9 +80,9 @@ SCHEMA_FILES = ["common.json", *(f"{t}.json" for t in RECORD_TYPES)]
 REQUIRED_WHEEL = {
     "comuvia": [f"comuvia/schemas/v0_1/{f}" for f in SCHEMA_FILES]
     + ["comuvia/rules/binary-brier-v1/1.json",
-       "comuvia/cli.py", "comuvia/store.py", "comuvia/evaluation.py", "comuvia-0.1.0.dist-info/licenses/LICENSE"],
+       "comuvia/cli.py", "comuvia/store.py", "comuvia/evaluation.py", f"comuvia-{VERSIONS['comuvia']}.dist-info/licenses/LICENSE"],
     "foreglass": [f"foreglass/{m}.py" for m in ("client", "intake", "catalog", "normalize", "capabilities", "reasons")]
-    + ["foreglass-0.1.0.dist-info/licenses/LICENSE"],
+    + [f"foreglass-{VERSIONS['foreglass']}.dist-info/licenses/LICENSE"],
 }
 REQUIRED_SDIST = {
     "comuvia": [f"tests/vectors/{f}" for f in ("canonicalization.json", "identity.json", "records.json", "evaluation.json")]
@@ -124,7 +144,7 @@ def release_recipe():
 
 
 def build_into(out: Path, find_links: str | None = None) -> dict[str, Path]:
-    """Build with the release recipe (release/0.1.0/BUILD.md) into the empty directory ``out``."""
+    """Build with the release recipe (release/<comuvia version>/BUILD.md) into the empty directory ``out``."""
     try:
         release_recipe().build(out, find_links)
     except (SystemExit, subprocess.CalledProcessError) as error:
@@ -431,6 +451,7 @@ def install_env(env: Path, dist: Path, requirement: str) -> Path:
 
 def command_check(args: argparse.Namespace) -> dict:
     dist = Path(args.dist).resolve()
+    adopt_dist_versions(dist)
     work = Path(args.work).resolve()
     if REPO.joinpath("packages").is_dir():
         outside_checkout(work)
@@ -506,6 +527,7 @@ def run_tutorials(env: Path, tutorials: Path, fixtures: Path, work: Path, names:
 def command_conformance(args: argparse.Namespace) -> dict:
     """Install pinned test-only libraries, then comuvia from local artifacts only, and run every test."""
     dist = Path(args.dist).resolve()
+    adopt_dist_versions(dist)
     work = Path(args.work).resolve()
     if REPO.joinpath("packages").is_dir():
         outside_checkout(work)

@@ -1,5 +1,21 @@
 # comuvia changelog
 
+## 0.1.1
+
+A repair of invalid-input handling. Results for valid input are unchanged, byte for byte.
+
+- **`evaluate`, `evaluation_records` and `reproduce` refuse invalid input.**
+  - They run `validate` on every input record first, and on the evaluation passed to `reproduce`.
+  - If any record is invalid, they raise `RefusalError` with every issue. Each pointer is prefixed with `/<index>`, the record's position in the input, or with `/evaluation`.
+  - No partial report is returned. This is fail-closed: an invalid record that pairs with nothing still refuses the call.
+  - In 0.1.0, records passed in memory were scored even when `validate` refused them, for example a probability of 1.2 or a `resolved_value` of 2. Records read from a store were already validated.
+- **`validate` refuses non-finite numbers.** A NaN, `+inf` or `-inf` float at any schema-checked position gives `non_finite_number`, the code strict parsing already uses, and no range check runs on it.
+  - In 0.1.0 an in-memory NaN passed `validate`.
+  - **In-memory infinity changes code:** where 0.1.0 gave `out_of_range`, 0.1.1 gives `non_finite_number`.
+  - Top-level `extensions` stay unchecked by `validate`, as before.
+- **Records are JSON-shaped: arrays must be lists.** A tuple where the schema expects an array (for example `limitations=()`) is refused as `invalid_type`. 0.1.0's `evaluate` scored such records, although its `validate` already refused them.
+- **No change** to the schemas, the `binary-brier-v1` descriptor, the reason vocabulary, `verify`, the store or the CLI.
+
 ## 0.1.0 — 2026-10-01
 
 First release, published on PyPI on 2026-10-01 from tag `v0.1.0`. The copy of this file inside the 0.1.0 source distribution was written before the upload and still calls this version a release candidate.

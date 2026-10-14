@@ -8,7 +8,7 @@ stored evaluations, and the ``comuvia`` command-line interface. There is no aggr
 score, no network access and no runtime dependency.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .identity import (
     ReferenceCheck,

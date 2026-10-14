@@ -14,6 +14,7 @@ from __future__ import annotations
 import datetime as _dt
 import functools
 import importlib.resources
+import math
 import re
 from collections.abc import Mapping
 
@@ -106,6 +107,11 @@ def _type_ok(value, name: str) -> bool:
     raise RuntimeError(f"unknown schema type {name}")
 
 
+def _non_finite(value) -> bool:
+    """A float that is NaN, +inf or -inf: never a JSON number."""
+    return isinstance(value, float) and not math.isfinite(value)
+
+
 def _json_equal(a, b) -> bool:
     if isinstance(a, bool) or isinstance(b, bool):
         return type(a) is type(b) and a == b
@@ -153,6 +159,10 @@ class _Interpreter:
             return []
         if schema is False:
             return [Issue(pointer, reasons.UNRECOGNIZED_MEMBER, "not allowed")]
+        if _non_finite(value):
+            # NaN fails every comparison, so range checks would pass it; refuse it here with the
+            # code strict parsing uses, at any schema-checked position.
+            return [Issue(pointer, reasons.NON_FINITE_NUMBER, "non-finite number")]
         issues: list[Issue] = []
         local: list = []
         if "$ref" in schema:
@@ -213,6 +223,8 @@ class _Interpreter:
         return self._finish(schema, issues, notes, local, pointer, value)
 
     def _any_of(self, value, branches, pointer: str, base: str, notes: list) -> list[Issue]:
+        if _non_finite(value):
+            return [Issue(pointer, reasons.NON_FINITE_NUMBER, "non-finite number")]
         attempts = []
         for branch in branches:
             branch_notes: list = []

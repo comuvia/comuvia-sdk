@@ -1,12 +1,14 @@
 # Publishes one distribution pair to one package index, by manual dispatch only.
 #
-# Order: dispatch `comuvia`, verify it from the index, then dispatch `foreglass`.
-# The build job has no publishing identity. It rebuilds all four 0.1.0 files with the
-# committed recipe (release/0.1.0/BUILD.md) and fails unless every file matches
-# release/0.1.0/SHA256SUMS. The publish job runs only after the owner approves the
-# `testpypi` or `pypi` environment. It holds the only `id-token: write` permission and
-# re-checks the two selected files against the approved digests before uploading them
-# through PyPI Trusted Publishing, with attestations.
+# The version is comuvia's source __version__; it names release/<version>/ and
+# dist-release/<version>/. The build job has no publishing identity. It rebuilds the
+# distributions with the committed recipe (release/<version>/BUILD.md) and fails unless
+# every file listed in release/<version>/SHA256SUMS matches. Only a package whose pair is
+# listed there can be dispatched: a package that is not listed (for 0.1.1, foreglass,
+# whose 0.1.0 is already published) fails here, before the publish job. The publish job
+# runs only after the owner approves the `testpypi` or `pypi` environment. It holds the
+# only `id-token: write` permission and re-checks the two selected files against the
+# approved digests before uploading them through PyPI Trusted Publishing, with attestations.
 #
 # Every action is pinned to a full commit id; the comment names its release tag.
 
@@ -16,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: Distribution to publish (comuvia first, then foreglass)
+        description: Distribution to publish (only a package listed in the approved SHA256SUMS)
         type: choice
         options: [comuvia, foreglass]
         required: true
@@ -43,6 +45,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       sums: ${{ steps.select.outputs.sums }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -50,19 +53,30 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
-      - name: Build all four distributions with the pinned recipe
-        run: python -I tools/build_release.py build --out dist-release/0.1.0
-      - name: Require release/0.1.0/SHA256SUMS
-        run: python -I tools/build_release.py check dist-release/0.1.0
+      - name: Read the version from source
+        id: version
+        run: |
+          version=$(sed -n 's/^__version__ = "\([^"]*\)"$/\1/p' packages/comuvia/src/comuvia/__init__.py)
+          test -n "$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Build the distributions with the pinned recipe
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: python -I tools/build_release.py build --out "dist-release/${VERSION}"
+      - name: Require release/<version>/SHA256SUMS
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: python -I tools/build_release.py check "dist-release/${VERSION}"
       - name: Select the dispatched package
         id: select
         env:
           PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           mkdir upload
-          cp "dist-release/0.1.0/${PACKAGE}-0.1.0-py3-none-any.whl" "dist-release/0.1.0/${PACKAGE}-0.1.0.tar.gz" upload/
-          grep -E "  ${PACKAGE}-0\.1\.0(-py3-none-any\.whl|\.tar\.gz)$" release/0.1.0/SHA256SUMS > selected.sums
-          test "$(wc -l < selected.sums)" -eq 2
+          grep -E "  ${PACKAGE}-[0-9][0-9A-Za-z.]*(-py3-none-any\.whl|\.tar\.gz)$" "release/${VERSION}/SHA256SUMS" > selected.sums || true
+          test "$(wc -l < selected.sums)" -eq 2 || { echo "${PACKAGE} is not in release/${VERSION}/SHA256SUMS: nothing to publish" >&2; exit 1; }
+          while read -r _ name; do cp "dist-release/${VERSION}/${name}" upload/; done < selected.sums
           cat selected.sums
           echo "sums=$(base64 -w0 selected.sums)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -77,7 +91,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment:
       name: ${{ inputs.index }}
-      url: ${{ inputs.index == 'pypi' && format('https://pypi.org/project/{0}/0.1.0/', inputs.package) || format('https://test.pypi.org/project/{0}/0.1.0/', inputs.package) }}
+      url: ${{ inputs.index == 'pypi' && format('https://pypi.org/project/{0}/{1}/', inputs.package, needs.build.outputs.version) || format('https://test.pypi.org/project/{0}/{1}/', inputs.package, needs.build.outputs.version) }}
     permissions:
       id-token: write
     steps:

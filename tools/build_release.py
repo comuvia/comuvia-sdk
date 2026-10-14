@@ -1,12 +1,14 @@
-"""Build and check the 0.1.0 release distributions with the fixed recipe in release/0.1.0/BUILD.md.
+"""Build and check the release distributions with the fixed recipe in release/<version>/BUILD.md.
 
-Standard library only; Python 3.11+. Run from a checkout of the public repository.
+Standard library only; Python 3.11+. Run from a checkout of the public repository. Each
+package's version is its source ``__version__``; ``<version>`` is comuvia's, which names the
+recipe directory.
 
-    python -I tools/build_release.py build --out dist-release/0.1.0 [--find-links <dir>]
-    python -I tools/build_release.py check dist-release/0.1.0
+    python -I tools/build_release.py build --out dist-release/<version> [--find-links <dir>]
+    python -I tools/build_release.py check dist-release/<version>
     python -I tools/build_release.py wheel-from-sdist <verified sdist> --out <empty dir> [--find-links <dir>]
 
-``build`` installs the build backend pinned by hash in ``release/0.1.0/build-constraints.txt``
+``build`` installs the build backend pinned by hash in ``release/<version>/build-constraints.txt``
 (flit_core 3.12.0) into a fresh virtual environment, then calls its PEP 517 hooks directly:
 ``build_sdist``, then ``build_wheel`` from the unpacked sdist. ``SOURCE_DATE_EPOCH`` is always
 ``1767225600``, whatever the environment says; it fixes archive timestamps and is not a
@@ -15,8 +17,11 @@ HOOKS). The output directory receives the four distributions, ``SHA256SUMS`` and
 ``manifest.json``, and nothing else.
 
 ``check`` rehashes a staging directory. It fails unless the directory holds exactly the expected
-files and every distribution matches both the directory's ``SHA256SUMS`` and the approved
-``release/0.1.0/SHA256SUMS``. Run it immediately before any upload.
+files, and every distribution listed in the approved ``release/<version>/SHA256SUMS`` is present
+and matches the directory's ``SHA256SUMS``, ``manifest.json`` and the approved digest. Exactly the
+listed files are compared; any other built file (for 0.1.1, foreglass 0.1.0, which is already
+published) is reported as not for upload. It refuses a version that has no approved
+``SHA256SUMS``. Run it immediately before any upload.
 
 ``wheel-from-sdist`` builds the wheel from a downloaded, already verified sdist with the same
 recipe, in an isolated environment, and fails unless it equals the approved wheel.
@@ -29,17 +34,27 @@ import hashlib
 import json
 import os
 import platform
+import re
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-RELEASE = REPO / "release" / "0.1.0"
+PACKAGES = ["comuvia", "foreglass"]
+
+
+def source_version(name: str) -> str:
+    """The package's ``__version__``, read from its source (no import)."""
+    text = (REPO / "packages" / name / "src" / name / "__init__.py").read_text(encoding="utf-8")
+    return re.search(r'^__version__ = "([^"]+)"$', text, re.M).group(1)
+
+
+VERSIONS = {name: source_version(name) for name in PACKAGES}
+VERSION = VERSIONS["comuvia"]  # the release line: its recipe directory is release/<comuvia version>
+RELEASE = REPO / "release" / VERSION
 CONSTRAINTS = RELEASE / "build-constraints.txt"
 APPROVED = RELEASE / "SHA256SUMS"
-VERSION = "0.1.0"
-PACKAGES = ["comuvia", "foreglass"]
 SOURCE_DATE_EPOCH = "1767225600"
 
 HOOKS = r"""
@@ -69,7 +84,7 @@ with tempfile.TemporaryDirectory() as unpacked:
 
 
 def expected_names(packages: list[str]) -> list[str]:
-    return sorted(n for p in packages for n in (f"{p}-{VERSION}-py3-none-any.whl", f"{p}-{VERSION}.tar.gz"))
+    return sorted(n for p in packages for n in (f"{p}-{VERSIONS[p]}-py3-none-any.whl", f"{p}-{VERSIONS[p]}.tar.gz"))
 
 
 def sha256(path: Path) -> str:
@@ -146,6 +161,9 @@ def build(out: Path, find_links: str | None = None) -> list[dict]:
 
 def wheel_from_sdist(sdist: Path, out: Path, find_links: str | None = None) -> int:
     """Build the wheel from a (verified) sdist with the same recipe and compare it with the approved wheel."""
+    if not APPROVED.is_file():
+        print(f"FAIL {APPROVED.relative_to(REPO).as_posix()} is absent: {VERSION} has no approved digests", file=sys.stderr)
+        return 1
     run_hooks([sdist], empty_directory(out), find_links)
     (wheel,) = [p for p in out.iterdir() if p.suffix == ".whl"]
     actual, approved = sha256(wheel), read_sums(APPROVED).get(wheel.name)
@@ -158,17 +176,27 @@ def wheel_from_sdist(sdist: Path, out: Path, find_links: str | None = None) -> i
 
 
 def check(stage: Path) -> int:
+    if not APPROVED.is_file():  # the owner's approval of a release; a candidate without it is never "OK"
+        print(f"FAIL {APPROVED.relative_to(REPO).as_posix()} is absent: {VERSION} has no approved digests", file=sys.stderr)
+        return 1
     problems = []
-    names = expected_names(PACKAGES)
+    built = expected_names(PACKAGES)
     present = sorted(p.name for p in stage.iterdir())
-    if present != sorted(names + ["SHA256SUMS", "manifest.json"]):
-        problems.append(f"{stage} must hold exactly {names} plus SHA256SUMS and manifest.json; found {present}")
+    if present != sorted(built + ["SHA256SUMS", "manifest.json"]):
+        problems.append(f"{stage} must hold exactly {built} plus SHA256SUMS and manifest.json; found {present}")
     staged = read_sums(stage / "SHA256SUMS") if (stage / "SHA256SUMS").is_file() else {}
     approved = read_sums(APPROVED)
     manifest = ({f["name"]: f["sha256"] for f in json.loads((stage / "manifest.json").read_text(encoding="utf-8"))["files"]}
                 if (stage / "manifest.json").is_file() else {})
-    if sorted(staged) != names:
-        problems.append(f"staged SHA256SUMS names {sorted(staged)}, expected {names}")
+    if sorted(staged) != built:
+        problems.append(f"staged SHA256SUMS names {sorted(staged)}, expected {built}")
+    # Exactly the approved files are compared, and each is required; any other built file is not for upload.
+    names = sorted(approved)
+    unknown = [n for n in names if n not in built]
+    if not names or unknown:
+        problems.append(f"approved SHA256SUMS must list only files this recipe builds; lists {names}")
+    for name in sorted(set(built) - set(names)):
+        print(f"not for upload (not in the approved list): {name}", file=sys.stderr)
     for name in names:
         path = stage / name
         actual = sha256(path) if path.is_file() else None

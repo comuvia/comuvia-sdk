@@ -17,7 +17,8 @@ from dataclasses import dataclass
 from . import reasons
 from .history import latest_revisions
 from .identity import canonicalize, content_digest, is_marker, parse_json, record_digest, reference_to
-from .validation import compare_times
+from .issues import Issue, RefusalError
+from .validation import compare_times, validate
 
 _UNRESOLVED = frozenset({reasons.UNRESOLVED_OUTCOME, reasons.NO_OUTCOME_RECORDED})
 _STATUS_EXCLUSIONS = {
@@ -204,14 +205,46 @@ class _Index:
         return body
 
 
+def _plain(value):
+    """A plain-JSON view for validation: every Mapping, at any depth, as a dict; lists stay lists."""
+    if isinstance(value, Mapping):
+        return {key: _plain(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_plain(item) for item in value]
+    return value
+
+
+def _validated(records: Iterable[Mapping], extra: Mapping | None = None) -> list[Mapping]:
+    """Materialize ``records`` and refuse them all if any record is invalid.
+
+    Records may be any ``Mapping`` (as in 0.1.0); each is validated through a plain-JSON view,
+    and the original objects are returned. Each issue's pointer is prefixed with ``/<index>``,
+    the record's zero-based position in the input; issues in ``extra`` (the evaluation passed to
+    ``reproduce``) are prefixed with ``/evaluation``. Invalid input is refused, never excluded:
+    exclusion is for valid records.
+    """
+    bodies = list(records)
+    issues = [Issue(f"/{position}{issue.pointer}", issue.code, issue.message)
+              for position, body in enumerate(bodies) for issue in validate(_plain(body))]
+    if extra is not None:
+        issues += [Issue(f"/evaluation{issue.pointer}", issue.code, issue.message) for issue in validate(_plain(extra))]
+    if issues:
+        raise RefusalError(issues)
+    return bodies
+
+
 def evaluate(records: Iterable[Mapping], *, rule: ScoringRule | None = None) -> EvaluationReport:
     """Evaluate every candidate among ``records`` (all revisions may be passed).
 
     Candidates are the latest revision of each forecast, source assertion and
     interpretation. Pinned references (questions) resolve by digest among all records.
+
+    Every record is validated first. If any record is invalid, even one that pairs with
+    nothing, the whole call raises ``RefusalError`` with every issue (pointers prefixed with
+    ``/<index>``) and no partial report: fail-closed.
     """
     rule = rule or load_rule()
-    index = _Index(records)
+    index = _Index(_validated(records))
     latest = latest_revisions(index.all)
     outcomes: dict[str, list[Mapping]] = {}
     for (record_type, _), body in latest.items():
@@ -267,8 +300,11 @@ def evaluation_records(
     recorded_by: str,
     recorded_at: str,
 ) -> list[dict]:
-    """Evaluation record bodies for every forecast paired with an outcome in ``report``."""
-    index = _Index(records)
+    """Evaluation record bodies for every forecast paired with an outcome in ``report``.
+
+    Refuses invalid ``records`` exactly as ``evaluate`` does.
+    """
+    index = _Index(_validated(records))
     bodies = []
     for result in report.results:
         if result.kind != "forecast" or result.outcome is None:
@@ -307,7 +343,12 @@ class Reproduction:
 
 
 def reproduce(evaluation: Mapping, records: Iterable[Mapping]) -> Reproduction:
-    """Re-derive a stored evaluation from the inputs it pins, found by digest. Never overwrites."""
+    """Re-derive a stored evaluation from the inputs it pins, found by digest. Never overwrites.
+
+    Refuses invalid ``records`` exactly as ``evaluate`` does, and an invalid ``evaluation``
+    (its issues prefixed with ``/evaluation``).
+    """
+    records = _validated(records, evaluation)
     stored = dict(evaluation["result"])
     try:
         rule = load_rule(evaluation["scoring_rule"]["id"], evaluation["scoring_rule"]["version"])
@@ -315,7 +356,7 @@ def reproduce(evaluation: Mapping, records: Iterable[Mapping]) -> Reproduction:
         return Reproduction("unavailable", stored, None, reasons.RULE_NOT_FOUND)
     if rule.reference() != evaluation["scoring_rule"]:
         return Reproduction("unavailable", stored, None, reasons.RULE_NOT_FOUND)
-    index = _Index(records)
+    index = _Index(records)  # already validated above
     forecast, outcome = index.resolve(evaluation["forecast"]), index.resolve(evaluation["outcome"])
     if forecast is None or outcome is None:
         return Reproduction("unavailable", stored, None, reasons.EVALUATION_INPUT_NOT_FOUND)
