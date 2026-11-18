@@ -70,6 +70,7 @@ PUBLIC_PATHS = [
     "packages/foreglass",
     "release/0.1.0",
     "release/0.1.1",
+    "release/0.1.2",
     "tools",
 ]
 # Initial mode only: the first public commit used this date and message. Chained exports

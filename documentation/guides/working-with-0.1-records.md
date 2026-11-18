@@ -52,12 +52,12 @@ assert [(i.pointer, i.code) for i in comuvia.validate(snapshot_style)] == [("/co
 
 A marker in a descriptor's `digest` gives `malformed_digest`.
 
-## 2. `schema_files()` returns a directory
+## 2. `schema_dir()` and the deprecated `schema_files()` alias
 
-Despite its plural name, `comuvia.schema_files()` returns the packaged schema **directory**, an `importlib.resources` traversable that is often a `pathlib.Path`. Iterating over it directly raises `TypeError`, so call `.iterdir()`:
+`comuvia.schema_dir()` (added in 0.1.2) returns the packaged schema **directory**, an `importlib.resources` traversable that is often a `pathlib.Path`. The earlier `comuvia.schema_files()` name is kept as a deprecated alias returning the same directory; call `.iterdir()` to iterate over the schema files:
 
 ```python
-folder = comuvia.schema_files()
+folder = comuvia.schema_dir()
 names = sorted(path.name for path in folder.iterdir())
 assert len(names) == 10  # one schema per record type, plus common.json
 assert "common.json" in names and "source_assertion.json" in names
@@ -97,7 +97,7 @@ Every record starts with the same eight fields:
 - `schema`, `record_type`, `id`, `revision` and `predecessor`;
 - `data_origin`, `recorded_by` and `recorded_at`.
 
-0.1.0 has no record builder, so most projects write a small helper. Two helpers are enough. They are a pattern, not part of the library. They fill only the mechanical fields, and they deliberately have no default for who recorded a record or when:
+From `comuvia` 0.1.2, `comuvia.new_record` and `comuvia.revise` ship directly in the core library (requiring explicit `data_origin`, `recorded_by` and `recorded_at`, and validating via `comuvia.validate`). On 0.1.0 or 0.1.1, two small helpers follow the same pattern:
 
 ```python
 def envelope(record_type, record_id, *, data_origin, recorded_by, recorded_at):

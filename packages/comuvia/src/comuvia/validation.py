@@ -42,9 +42,14 @@ _TIMESTAMP = re.compile(
 )
 
 
-def schema_files():
+def schema_dir():
     """The packaged schema resource directory (an ``importlib.resources`` traversable)."""
     return importlib.resources.files("comuvia").joinpath("schemas").joinpath("v0_1")
+
+
+def schema_files():
+    """Deprecated alias for ``schema_dir()``: returns the schema resource directory (use ``.iterdir()``)."""
+    return schema_dir()
 
 
 def _check_keywords(schema, where: str) -> None:
@@ -70,7 +75,7 @@ def _check_keywords(schema, where: str) -> None:
 def load_schemas() -> dict[str, dict]:
     """Load every packaged schema, keyed by ``$id``."""
     registry = {}
-    for entry in sorted(schema_files().iterdir(), key=lambda e: e.name):
+    for entry in sorted(schema_dir().iterdir(), key=lambda e: e.name):
         if entry.name.endswith(".json"):
             schema = parse_json(entry.read_bytes())
             _check_keywords(schema, entry.name)
@@ -411,6 +416,7 @@ def _record_rules(body: Mapping) -> list[Issue]:
 
 def _refine_digests(body, issues: list[Issue]) -> list[Issue]:
     refined = []
+    is_descriptor = body.get("record_type") == "artifact_descriptor"
     for issue in issues:
         if issue.code == reasons.MALFORMED_DIGEST:
             value = body
@@ -419,6 +425,8 @@ def _refine_digests(body, issues: list[Issue]) -> list[Issue]:
                 value = value[int(token)] if isinstance(value, list) else value.get(token) if isinstance(value, dict) else None
             better = digest_issue(value, issue.pointer)
             issue = better if better is not None else issue
+        elif is_descriptor and issue.pointer == "/content/retained" and issue.code == reasons.UNRECOGNIZED_MEMBER:
+            issue = Issue(issue.pointer, issue.code, "artifact_descriptor content always identifies retained bytes; omit 'retained'")
         refined.append(issue)
     return refined
 

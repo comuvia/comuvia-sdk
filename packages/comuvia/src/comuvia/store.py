@@ -49,9 +49,10 @@ that references resolve. It does not check that an evaluation's result is correc
 forged but well-formed evaluation record is valid and stores. Run ``reproduce`` for any
 stored evaluation you depend on.
 
-Detection limit. ``verify`` cannot detect removal of complete index lines at the tail,
-or replacement of the whole store, without an independently retained checkpoint.
-Checkpoints are not part of 0.1.
+Detection limit. Without an independently retained checkpoint passed to
+``verify(checkpoint=...)``, ``verify`` cannot detect removal of complete index lines at
+the tail or replacement of the whole store. ``checkpoint()`` produces a canonical prefix
+commitment over ``index.jsonl`` that ``verify(checkpoint=...)`` checks offline.
 """
 
 from __future__ import annotations
@@ -73,6 +74,7 @@ from .issues import Issue, RefusalError
 from .validation import validate
 
 STORE_FORMAT = "comuvia-store/1"
+CHECKPOINT_FORMAT = "comuvia-checkpoint/1"
 MARKER = "comuvia-store.json"
 INDEX = "index.jsonl"
 RECORDS = "records"
@@ -80,10 +82,11 @@ TMP = "tmp"
 LOCK = "writer.lock"
 DETECTION_LIMIT = (
     "Removal of complete index lines at the tail, or replacement of the whole store, "
-    "cannot be detected without an independently retained checkpoint; checkpoints are not part of 0.1."
+    "cannot be detected without passing an independently retained checkpoint to verify(checkpoint=...)."
 )
 _BODY_NAME = re.compile(r"[0-9a-f]{64}\.json\Z")
 _ENTRY_KEYS = {"digest", "id", "record_type", "revision", "sequence"}
+_CHECKPOINT_KEYS = {"format", "entries", "head_sequence", "head_digest", "index_sha256"}
 _LOCK_OFFSET = 1 << 30  # Windows locks a byte far past the holder details so they stay readable.
 _HOLDER_SLOT = 1024  # fixed-size, space-padded holder details at the start of writer.lock
 
@@ -116,6 +119,7 @@ class StoreReport:
     lock_holder: str | None  # holder details last written; a reader cannot tell if that holder is alive
     issues: tuple[Issue, ...]
     detection_limit: str = field(default=DETECTION_LIMIT)
+    checkpoint_verified: bool = False
 
     @property
     def ok(self) -> bool:
@@ -438,9 +442,139 @@ class RecordStore:
                 os.fsync(handle.fileno())
         return len(tail)
 
+    # ---- portability and checkpoints
+
+    def export_jsonl(self, path: str | os.PathLike | None = None) -> bytes:
+        """Export every stored record in sequence order as canonical RFC 8785 JSONL bytes.
+
+        Verifies the store first and refuses if any integrity issue is present. When
+        ``path`` is supplied, writes the exported bytes durably via a temporary file.
+        """
+        report = self.verify()
+        if not report.ok:
+            raise RefusalError(list(report.issues))
+        payload = b"".join(canonicalize(body) + b"\n" for body in self.records())
+        if path is not None:
+            dest = Path(path)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            temporary = dest.parent / f".{dest.name}.{os.getpid()}.{uuid.uuid4().hex}.tmp"
+            _write_durably(temporary, payload)
+            os.replace(temporary, dest)
+            _fsync_directory(dest.parent)
+        return payload
+
+    def import_jsonl(self, source: bytes | str | os.PathLike) -> tuple[StoreEntry, ...]:
+        """Validate and append canonical or non-canonical JSONL records from ``source``.
+
+        ``source`` is raw UTF-8 ``bytes`` or a filesystem path. Every line is parsed,
+        validated, and checked for reference resolution and revision conflicts across the
+        existing store plus the batch before any record is written to disk.
+        """
+        if self._lock_fd is None or self._entries is None:
+            raise _refuse(reasons.READ_ONLY_STORE, "open the store with writer=True to import")
+        if self._read_index()[1]:
+            raise _refuse(reasons.INDEX_TORN, "the final index line is incomplete; an operator must run truncate_torn_tail")
+        raw = source if isinstance(source, bytes) else Path(source).read_bytes()
+        if not raw:
+            return ()
+        lines = raw.split(b"\n")
+        if lines and lines[-1] == b"":
+            lines.pop()
+        parsed: list[dict] = []
+        issues: list[Issue] = []
+        for pos, line in enumerate(lines):
+            if line.endswith(b"\r"):
+                line = line[:-1]
+            try:
+                body = parse_json(line)
+            except RefusalError as error:
+                issues.extend(Issue(f"/{pos}{i.pointer}", i.code, i.message) for i in error.issues)
+                continue
+            found = validate(body)
+            if found:
+                issues.extend(Issue(f"/{pos}{i.pointer}", i.code, i.message) for i in found)
+                continue
+            parsed.append(body)
+        if issues:
+            raise RefusalError(issues)
+
+        sim_by_key = {(e.record_type, e.id, e.revision): e.digest for e in self._entries}
+        batch_issues: list[Issue] = []
+        for pos, body in enumerate(parsed):
+            digest = record_digest(body)
+            key = (body["record_type"], body["id"], body["revision"])
+            existing_digest = sim_by_key.get(key)
+            if existing_digest is not None:
+                if existing_digest != digest:
+                    batch_issues.append(Issue(f"/{pos}", reasons.REVISION_CONFLICT,
+                                              f"{key[0]} {key[1]!r} revision {key[2]} has a conflicting digest"))
+                continue
+            for pointer, ref in _references(body):
+                target = sim_by_key.get((ref["record_type"], ref["id"], ref["revision"]))
+                if target is None:
+                    batch_issues.append(Issue(f"/{pos}{pointer}", reasons.UNRESOLVED_REFERENCE,
+                                              "referenced record is not in the store or earlier in the import"))
+                elif target != ref["digest"]:
+                    batch_issues.append(Issue(f"/{pos}{pointer}", reasons.REFERENCE_DIGEST_MISMATCH,
+                                              "referenced target has a different digest"))
+            sim_by_key[key] = digest
+        if batch_issues:
+            raise RefusalError(batch_issues)
+
+        return tuple(self.append(body) for body in parsed)
+
+    def checkpoint(self) -> dict:
+        """Return a tamper-evident prefix commitment over the verified store index."""
+        report = self.verify()
+        if not report.ok:
+            raise RefusalError(list(report.issues))
+        entries = self.entries()
+        index_bytes = (self.path / INDEX).read_bytes()
+        return {
+            "format": CHECKPOINT_FORMAT,
+            "entries": len(entries),
+            "head_sequence": entries[-1].sequence if entries else 0,
+            "head_digest": entries[-1].digest if entries else None,
+            "index_sha256": "sha256:" + hashlib.sha256(index_bytes).hexdigest(),
+        }
+
+    def _check_checkpoint(self, checkpoint: Mapping, entries: list[StoreEntry]) -> tuple[list[Issue], bool]:
+        if not isinstance(checkpoint, Mapping) or set(checkpoint) != _CHECKPOINT_KEYS:
+            return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, "not a comuvia-checkpoint/1 object")], False
+        if checkpoint.get("format") != CHECKPOINT_FORMAT:
+            return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, f"expected format {CHECKPOINT_FORMAT!r}")], False
+        count = checkpoint.get("entries")
+        head_seq = checkpoint.get("head_sequence")
+        head_digest = checkpoint.get("head_digest")
+        index_sha = checkpoint.get("index_sha256")
+        if isinstance(count, bool) or not isinstance(count, int) or count < 0 or head_seq != count:
+            return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, "invalid checkpoint entry count or head_sequence")], False
+        if not isinstance(index_sha, str) or not DIGEST_PATTERN.match(index_sha):
+            return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, "checkpoint index_sha256 is malformed")], False
+        if count == 0:
+            if head_digest is not None:
+                return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, "empty checkpoint must have null head_digest")], False
+        elif not isinstance(head_digest, str) or not DIGEST_PATTERN.match(head_digest):
+            return [Issue("checkpoint", reasons.CHECKPOINT_INVALID, "checkpoint head_digest is malformed")], False
+
+        if len(entries) < count:
+            return [Issue(
+                INDEX, reasons.CHECKPOINT_MISMATCH,
+                f"store has {len(entries)} entries, fewer than checkpoint's {count} (truncation or replacement)",
+            )], False
+        raw_data = (self.path / INDEX).read_bytes()
+        complete, _, _ = raw_data.rpartition(b"\n")
+        raw_lines = complete.split(b"\n") if complete else []
+        prefix = b"".join(line + b"\n" for line in raw_lines[:count])
+        actual_sha = "sha256:" + hashlib.sha256(prefix).hexdigest()
+        actual_head = entries[count - 1].digest if count > 0 else None
+        if actual_head != head_digest or actual_sha != index_sha:
+            return [Issue(INDEX, reasons.CHECKPOINT_MISMATCH, "store index prefix does not match checkpoint")], False
+        return [], True
+
     # ---- verification
 
-    def verify(self) -> StoreReport:
+    def verify(self, *, checkpoint: Mapping | None = None) -> StoreReport:
         """Check the index and bodies; every problem is reported by name. Nothing is modified."""
         listed = sorted((self.path / RECORDS).iterdir())  # listed before the index is read
         entries, tail, issues = self._read_index()
@@ -496,4 +630,15 @@ class RecordStore:
                 issues.append(Issue(f"{RECORDS}/{path.name}", reasons.ORPHAN_BODY, "body file has no index entry"))
         for path in sorted((self.path / TMP).iterdir()):
             issues.append(Issue(f"{TMP}/{path.name}", reasons.LEFTOVER_TEMP_FILE, "left by an interrupted write"))
-        return StoreReport(len(entries), bodies, recorded_holder(self.path / LOCK), tuple(sorted(issues)))
+        checkpoint_ok = False
+        limit_note = DETECTION_LIMIT
+        if checkpoint is not None:
+            cp_issues, checkpoint_ok = self._check_checkpoint(checkpoint, entries)
+            issues.extend(cp_issues)
+            if checkpoint_ok:
+                n = checkpoint["entries"]
+                limit_note = (
+                    f"Verified against retained checkpoint through entry {n}; "
+                    f"tail removals after entry {n} require a newer checkpoint."
+                )
+        return StoreReport(len(entries), bodies, recorded_holder(self.path / LOCK), tuple(sorted(issues)), limit_note, checkpoint_ok)

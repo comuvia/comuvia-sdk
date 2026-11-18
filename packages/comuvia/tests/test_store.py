@@ -11,6 +11,7 @@ import unittest
 from pathlib import Path
 
 import comuvia
+from package_context import python_code
 from comuvia import RecordStore, RefusalError, record_digest, reference_to
 
 VECTORS = Path(__file__).resolve().parent / "vectors"
@@ -68,7 +69,7 @@ class StoreTest(unittest.TestCase):
         return caught.exception.codes
 
     def holder(self, mode):
-        process = subprocess.Popen([sys.executable, "-I", "-c", HOLDER, str(self.path), mode],
+        process = subprocess.Popen(python_code(HOLDER, str(self.path), mode),
                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
         word, pid = process.stdout.readline().split()
         self.assertEqual(word, "locked")
@@ -99,7 +100,7 @@ class StoreTest(unittest.TestCase):
             store.append(QUESTION)
 
     def test_writer_dying_mid_append_leaves_guarded_residue(self):
-        subprocess.run([sys.executable, "-I", "-c", HOLDER, str(self.path), "torn", json.dumps(QUESTION)],
+        subprocess.run(python_code(HOLDER, str(self.path), "torn", json.dumps(QUESTION)),
                        check=True, capture_output=True, timeout=60)
         report = RecordStore(self.path).verify()
         self.assertLessEqual({"torn_index_line", "orphan_body"}, {i.code for i in report.issues})
@@ -159,7 +160,7 @@ class StoreTest(unittest.TestCase):
 
     def test_stress_reader_process_running_cli_verify(self):
         stop = Path(self.tmp.name) / "stop"
-        reader = subprocess.Popen([sys.executable, "-I", "-c", VERIFY_LOOP, str(self.path), str(stop)],
+        reader = subprocess.Popen(python_code(VERIFY_LOOP, str(self.path), str(stop)),
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
             close_errors, refusals = self.writer_cycles()
@@ -207,8 +208,9 @@ class StoreTest(unittest.TestCase):
         for forbidden in ("update", "delete", "remove", "replace", "put", "overwrite", "set", "rewrite", "edit"):
             self.assertFalse({n for n in names if forbidden in n}, forbidden)
         self.assertEqual(names, {
-            "append", "close", "create", "entries", "get", "get_by_digest",
-            "is_writer", "latest", "records", "truncate_torn_tail", "verify",
+            "append", "checkpoint", "close", "create", "entries", "export_jsonl",
+            "get", "get_by_digest", "import_jsonl", "is_writer", "latest",
+            "records", "truncate_torn_tail", "verify",
         })
 
     def test_verify_reports_crash_and_tamper_by_name(self):
@@ -264,6 +266,68 @@ class StoreTest(unittest.TestCase):
     def test_create_and_open_refusals(self):
         self.assertEqual(self.codes(lambda: RecordStore.create(self.path)), {"store_exists"})
         self.assertEqual(self.codes(lambda: RecordStore(Path(self.tmp.name))), {"not_a_store"})
+
+    def test_export_and_import_jsonl_round_trip_and_batch_atomicity(self):
+        with RecordStore(self.path, writer=True) as store:
+            store.append(QUESTION)
+            store.append(FORECAST)
+        dump_path = Path(self.tmp.name) / "exported.jsonl"
+        payload = RecordStore(self.path).export_jsonl(dump_path)
+        self.assertEqual(dump_path.read_bytes(), payload)
+        self.assertEqual(payload, comuvia.canonicalize(QUESTION) + b"\n" + comuvia.canonicalize(FORECAST) + b"\n")
+
+        dest = Path(self.tmp.name) / "imported-store"
+        RecordStore.create(dest)
+        self.assertEqual(self.codes(lambda: RecordStore(dest).import_jsonl(dump_path)), {"read_only_store"})
+        with RecordStore(dest, writer=True) as target:
+            first = target.import_jsonl(dump_path)
+            self.assertEqual([e.appended for e in first], [True, True])
+            second = target.import_jsonl(payload)
+            self.assertEqual([e.appended for e in second], [False, False])
+            self.assertEqual(target.records(), [QUESTION, FORECAST])
+
+            # All-or-nothing batch pre-flight: a valid new record followed by a conflicting one writes nothing.
+            q_new = copy.deepcopy(QUESTION)
+            q_new["id"] = "q-new-atomic"
+            conflict = copy.deepcopy(QUESTION)
+            conflict["text"] += " (conflict)"
+            batch = comuvia.canonicalize(q_new) + b"\n" + comuvia.canonicalize(conflict) + b"\n"
+            self.assertEqual(self.codes(lambda: target.import_jsonl(batch)), {"revision_conflict"})
+            self.assertIsNone(target.get("question", "q-new-atomic"))
+            self.assertEqual(len(target.entries()), 2)
+
+    def test_checkpoint_detects_tail_truncation_and_allows_append_extension(self):
+        cp_empty = RecordStore(self.path).checkpoint()
+        self.assertEqual((cp_empty["entries"], cp_empty["head_digest"]), (0, None))
+        self.assertTrue(RecordStore(self.path).verify(checkpoint=cp_empty).checkpoint_verified)
+
+        with RecordStore(self.path, writer=True) as store:
+            store.append(QUESTION)
+            cp_one = store.checkpoint()
+            store.append(FORECAST)
+            cp_two = store.checkpoint()
+
+        # Appending new records preserves valid earlier prefix checkpoints.
+        for cp in (cp_empty, cp_one, cp_two):
+            report = RecordStore(self.path).verify(checkpoint=cp)
+            self.assertTrue(report.ok, report.issues)
+            self.assertTrue(report.checkpoint_verified)
+
+        # Simulate tail truncation (removing FORECAST's index line and body file).
+        index = self.path / "index.jsonl"
+        first_line = index.read_bytes().splitlines(keepends=True)[0]
+        index.write_bytes(first_line)
+        os.remove(self.path / "records" / (record_digest(FORECAST).removeprefix("sha256:") + ".json"))
+        # Plain verify() passes on the truncated 1-entry store, while verify(checkpoint=cp_two) catches it!
+        self.assertTrue(RecordStore(self.path).verify().ok)
+        truncated = RecordStore(self.path).verify(checkpoint=cp_two)
+        self.assertFalse(truncated.ok)
+        self.assertFalse(truncated.checkpoint_verified)
+        self.assertEqual({i.code for i in truncated.issues}, {"checkpoint_mismatch"})
+
+        # Malformed checkpoint object is reported as checkpoint_invalid.
+        bad = RecordStore(self.path).verify(checkpoint={"format": "wrong"})
+        self.assertEqual({i.code for i in bad.issues}, {"checkpoint_invalid"})
 
 
 if __name__ == "__main__":

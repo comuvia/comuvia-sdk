@@ -11,13 +11,14 @@ import json
 import sys
 from pathlib import Path
 
-from . import __version__
+from . import __version__, reasons
 from .evaluation import evaluate, evaluation_records, reproduce
-from .identity import content_digest, record_digest, verify
+from .identity import canonicalize, content_digest, parse_json, record_digest, verify
 from .issues import Issue, RefusalError
+from .ots import ProofError, check_proof_digest, parse_proof
 from .selectors import check_selector
 from .store import RecordStore
-from .validation import instant, load_record, validate
+from .validation import instant, load_record
 
 OK, FAILED, USAGE = 0, 1, 2
 
@@ -50,6 +51,39 @@ def _now() -> str:
     return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _attestation_dict(att) -> dict:
+    merkle = att.result[::-1].hex() if att.kind in ("bitcoin", "litecoin", "ethereum") and att.result and len(att.result) == 32 else None
+    return {
+        "kind": att.kind,
+        "tag": att.tag,
+        "height": att.height,
+        "uri": att.uri,
+        "merkle_root_display": merkle,
+        "description": att.describe(),
+    }
+
+
+def _check_ots(ots_path: str, *, content: bytes | None, expected_digest: str | None) -> tuple[dict | None, list[Issue]]:
+    raw = Path(ots_path).read_bytes()
+    try:
+        proof = parse_proof(raw)
+    except ProofError as error:
+        return None, [Issue("/ots", reasons.PROOF_INVALID, str(error))]
+    issues = check_proof_digest(proof, content=content, expected_digest=expected_digest)
+    committed = f"{proof.digest_type}:{proof.digest}"
+    checked_against = content is not None or expected_digest is not None
+    digest_identity = ("mismatch" if issues else "match") if checked_against else "unverified"
+    summary = {
+        "digest_type": proof.digest_type,
+        "committed_digest": committed,
+        "digest_identity": digest_identity,
+        "operations": proof.operations,
+        "verified_against_chain": False,
+        "attestations": [_attestation_dict(a) for a in proof.attestations],
+    }
+    return summary, issues
+
+
 # ------------------------------------------------------------------ commands
 
 
@@ -79,8 +113,33 @@ def cmd_digest(args, out: _Output) -> int:
 
 
 def cmd_verify(args, out: _Output) -> int:
-    body = _read_record(args.record)
+    if args.record is None and not args.ots:
+        raise _Usage("verify requires a record file or --ots <proof.ots>")
     content = Path(args.content).read_bytes() if args.content else None
+
+    if args.record is None:
+        ots_summary, issues = _check_ots(args.ots, content=content, expected_digest=args.expected_digest)
+        content_identity = "unavailable"
+        if content is not None and ots_summary is not None:
+            content_identity = "mismatch" if any(i.code == reasons.PROOF_DIGEST_MISMATCH for i in issues) else "match"
+        data = {
+            "ots_proof": ots_summary,
+            "content_identity": content_identity,
+            "timestamp_assurance": "unavailable",
+            "issues": _issues(issues),
+        }
+        lines = []
+        if ots_summary is not None:
+            lines.append(f"ots digest          {ots_summary['committed_digest']} ({ots_summary['digest_identity']})")
+            lines.append(f"ots operations      {ots_summary['operations']}")
+            for att in ots_summary["attestations"]:
+                lines.append(f"ots attestation     UNVERIFIED: {att['description']}")
+        lines.append("timestamp assurance unavailable (attestations parsed offline; never checked against Bitcoin)")
+        lines += _issue_lines(issues)
+        out.emit(data, lines)
+        return FAILED if issues else OK
+
+    body = _read_record(args.record)
     records = RecordStore(args.store).records() if args.store else []
     result = verify(body, expected_digest=args.expected_digest, content=content, records=records)
     selector = None
@@ -97,7 +156,6 @@ def cmd_verify(args, out: _Output) -> int:
         "selector": None if selector is None else {"result": selector.result, "checked": list(selector.checked)},
         "timestamp_assurance": result.timestamp_assurance,
         "signature": result.signature,
-        "issues": _issues(issues),
     }
     lines = [
         f"record digest       {result.record_digest}",
@@ -107,6 +165,21 @@ def cmd_verify(args, out: _Output) -> int:
     lines += [f"reference {r.pointer:<10} {r.result}" for r in result.references]
     if selector is not None:
         lines.append(f"selector            {selector.result} ({', '.join(selector.checked) or 'nothing checkable'})")
+    if args.ots:
+        body_content = body.get("content") if isinstance(body.get("content"), dict) else None
+        target_digest = (
+            None if content is not None
+            else body_content["digest"] if body_content and isinstance(body_content.get("digest"), str)
+            else result.record_digest
+        )
+        ots_summary, ots_issues = _check_ots(args.ots, content=content, expected_digest=target_digest)
+        data["ots_proof"] = ots_summary
+        issues += ots_issues
+        if ots_summary is not None:
+            lines.append(f"ots digest          {ots_summary['committed_digest']} ({ots_summary['digest_identity']})")
+            for att in ots_summary["attestations"]:
+                lines.append(f"ots attestation     UNVERIFIED: {att['description']}")
+    data["issues"] = _issues(issues)
     lines += [f"timestamp assurance {result.timestamp_assurance}", f"signature           {result.signature}"]
     lines += _issue_lines(issues)
     out.emit(data, lines)
@@ -136,11 +209,13 @@ def cmd_store_append(args, out: _Output) -> int:
 
 
 def cmd_store_verify(args, out: _Output) -> int:
-    report = RecordStore(args.store).verify()
+    cp = parse_json(Path(args.checkpoint).read_bytes()) if args.checkpoint else None
+    report = RecordStore(args.store).verify(checkpoint=cp)
     data = {
         "ok": report.ok,
         "entries": report.entries,
         "bodies": report.bodies,
+        "checkpoint_verified": report.checkpoint_verified,
         "lock_holder": report.lock_holder,
         "lock_note": "holder details last written by a writer; a reader cannot tell whether that holder is still alive",
         "scope": "identity and references only; run 'comuvia reproduce' to check stored evaluation results",
@@ -149,6 +224,8 @@ def cmd_store_verify(args, out: _Output) -> int:
     }
     holder = report.lock_holder or "none recorded"
     lines = [f"{'OK' if report.ok else 'PROBLEMS FOUND'}: {report.entries} index entries, {report.bodies} bodies"]
+    if args.checkpoint:
+        lines.append(f"checkpoint: {'verified' if report.checkpoint_verified else 'FAILED'}")
     lines.append(f"writer details last recorded: {holder} (a reader cannot tell whether that writer is alive)")
     lines += _issue_lines(report.issues)
     lines.append(f"limit: {report.detection_limit}")
@@ -170,6 +247,52 @@ def cmd_store_show(args, out: _Output) -> int:
     rows = [{"record_type": b["record_type"], "id": b["id"], "revision": b["revision"], "digest": record_digest(b)} for b in bodies]
     data = {"records": bodies if args.bodies else rows}
     out.emit(data, [f"{r['record_type']:<20} {r['id']} r{r['revision']} {r['digest']}" for r in rows])
+    return OK
+
+
+def cmd_store_export(args, out: _Output) -> int:
+    store = RecordStore(args.store)
+    payload = store.export_jsonl(args.out)
+    count = payload.count(b"\n")
+    digest = content_digest(payload)
+    if args.out:
+        out.emit(
+            {"store": args.store, "out": args.out, "records": count, "byte_length": len(payload), "digest": digest},
+            [f"exported {count} records ({len(payload)} bytes, {digest}) to {args.out}"],
+        )
+    elif out.as_json:
+        out.emit(
+            {"store": args.store, "records": count, "byte_length": len(payload), "digest": digest, "jsonl": payload.decode("utf-8")},
+            [],
+        )
+    else:
+        sys.stdout.buffer.write(payload)
+        sys.stdout.flush()
+    return OK
+
+
+def cmd_store_import(args, out: _Output) -> int:
+    with RecordStore(args.store, writer=True) as store:
+        imported = store.import_jsonl(args.file)
+    entries = [{**e.as_index(), "appended": e.appended} for e in imported]
+    lines = [
+        f"{'appended' if e['appended'] else 'present '} seq={e['sequence']} {e['record_type']} {e['id']} r{e['revision']} {e['digest']}"
+        for e in entries
+    ]
+    out.emit({"file": args.file, "entries": entries}, lines or [f"imported 0 records from {args.file}"])
+    return OK
+
+
+def cmd_store_checkpoint(args, out: _Output) -> int:
+    cp = RecordStore(args.store).checkpoint()
+    if args.out:
+        dest = Path(args.out)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(canonicalize(cp) + b"\n")
+    lines = [f"checkpoint entries={cp['entries']} head={cp['head_digest'] or 'none'} index={cp['index_sha256']}"]
+    if args.out:
+        lines.append(f"wrote {args.out}")
+    out.emit(cp, lines)
     return OK
 
 
@@ -269,11 +392,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--content", action="store_true", help="digest the file's exact bytes instead of a record")
     p.set_defaults(handler=cmd_digest)
 
-    p = sub.add_parser("verify", parents=[common], help="verify a record against content bytes and a store")
-    p.add_argument("record")
-    p.add_argument("--content", help="retained bytes of the record's resource (snapshot, descriptor or assertion)")
-    p.add_argument("--expected-digest", help="the record digest the record should have")
+    p = sub.add_parser("verify", parents=[common], help="verify a record or detached .ots proof offline")
+    p.add_argument("record", nargs="?", help="record file (optional when --ots is given)")
+    p.add_argument("--content", help="retained bytes of the resource or target file")
+    p.add_argument("--expected-digest", help="expected sha256:... digest")
     p.add_argument("--store", help="store whose records resolve the record's references")
+    p.add_argument("--ots", help="detached OpenTimestamps proof (.ots) to parse offline")
     p.set_defaults(handler=cmd_verify)
 
     store = sub.add_parser("store", parents=[common], help="single-writer record store").add_subparsers(dest="store_command", required=True)
@@ -286,9 +410,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(handler=cmd_store_append)
     p = store.add_parser(
         "verify", parents=[common],
-        help="check index, bodies and references by name (identity only; use 'reproduce' for evaluation results)",
+        help="check index, bodies, references and optional checkpoint (identity only; use 'reproduce' for evaluation results)",
     )
     p.add_argument("store")
+    p.add_argument("--checkpoint", help="independently retained checkpoint JSON file")
     p.set_defaults(handler=cmd_store_verify)
     p = store.add_parser("show", parents=[common], help="list stored records")
     p.add_argument("store")
@@ -297,6 +422,18 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--id")
     p.add_argument("--bodies", action="store_true", help="include full record bodies (with --json)")
     p.set_defaults(handler=cmd_store_show)
+    p = store.add_parser("export", parents=[common], help="export verified records in sequence order as canonical JSONL")
+    p.add_argument("store")
+    p.add_argument("--out", help="destination JSONL file (default: stdout)")
+    p.set_defaults(handler=cmd_store_export)
+    p = store.add_parser("import", parents=[common], help="validate and append JSONL records (takes the writer lock)")
+    p.add_argument("store")
+    p.add_argument("file")
+    p.set_defaults(handler=cmd_store_import)
+    p = store.add_parser("checkpoint", parents=[common], help="emit a tamper-evident index prefix checkpoint")
+    p.add_argument("store")
+    p.add_argument("--out", help="write canonical checkpoint JSON to this file")
+    p.set_defaults(handler=cmd_store_checkpoint)
     p = store.add_parser("repair", parents=[common], help="operator action: remove an incomplete final index line")
     p.add_argument("store")
     p.add_argument("--truncate-torn-tail", action="store_true", required=True)

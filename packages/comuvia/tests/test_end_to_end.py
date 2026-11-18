@@ -14,6 +14,7 @@ import unittest
 from pathlib import Path
 
 import comuvia
+from package_context import python_cli
 from comuvia import RecordStore, check_selector, evaluate, evaluation_records, reference_to, reproduce
 
 VECTORS = Path(__file__).resolve().parent / "vectors"
@@ -29,8 +30,8 @@ EVALUATED = {"evaluated_at": "2027-02-17T00:00:00Z", "recorded_by": "evaluator:e
 
 
 def cli(*args):
-    """Run the installed CLI; return (exit code, parsed JSON output)."""
-    result = subprocess.run([sys.executable, "-I", "-m", "comuvia", "--json", *args], capture_output=True, text=True)
+    """Run the same package's CLI; return (exit code, parsed JSON output)."""
+    result = subprocess.run(python_cli("--json", *args), capture_output=True, text=True, timeout=60)
     return result.returncode, json.loads(result.stdout) if result.stdout.strip() else None
 
 
@@ -181,6 +182,58 @@ class FixtureB(Scenario):
         self.assertEqual((code, verified["ok"], verified["entries"]), (0, True, 5))
         self.assertIn("checkpoint", verified["detection_limit"])
         code, _ = cli("evaluate", "--store", store, "--append")
+        self.assertEqual(code, 2)
+
+        # CLI store export / import / checkpoint / verify --checkpoint
+        exported = str(self.root / "dump.jsonl")
+        cp_file = str(self.root / "checkpoint.json")
+        code, exp_out = cli("store", "export", store, "--out", exported)
+        self.assertEqual((code, exp_out["records"]), (0, 5))
+        code, cp_out = cli("store", "checkpoint", store, "--out", cp_file)
+        self.assertEqual((code, cp_out["entries"]), (0, 5))
+        code, ver_cp = cli("store", "verify", store, "--checkpoint", cp_file)
+        self.assertEqual((code, ver_cp["ok"], ver_cp["checkpoint_verified"]), (0, True, True))
+
+        store2 = str(self.root / "store2")
+        cli("store", "init", store2)
+        code, imp_out = cli("store", "import", store2, exported)
+        self.assertEqual((code, len(imp_out["entries"])), (0, 5))
+        code, ver2 = cli("store", "verify", store2, "--checkpoint", cp_file)
+        self.assertEqual((code, ver2["ok"], ver2["checkpoint_verified"]), (0, True, True))
+
+    def test_cli_ots_verify_standalone_and_with_record(self):
+        ots_doc = json.loads((VECTORS / "ots.json").read_text(encoding="utf-8"))
+        valid_proof = bytes.fromhex(ots_doc["valid"][0]["proof_hex"])
+        ots_path = self.root / "vector1.ots"
+        ots_path.write_bytes(valid_proof)
+        target_bytes = b"synthetic comuvia ots vector 1\n"
+        target_path = self.root / "vector1.txt"
+        target_path.write_bytes(target_bytes)
+
+        # Standalone detached .ots check against content bytes
+        code, ok_res = cli("verify", "--ots", str(ots_path), "--content", str(target_path))
+        self.assertEqual(code, 0, ok_res)
+        self.assertEqual(ok_res["content_identity"], "match")
+        self.assertEqual(ok_res["timestamp_assurance"], "unavailable")
+        self.assertFalse(ok_res["ots_proof"]["verified_against_chain"])
+        self.assertEqual(ok_res["ots_proof"]["digest_identity"], "match")
+
+        # Mismatched content bytes fail with exit 1 and proof_digest_mismatch
+        wrong_path = self.root / "wrong.txt"
+        wrong_path.write_bytes(b"different bytes\n")
+        code, bad_res = cli("verify", "--ots", str(ots_path), "--content", str(wrong_path))
+        self.assertEqual(code, 1)
+        self.assertEqual([i["code"] for i in bad_res["issues"]], ["proof_digest_mismatch"])
+
+        # Malformed .ots bytes fail with exit 1 and proof_invalid
+        broken_ots = self.root / "broken.ots"
+        broken_ots.write_bytes(b"not-an-ots-file")
+        code, broken_res = cli("verify", "--ots", str(broken_ots))
+        self.assertEqual(code, 1)
+        self.assertEqual([i["code"] for i in broken_res["issues"]], ["proof_invalid"])
+
+        # verify without record or --ots is a usage error (exit 2)
+        code, _ = cli("verify")
         self.assertEqual(code, 2)
 
 

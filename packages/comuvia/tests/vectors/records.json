@@ -1100,6 +1100,15 @@
         "code": "information_cutoff_after_issued_at",
         "pointer": "/information_cutoff"
       }
+    },
+    {
+      "id": "F1-artifact-descriptor-retained-member",
+      "layer": "schema",
+      "text": "{\"schema\": \"comuvia/0.1\", \"record_type\": \"artifact_descriptor\", \"id\": \"art-port-calder-bulletin-2027-01-first\", \"revision\": 1, \"predecessor\": null, \"data_origin\": \"synthetic\", \"content\": {\"media_type\": \"text/csv; charset=utf-8\", \"byte_length\": 49, \"digest\": \"sha256:f9bcfff9fe5b9670049d90519b9e66b9fbdab7734f3a4053e5a4cce18e059c77\", \"retained\": true}, \"content_schema\": \"month,container_teu,release\", \"origin\": {\"name\": \"Port Calder Authority monthly statistical bulletin (fictional)\", \"locator\": \"https://example.org/synthetic/port-calder/bulletins/\"}, \"published_at\": {\"date\": \"2027-02-15\", \"precision\": \"day\"}, \"retrieved_at\": \"2027-02-16T09:30:00Z\", \"units\": [\"TEU\"], \"rights_reference\": {\"unknown\": \"rights_not_reviewed\"}, \"access\": \"public\", \"locator\": \"https://example.org/synthetic/port-calder/bulletins/2027-01.csv\", \"recorded_by\": \"recorder:example-resolver\", \"recorded_at\": \"2027-02-16T09:50:00Z\"}",
+      "expect": {
+        "code": "unrecognized_member",
+        "pointer": "/content/retained"
+      }
     }
   ]
 }

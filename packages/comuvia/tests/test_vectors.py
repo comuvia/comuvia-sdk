@@ -283,13 +283,69 @@ class RuleVersions(unittest.TestCase):
 
 class SchemaResources(unittest.TestCase):
     def test_schema_tree_is_packaged(self):
-        names = sorted(e.name for e in comuvia.schema_files().iterdir() if e.name.endswith(".json"))
+        self.assertEqual(comuvia.schema_dir(), comuvia.schema_files())
+        names = sorted(e.name for e in comuvia.schema_dir().iterdir() if e.name.endswith(".json"))
         self.assertEqual(names, sorted(["common.json", *(f"{t}.json" for t in comuvia.RECORD_TYPES)]))
-        for entry in comuvia.schema_files().iterdir():
+        for entry in comuvia.schema_dir().iterdir():
             if entry.name.endswith(".json"):
                 schema = parse_json(entry.read_bytes())
                 self.assertTrue(schema["$id"].startswith("urn:comuvia:schema:0.1:"), entry.name)
                 self.assertNotIn("http", schema["$id"])
+
+
+class TypesSchemaAgreement(unittest.TestCase):
+    """comuvia.types TypedDict keys agree with the packaged v0_1 JSON Schemas."""
+
+    def test_typed_dicts_match_schemas(self):
+        import comuvia.types as ct
+
+        for record_type in comuvia.RECORD_TYPES:
+            cls_name = "".join(p.capitalize() for p in record_type.split("_")) + "Record"
+            typed_cls = getattr(ct, cls_name)
+            schema = parse_json(comuvia.schema_dir().joinpath(f"{record_type}.json").read_bytes())
+            props = set(schema["properties"])
+            req = set(schema["required"])
+            self.assertEqual(typed_cls.__required_keys__, req, cls_name)
+            self.assertEqual(typed_cls.__optional_keys__, props - req, cls_name)
+
+
+class OtsVectors(unittest.TestCase):
+    """OpenTimestamps detached-proof vectors shared with foreglass.verify."""
+
+    def test_ots_vectors(self):
+        from comuvia.ots import ProofError, check_proof_digest, parse_proof
+
+        doc = load("ots.json")
+        self.assertGreaterEqual(len(doc["valid"]), 3)
+        self.assertGreaterEqual(len(doc["refusals"]), 10)
+        for case in doc["valid"]:
+            with self.subTest(case["id"]):
+                proof = parse_proof(bytes.fromhex(case["proof_hex"]))
+                expect = case["expect"]
+                self.assertEqual(proof.digest_type, expect["digest_type"])
+                self.assertEqual(proof.digest, expect["digest"])
+                self.assertEqual(proof.operations, expect["operations"])
+                self.assertEqual(len(proof.attestations), len(expect["attestations"]))
+                for got, exp in zip(proof.attestations, expect["attestations"]):
+                    merkle = (
+                        got.result[::-1].hex()
+                        if got.kind in ("bitcoin", "litecoin", "ethereum") and got.result and len(got.result) == 32
+                        else None
+                    )
+                    self.assertEqual(got.kind, exp["kind"])
+                    self.assertEqual(got.height, exp["height"])
+                    self.assertEqual(got.uri, exp["uri"])
+                    self.assertEqual(merkle, exp["merkle_root_display"])
+                    self.assertTrue(got.describe())
+                if proof.digest_type == "sha256":
+                    self.assertEqual(check_proof_digest(proof, expected_digest=f"sha256:{proof.digest}"), [])
+                    wrong = check_proof_digest(proof, expected_digest="sha256:" + "0" * 64)
+                    self.assertEqual([i.code for i in wrong], ["proof_digest_mismatch"])
+        for case in doc["refusals"]:
+            with self.subTest(case["id"]):
+                with self.assertRaises(ProofError) as caught:
+                    parse_proof(bytes.fromhex(case["proof_hex"]))
+                self.assertIn(case["expect_error"], str(caught.exception))
 
 
 if __name__ == "__main__":

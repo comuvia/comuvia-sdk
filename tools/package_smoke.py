@@ -79,14 +79,15 @@ SCHEMA_FILES = ["common.json", *(f"{t}.json" for t in RECORD_TYPES)]
 # Members each distribution must contain beyond its package module (relative to wheel / sdist root).
 REQUIRED_WHEEL = {
     "comuvia": [f"comuvia/schemas/v0_1/{f}" for f in SCHEMA_FILES]
-    + ["comuvia/rules/binary-brier-v1/1.json",
-       "comuvia/cli.py", "comuvia/store.py", "comuvia/evaluation.py", f"comuvia-{VERSIONS['comuvia']}.dist-info/licenses/LICENSE"],
+    + ["comuvia/rules/binary-brier-v1/1.json", "comuvia/py.typed", "comuvia/types.py",
+       "comuvia/builders.py", "comuvia/ots.py", "comuvia/cli.py", "comuvia/store.py",
+       "comuvia/evaluation.py", f"comuvia-{VERSIONS['comuvia']}.dist-info/licenses/LICENSE"],
     "foreglass": [f"foreglass/{m}.py" for m in ("client", "intake", "catalog", "normalize", "capabilities", "reasons")]
     + [f"foreglass-{VERSIONS['foreglass']}.dist-info/licenses/LICENSE"],
 }
 REQUIRED_SDIST = {
-    "comuvia": [f"tests/vectors/{f}" for f in ("canonicalization.json", "identity.json", "records.json", "evaluation.json")]
-    + [f"src/comuvia/schemas/v0_1/{f}" for f in SCHEMA_FILES] + ["LICENSE"],
+    "comuvia": [f"tests/vectors/{f}" for f in ("canonicalization.json", "identity.json", "records.json", "evaluation.json", "ots.json")]
+    + [f"src/comuvia/schemas/v0_1/{f}" for f in SCHEMA_FILES] + ["LICENSE", "src/comuvia/py.typed"],
     "foreglass": [f"tests/vectors/foreglass-ledger/{f}" for f in (
         "expected.json", "source/ledger.json", "source/ledger.json.ots", "source/ledger-archive-index.json",
         "source/fragility-latest.json")]
@@ -323,7 +324,8 @@ for name in cfg["present"]:
     assert public == sorted(getattr(module, "__all__", [])), (name, public)
     entry = {"version": module.__version__, "under_env": True, "modules_loaded": loaded, "public": public}
     if name == "comuvia":
-        folder = module.schema_files()
+        folder = module.schema_dir()
+        assert folder == module.schema_files()
         assert pathlib.Path(str(folder)).resolve().is_relative_to(prefix), str(folder)
         schemas = sorted(e.name for e in folder.iterdir() if e.name.endswith(".json"))
         assert schemas == sorted(cfg["schema_files"]), schemas

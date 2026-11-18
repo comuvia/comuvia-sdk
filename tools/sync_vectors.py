@@ -10,8 +10,12 @@ What it writes:
 - ``fixtures/synthetic/*/records/*.json``: every reference gains/keeps the record digest
   of its target (targets first). Content digests and all other values are untouched.
 - ``fixtures/synthetic/*/expected.json``: references carry the same record digests.
-- ``packages/comuvia/tests/vectors/identity.json``, ``records.json`` and ``evaluation.json``:
-  self-contained vectors built from the fixtures.
+- ``packages/comuvia/tests/vectors/identity.json``, ``records.json``, ``evaluation.json``
+  and ``ots.json``: self-contained vectors built from the fixtures and OpenTimestamps
+  format rules (when ``packages/foreglass/src/foreglass/verify.py`` is present, ``ots.json``
+  is also synced byte-for-byte into ``packages/foreglass/tests/vectors/ots.json``).
+- ``packages/comuvia/src/comuvia/types.py``: PEP 561 ``TypedDict`` definitions derived from
+  ``packages/comuvia/src/comuvia/schemas/v0_1/*.json``.
 
 Expected reason codes and results in the vectors are written here by hand. Only digest
 values are computed by the in-tree encoder, so those values prove stability, not
@@ -23,6 +27,7 @@ from __future__ import annotations
 
 import base64
 import copy
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -33,7 +38,12 @@ sys.path.insert(0, str(REPO / "packages" / "comuvia" / "src"))
 from comuvia import content_digest, record_digest, validate  # noqa: E402
 
 FIXTURES = REPO / "fixtures" / "synthetic"
+CORE_FIXTURES = ("narrative-conditional", "structured-binary")
+SCHEMAS = REPO / "packages" / "comuvia" / "src" / "comuvia" / "schemas" / "v0_1"
+TYPES_PATH = REPO / "packages" / "comuvia" / "src" / "comuvia" / "types.py"
 VECTORS = REPO / "packages" / "comuvia" / "tests" / "vectors"
+FOREGLASS_VERIFY = REPO / "packages" / "foreglass" / "src" / "foreglass" / "verify.py"
+FOREGLASS_VECTORS = REPO / "packages" / "foreglass" / "tests" / "vectors"
 LOCATOR_HASH = "sha256:019b10b3b701c573395ff3fa4c5c7382623c2c0be9606178902576ad3e9a3cbf"
 
 
@@ -74,7 +84,8 @@ def load_fixture(directory: Path) -> tuple[dict, dict, dict]:
     for path in sorted((directory / "records").glob("*.json")):
         records[path] = json.loads(path.read_text(encoding="utf-8"))
     expected = json.loads((directory / "expected.json").read_text(encoding="utf-8"))
-    sources = {p.name: p.read_bytes() for p in sorted((directory / "source").iterdir())}
+    source_dir = directory / "source"
+    sources = {p.name: p.read_bytes() for p in sorted(source_dir.iterdir())} if source_dir.is_dir() else {}
     return records, expected, sources
 
 
@@ -343,7 +354,7 @@ def build_record_vectors(records: dict[str, dict]) -> dict:
     out = records["out-port-calder-teu-2027-01"]
     snap = records["res-harbor-weekly-e42-transcript"]
     q = records["q-port-calder-teu-2027-01"]
-    assessment = shape_examples(records)[0]
+    assessment, _, descriptor = shape_examples(records)
     valid = [{"id": f"fixture-{b['id']}", "record": b} for b in records.values()]
     valid += [{"id": f"shape-{b['record_type']}", "record": b} for b in shape_examples(records)]
     valid += [
@@ -446,6 +457,9 @@ def build_record_vectors(records: dict[str, dict]) -> dict:
         # OSS-1A review R4: time order is exact at the written precision.
         case("R4-cutoff-100ns-after-issued", with_value(fc, ["information_cutoff"], "2026-10-01T12:00:00.0000001Z"),
              "semantic", "information_cutoff_after_issued_at", "/information_cutoff"),
+        # Usability triage F1: artifact_descriptor.content always identifies retained bytes (no 'retained' member).
+        case("F1-artifact-descriptor-retained-member", with_value(descriptor, ["content", "retained"], True),
+             "schema", "unrecognized_member", "/content/retained"),
     ]
     return {
         "description": "Single-record validation vectors: valid records and named refusals (review sections 5-7).",
@@ -619,12 +633,354 @@ def build_evaluation_vectors(records: dict[str, dict]) -> dict:
     }
 
 
+def _ots_varuint(value: int) -> bytes:
+    out = bytearray()
+    while True:
+        byte, value = value & 0x7F, value >> 7
+        if value:
+            out.append(byte | 0x80)
+        else:
+            out.append(byte)
+            return bytes(out)
+
+
+def _ots_varbytes(data: bytes) -> bytes:
+    return _ots_varuint(len(data)) + data
+
+
+def build_ots_vectors() -> dict:
+    """Language-neutral OpenTimestamps detached-proof vectors shared by comuvia.ots and foreglass.verify."""
+    from comuvia.ots import ATTESTATION_TAGS, OTS_MAGIC, OTS_VERSION
+
+    btc_tag = bytes.fromhex("0588960d73d71901")
+    pending_tag = bytes.fromhex("83dfe30d2ef90c8e")
+    ltc_tag = bytes.fromhex("06869a0d73d71b45")
+    eth_tag = bytes.fromhex("30fe8087b5c7ead7")
+    unknown_tag = bytes.fromhex("deadbeefcafebabe")
+    assert ATTESTATION_TAGS[btc_tag] == "bitcoin"
+
+    # Case 1: SHA-256 with pending calendars + Bitcoin block-header attestations
+    msg1 = hashlib.sha256(b"synthetic comuvia ots vector 1\n").digest()
+    nonce1 = b"synthetic-nonce-01"
+    inner1 = hashlib.sha256(msg1 + nonce1).digest()
+    cals1 = ["https://calendar-a.example.org", "https://calendar-b.example.org"]
+    heights1 = [100200, 100205]
+    body1 = b""
+    for uri in cals1:
+        body1 += b"\xff\x00" + pending_tag + _ots_varbytes(_ots_varbytes(uri.encode("utf-8")))
+    roots1 = []
+    for idx, height in enumerate(heights1):
+        prefix = bytes([idx + 1]) * 4
+        branch = b"\xf1" + _ots_varbytes(prefix) + b"\x08\x00" + btc_tag + _ots_varbytes(_ots_varuint(height))
+        roots1.append(hashlib.sha256(prefix + inner1).digest()[::-1].hex())
+        body1 += (b"\xff" if idx < len(heights1) - 1 else b"") + branch
+    proof1 = OTS_MAGIC + _ots_varuint(OTS_VERSION) + b"\x08" + msg1 + b"\xf0" + _ots_varbytes(nonce1) + b"\x08" + body1
+
+    # Case 2: reverse (0xF2), hexlify (0xF3), prepend (0xF1), sha256 (0x08), litecoin, ethereum & unknown tags
+    msg2 = hashlib.sha256(b"synthetic comuvia ots vector 2\n").digest()
+    rev_hex = msg2[::-1].hex().encode("ascii")
+    leaf2 = hashlib.sha256(b"pre" + rev_hex).digest()
+    root2 = leaf2[::-1].hex()
+    att_ltc = b"\x00" + ltc_tag + _ots_varbytes(_ots_varuint(2500000))
+    att_eth = b"\x00" + eth_tag + _ots_varbytes(_ots_varuint(19000000))
+    att_unk = b"\x00" + unknown_tag + _ots_varbytes(b"\x01\x02\x03")
+    proof2 = (
+        OTS_MAGIC + _ots_varuint(OTS_VERSION) + b"\x08" + msg2
+        + b"\xf2\xf3\xf1" + _ots_varbytes(b"pre") + b"\x08"
+        + b"\xff" + att_ltc + b"\xff" + att_eth + att_unk
+    )
+
+    # Case 3: keccak256 initial digest (0x67) + keccak256 op (0x67) -> unavailable commitment (None)
+    msg3 = bytes(range(32))
+    proof3 = OTS_MAGIC + _ots_varuint(OTS_VERSION) + b"\x67" + msg3 + b"\x67\x00" + btc_tag + _ots_varbytes(_ots_varuint(900000))
+
+    valid = [
+        {
+            "id": "sha256-bitcoin-and-pending",
+            "proof_hex": proof1.hex(),
+            "expect": {
+                "digest_type": "sha256",
+                "digest": msg1.hex(),
+                "operations": 6,
+                "attestations": [
+                    {"kind": "pending", "height": None, "uri": cals1[0], "merkle_root_display": None},
+                    {"kind": "pending", "height": None, "uri": cals1[1], "merkle_root_display": None},
+                    {"kind": "bitcoin", "height": heights1[0], "uri": None, "merkle_root_display": roots1[0]},
+                    {"kind": "bitcoin", "height": heights1[1], "uri": None, "merkle_root_display": roots1[1]},
+                ],
+            },
+        },
+        {
+            "id": "sha256-reverse-hexlify-multichain-and-unknown",
+            "proof_hex": proof2.hex(),
+            "expect": {
+                "digest_type": "sha256",
+                "digest": msg2.hex(),
+                "operations": 4,
+                "attestations": [
+                    {"kind": "litecoin", "height": 2500000, "uri": None, "merkle_root_display": root2},
+                    {"kind": "ethereum", "height": 19000000, "uri": None, "merkle_root_display": root2},
+                    {"kind": "unknown", "height": None, "uri": None, "merkle_root_display": None},
+                ],
+            },
+        },
+        {
+            "id": "keccak256-unavailable-operation",
+            "proof_hex": proof3.hex(),
+            "expect": {
+                "digest_type": "keccak256",
+                "digest": msg3.hex(),
+                "operations": 1,
+                "attestations": [
+                    {"kind": "bitcoin", "height": 900000, "uri": None, "merkle_root_display": None},
+                ],
+            },
+        },
+    ]
+
+    header_ok = OTS_MAGIC + _ots_varuint(OTS_VERSION) + b"\x08" + msg1
+    refusals = [
+        {"id": "bad-magic", "proof_hex": (b"not-ots-magic" + proof1[13:]).hex(), "expect_error": "magic bytes"},
+        {"id": "unsupported-version", "proof_hex": (OTS_MAGIC + _ots_varuint(2) + b"\x08" + msg1).hex(), "expect_error": "unsupported proof version 2"},
+        {"id": "unknown-digest-type", "proof_hex": (OTS_MAGIC + _ots_varuint(1) + b"\x99" + msg1).hex(), "expect_error": "unknown digest type 0x99"},
+        {"id": "truncated-digest", "proof_hex": (OTS_MAGIC + _ots_varuint(1) + b"\x08" + msg1[:10]).hex(), "expect_error": "truncated"},
+        {"id": "trailing-bytes", "proof_hex": (proof1 + b"\x00").hex(), "expect_error": "trailing bytes after the proof"},
+        {"id": "varuint-too-long", "proof_hex": (OTS_MAGIC + b"\x80" * 11).hex(), "expect_error": "varuint longer than 10 bytes"},
+        {"id": "argument-exceeds-limit", "proof_hex": (header_ok + b"\xf0" + _ots_varuint(4097) + b"x").hex(), "expect_error": "length 4097 exceeds 4096"},
+        {
+            "id": "message-exceeds-4096",
+            "proof_hex": (header_ok + b"\xf0" + _ots_varbytes(b"a" * 2100) + b"\xf0" + _ots_varbytes(b"b" * 2100)).hex(),
+            "expect_error": "message longer than 4096 bytes",
+        },
+        {"id": "unknown-op-tag", "proof_hex": (header_ok + b"\xaa").hex(), "expect_error": "unknown op tag 0xaa"},
+        {
+            "id": "bitcoin-payload-trailing",
+            "proof_hex": (header_ok + b"\x00" + btc_tag + _ots_varbytes(_ots_varuint(100) + b"\x00")).hex(),
+            "expect_error": "bitcoin attestation payload has trailing bytes",
+        },
+        {
+            "id": "pending-uri-invalid-utf8",
+            "proof_hex": (header_ok + b"\x00" + pending_tag + _ots_varbytes(_ots_varbytes(b"\xff\xfe"))).hex(),
+            "expect_error": "pending attestation URI is not UTF-8",
+        },
+        {
+            "id": "nesting-too-deep",
+            "proof_hex": (header_ok + b"\x08" * 258 + b"\x00" + btc_tag + _ots_varbytes(_ots_varuint(1))).hex(),
+            "expect_error": "nesting deeper than 256",
+        },
+    ]
+    return {
+        "description": "OpenTimestamps detached-proof vectors shared by comuvia.ots and foreglass.verify (fictional inputs only).",
+        "generated_by": "tools/sync_vectors.py",
+        "valid": valid,
+        "refusals": refusals,
+    }
+
+
+def _pascal(text: str) -> str:
+    return "".join(part.capitalize() for part in text.split("_"))
+
+
+def build_types_module() -> bytes:
+    """Generate packages/comuvia/src/comuvia/types.py deterministically from schemas/v0_1/*.json."""
+    common = json.loads((SCHEMAS / "common.json").read_text(encoding="utf-8"))["$defs"]
+    record_names = [
+        "resource_snapshot", "source_assertion", "interpretation", "assessment",
+        "question", "forecast", "outcome", "evaluation", "artifact_descriptor",
+    ]
+    schemas = {name: json.loads((SCHEMAS / f"{name}.json").read_text(encoding="utf-8")) for name in record_names}
+
+    ref_aliases = {
+        "schema_version": 'Literal["comuvia/0.1"]',
+        "record_type": "RecordType",
+        "identifier": "str",
+        "agent": "str",
+        "code": "str",
+        "text": "str",
+        "revision": "int",
+        "data_origin": "DataOrigin",
+        "timestamp": "str",
+        "date": "str",
+        "day_value": "DayValue",
+        "time_point": "TimePoint",
+        "period": "Period",
+        "unknown_marker": "UnknownMarker",
+        "withheld_marker": "WithheldMarker",
+        "digest": "str",
+        "reference": "RecordReference",
+        "predecessor": "RecordReference | None",
+        "probability": "float",
+        "unit_interval": "float",
+        "count": "int",
+        "language": "str",
+        "media_type": "str",
+        "locator": "str",
+        "legacy_id": "LegacyId",
+        "legacy_ids": "list[LegacyId]",
+        "condition": "Condition",
+        "codes": "list[str]",
+        "limitations": "list[str]",
+        "vintage": "Vintage",
+        "extensions": "dict[str, Any]",
+    }
+    assert set(ref_aliases) == set(common), f"common.json $defs changed: {set(common) ^ set(ref_aliases)}"
+
+    nested_defs: list[str] = []
+
+    def type_expr(node: dict, prefix: str) -> str:
+        if "$ref" in node:
+            ref_name = node["$ref"].split("#/$defs/", 1)[1]
+            return ref_aliases[ref_name]
+        if "allOf" in node:
+            # Typed record reference (e.g. reference constrained to record_type == "question")
+            return "RecordReference"
+        if "anyOf" in node:
+            parts = [type_expr(sub, prefix) for sub in node["anyOf"]]
+            deduped = list(dict.fromkeys(parts))
+            return " | ".join(deduped)
+        if "const" in node:
+            val = node["const"]
+            return "None" if val is None else f"Literal[{json.dumps(val)}]"
+        if "enum" in node:
+            lits = []
+            has_none = False
+            for opt in node["enum"]:
+                if opt is None:
+                    has_none = True
+                else:
+                    lits.append(json.dumps(opt))
+            base = f"Literal[{', '.join(lits)}]" if lits else "None"
+            return f"{base} | None" if has_none and lits else base
+        kind = node.get("type")
+        if kind == "null":
+            return "None"
+        if kind == "boolean":
+            return "bool"
+        if kind == "string":
+            return "str"
+        if kind == "integer":
+            return "int"
+        if kind == "number":
+            return "float"
+        if kind == "array":
+            item_t = type_expr(node["items"], prefix + "Item") if "items" in node else "Any"
+            return f"list[{item_t}]"
+        if kind == "object":
+            props = node.get("properties")
+            if not props:
+                return "dict[str, Any]"
+            req = set(node.get("required", []))
+            lines = [f"class {prefix}(TypedDict):"]
+            for prop_name, prop_schema in props.items():
+                prop_t = type_expr(prop_schema, f"{prefix}{_pascal(prop_name)}")
+                if prop_name not in req:
+                    prop_t = f"NotRequired[{prop_t}]"
+                lines.append(f"    {prop_name}: {prop_t}")
+            nested_defs.append("\n".join(lines))
+            return prefix
+        raise RuntimeError(f"unhandled schema node at {prefix}: {node}")
+
+    record_defs: list[str] = []
+    record_classes: list[str] = []
+    for name in record_names:
+        cls_name = f"{_pascal(name)}Record"
+        record_classes.append(cls_name)
+        schema = schemas[name]
+        req = set(schema["required"])
+        lines = [f"class {cls_name}(TypedDict):"]
+        for prop_name, prop_schema in schema["properties"].items():
+            prop_t = type_expr(prop_schema, f"{_pascal(name)}{_pascal(prop_name)}")
+            if prop_name not in req:
+                prop_t = f"NotRequired[{prop_t}]"
+            lines.append(f"    {prop_name}: {prop_t}")
+        record_defs.append("\n".join(lines))
+
+    record_literals = ", ".join(f'"{n}"' for n in record_names)
+    exported = [
+        "AnyRecord", "Condition", "DataOrigin", "DayValue", "LegacyId", "Marker",
+        "Period", "RecordReference", "RecordType", "TimePoint", "UnknownMarker",
+        "Vintage", "WithheldMarker", *sorted(record_classes),
+    ]
+    header = f'''"""Static ``TypedDict`` definitions for ``comuvia/0.1`` records (generated by ``tools/sync_vectors.py``).
+
+Generated deterministically from ``comuvia/schemas/v0_1/*.json``; do not edit by hand.
+Import on demand (``from comuvia.types import ForecastRecord, UnknownMarker``). Static
+types aid editors and type checkers; runtime validation remains ``comuvia.validate()``.
+"""
+
+from typing import Any, Literal, NotRequired, TypedDict
+
+RecordType = Literal[{record_literals}]
+DataOrigin = Literal["observed", "synthetic"]
+Vintage = Literal["first_release", "latest_release"]
+
+
+class DayValue(TypedDict):
+    date: str
+    precision: Literal["day"]
+
+
+TimePoint = str | DayValue
+
+
+class Period(TypedDict):
+    start: str
+    end: str
+    inclusive: bool
+    precision: Literal["day"]
+
+
+class UnknownMarker(TypedDict):
+    unknown: str
+    note: NotRequired[str]
+
+
+class WithheldMarker(TypedDict):
+    withheld: str
+    note: NotRequired[str]
+
+
+Marker = UnknownMarker | WithheldMarker
+
+
+class RecordReference(TypedDict):
+    record_type: RecordType
+    id: str
+    revision: int
+    digest: str
+
+
+class LegacyId(TypedDict):
+    scheme: str
+    value: str
+
+
+class Condition(TypedDict):
+    text: str
+    state: Literal["unresolved", "occurred", "not_occurred"]
+    note: NotRequired[str]
+'''
+    body = (
+        header
+        + "\n\n"
+        + "\n\n\n".join(nested_defs)
+        + "\n\n\n"
+        + "\n\n\n".join(record_defs)
+        + f"\n\n\nAnyRecord = {' | '.join(record_classes)}\n\n"
+        + "__all__ = [\n"
+        + "".join(f'    "{item}",\n' for item in exported)
+        + "]\n"
+    )
+    return body.encode("utf-8")
+
+
 def main() -> int:
     check = "--check" in sys.argv[1:]
     outputs: dict[Path, bytes] = {}
     records: dict[str, dict] = {}
     sources: dict[str, bytes] = {}
-    for directory in sorted(p for p in FIXTURES.iterdir() if (p / "records").is_dir()):  # comuvia record fixtures only
+    for name in CORE_FIXTURES:
+        directory = FIXTURES / name
         fixture_outputs, by_id, source_for = sync_fixture(directory)
         outputs.update(fixture_outputs)
         records.update(by_id)
@@ -632,6 +988,11 @@ def main() -> int:
     outputs[VECTORS / "identity.json"] = dump(build_identity_vectors(records, sources))
     outputs[VECTORS / "records.json"] = dump(build_record_vectors(records))
     outputs[VECTORS / "evaluation.json"] = dump(build_evaluation_vectors(records))
+    ots_bytes = dump(build_ots_vectors())
+    outputs[VECTORS / "ots.json"] = ots_bytes
+    if FOREGLASS_VERIFY.is_file():
+        outputs[FOREGLASS_VECTORS / "ots.json"] = ots_bytes
+    outputs[TYPES_PATH] = build_types_module()
     stale = [p for p, data in outputs.items() if not p.exists() or p.read_bytes() != data]
     if check:
         for path in stale:

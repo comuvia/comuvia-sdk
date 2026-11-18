@@ -5,12 +5,15 @@ import types
 import unittest
 
 import comuvia
+from package_context import INSTALLED
 
 
 class InstalledSkeletonTest(unittest.TestCase):
+    @unittest.skipUnless(INSTALLED, "comuvia is imported from source; metadata is checked on installed wheels")
     def test_version_matches_distribution_metadata(self):
         self.assertEqual(comuvia.__version__, importlib.metadata.version("comuvia"))
 
+    @unittest.skipUnless(INSTALLED, "comuvia is imported from source; dependencies are checked on installed wheels")
     def test_no_runtime_dependencies(self):
         self.assertIsNone(importlib.metadata.requires("comuvia"))
 
