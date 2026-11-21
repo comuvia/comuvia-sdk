@@ -80,8 +80,10 @@ SCHEMA_FILES = ["common.json", *(f"{t}.json" for t in RECORD_TYPES)]
 REQUIRED_WHEEL = {
     "comuvia": [f"comuvia/schemas/v0_1/{f}" for f in SCHEMA_FILES]
     + ["comuvia/rules/binary-brier-v1/1.json", "comuvia/py.typed", "comuvia/types.py",
-       "comuvia/builders.py", "comuvia/ots.py", "comuvia/cli.py", "comuvia/store.py",
-       "comuvia/evaluation.py", f"comuvia-{VERSIONS['comuvia']}.dist-info/licenses/LICENSE"],
+       "comuvia/builders.py", "comuvia/bundle.py", "comuvia/ots.py", "comuvia/cli.py",
+       "comuvia/store.py", "comuvia/evaluation.py", "comuvia/profiles/__init__.py",
+       "comuvia/profiles/dependencies.py", "comuvia/profiles/edition_review.py",
+       f"comuvia-{VERSIONS['comuvia']}.dist-info/licenses/LICENSE"],
     "foreglass": [f"foreglass/{m}.py" for m in ("client", "intake", "catalog", "normalize", "capabilities", "reasons")]
     + [f"foreglass-{VERSIONS['foreglass']}.dist-info/licenses/LICENSE"],
 }
@@ -502,7 +504,16 @@ def command_check(args: argparse.Namespace) -> dict:
         if label == "core-only":
             report["environments"][label]["cli"] = cli_scenario(env, sdists["comuvia"], work)
         if args.tutorials:
-            names = ["tutorial_a_narrative.py", "tutorial_b_forecast.py", "tutorial_d_dependencies.py", "tutorial_e_authoring.py", "tutorial_f_point_error.py", "tutorial_g_edition_review.py", "tutorial_h_pinned_evaluation.py"]
+            names = [
+                "tutorial_a_narrative.py",
+                "tutorial_b_forecast.py",
+                "tutorial_d_dependencies.py",
+                "tutorial_e_authoring.py",
+                "tutorial_f_point_error.py",
+                "tutorial_g_edition_review.py",
+                "tutorial_h_pinned_evaluation.py",
+                "tutorial_j_bundle_and_selection.py",
+            ]
             if "foreglass" in present:
                 names.append("tutorial_c_foreglass.py")
             report["environments"][label]["tutorials"] = run_tutorials(

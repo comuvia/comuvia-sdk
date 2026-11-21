@@ -120,6 +120,7 @@ class StoreReport:
     issues: tuple[Issue, ...]
     detection_limit: str = field(default=DETECTION_LIMIT)
     checkpoint_verified: bool = False
+    profiles_checked: bool = False
 
     @property
     def ok(self) -> bool:
@@ -384,7 +385,7 @@ class RecordStore:
 
     # ---- append
 
-    def append(self, body: Mapping) -> StoreEntry:
+    def append(self, body: Mapping, *, check_profiles: bool = False) -> StoreEntry:
         """Append one record body. Re-appending an identical body is a no-op."""
         if self._lock_fd is None or self._entries is None:
             raise _refuse(reasons.READ_ONLY_STORE, "open the store with writer=True to append")
@@ -399,6 +400,13 @@ class RecordStore:
         existing = by_key.get(key)
         if existing is not None:
             if existing.digest == digest:
+                if check_profiles:
+                    from .profiles import dependencies as _deps
+
+                    by_key_digest = {k: v.digest for k, v in by_key.items()}
+                    prof_issues, _ = _deps.verify_record_profile(body, by_key_digest, require_resolved=True)
+                    if prof_issues:
+                        raise RefusalError(prof_issues)
                 return StoreEntry(existing.sequence, *key, digest, appended=False)
             raise _refuse(reasons.REVISION_CONFLICT, f"{key[0]} {key[1]!r} revision {key[2]} is stored with a different digest")
         problems = []
@@ -408,6 +416,12 @@ class RecordStore:
                 problems.append(Issue(pointer, reasons.UNRESOLVED_REFERENCE, "referenced record is not in the store"))
             elif target.digest != ref["digest"]:
                 problems.append(Issue(pointer, reasons.REFERENCE_DIGEST_MISMATCH, "stored target has a different digest"))
+        if check_profiles:
+            from .profiles import dependencies as _deps
+
+            by_key_digest = {k: v.digest for k, v in by_key.items()}
+            prof_issues, _ = _deps.verify_record_profile(body, by_key_digest, require_resolved=True)
+            problems.extend(prof_issues)
         if problems:
             raise RefusalError(problems)
 
@@ -463,7 +477,7 @@ class RecordStore:
             _fsync_directory(dest.parent)
         return payload
 
-    def import_jsonl(self, source: bytes | str | os.PathLike) -> tuple[StoreEntry, ...]:
+    def import_jsonl(self, source: bytes | str | os.PathLike, *, check_profiles: bool = False) -> tuple[StoreEntry, ...]:
         """Validate and append canonical or non-canonical JSONL records from ``source``.
 
         ``source`` is raw UTF-8 ``bytes`` or a filesystem path. Every line is parsed,
@@ -508,6 +522,11 @@ class RecordStore:
                 if existing_digest != digest:
                     batch_issues.append(Issue(f"/{pos}", reasons.REVISION_CONFLICT,
                                               f"{key[0]} {key[1]!r} revision {key[2]} has a conflicting digest"))
+                elif check_profiles:
+                    from .profiles import dependencies as _deps
+
+                    prof_issues, _ = _deps.verify_record_profile(body, sim_by_key, require_resolved=True)
+                    batch_issues.extend(Issue(f"/{pos}{i.pointer}", i.code, i.message) for i in prof_issues)
                 continue
             for pointer, ref in _references(body):
                 target = sim_by_key.get((ref["record_type"], ref["id"], ref["revision"]))
@@ -517,11 +536,16 @@ class RecordStore:
                 elif target != ref["digest"]:
                     batch_issues.append(Issue(f"/{pos}{pointer}", reasons.REFERENCE_DIGEST_MISMATCH,
                                               "referenced target has a different digest"))
+            if check_profiles:
+                from .profiles import dependencies as _deps
+
+                prof_issues, _ = _deps.verify_record_profile(body, sim_by_key, require_resolved=True)
+                batch_issues.extend(Issue(f"/{pos}{i.pointer}", i.code, i.message) for i in prof_issues)
             sim_by_key[key] = digest
         if batch_issues:
             raise RefusalError(batch_issues)
 
-        return tuple(self.append(body) for body in parsed)
+        return tuple(self.append(body, check_profiles=check_profiles) for body in parsed)
 
     def checkpoint(self) -> dict:
         """Return a tamper-evident prefix commitment over the verified store index."""
@@ -574,7 +598,7 @@ class RecordStore:
 
     # ---- verification
 
-    def verify(self, *, checkpoint: Mapping | None = None) -> StoreReport:
+    def verify(self, *, checkpoint: Mapping | None = None, check_profiles: bool = False) -> StoreReport:
         """Check the index and bodies; every problem is reported by name. Nothing is modified."""
         listed = sorted((self.path / RECORDS).iterdir())  # listed before the index is read
         entries, tail, issues = self._read_index()
@@ -613,13 +637,20 @@ class RecordStore:
             data = path.read_bytes()
             if "sha256:" + hashlib.sha256(data).hexdigest() != entry.digest:
                 continue
-            for pointer, ref in _references(parse_json(data)):
+            parsed_body = parse_json(data)
+            for pointer, ref in _references(parsed_body):
                 target = stored.get((ref["record_type"], ref["id"], ref["revision"]))
                 where = f"{RECORDS}/{path.name}#{pointer}"
                 if target is None:
                     issues.append(Issue(where, reasons.UNRESOLVED_REFERENCE, "referenced record is not indexed"))
                 elif target != ref["digest"]:
                     issues.append(Issue(where, reasons.REFERENCE_DIGEST_MISMATCH, "indexed target has a different digest"))
+            if check_profiles:
+                from .profiles import dependencies as _deps
+
+                prof_issues, _ = _deps.verify_record_profile(parsed_body, stored, require_resolved=True)
+                for p_issue in prof_issues:
+                    issues.append(Issue(f"{RECORDS}/{path.name}#{p_issue.pointer}", p_issue.code, p_issue.message))
         bodies = 0
         for path in listed:
             if not _BODY_NAME.match(path.name):
@@ -641,4 +672,12 @@ class RecordStore:
                     f"Verified against retained checkpoint through entry {n}; "
                     f"tail removals after entry {n} require a newer checkpoint."
                 )
-        return StoreReport(len(entries), bodies, recorded_holder(self.path / LOCK), tuple(sorted(issues)), limit_note, checkpoint_ok)
+        return StoreReport(
+            len(entries),
+            bodies,
+            recorded_holder(self.path / LOCK),
+            tuple(sorted(issues)),
+            limit_note,
+            checkpoint_ok,
+            check_profiles,
+        )

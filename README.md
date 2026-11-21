@@ -4,7 +4,7 @@ This repository holds two independently versioned Python distributions, maintain
 
 | Package | Status | What it is |
 |---|---|---|
-| [`comuvia`](packages/comuvia/) | **0.1.2** on [PyPI](https://pypi.org/project/comuvia/0.1.2/), alpha · Apache-2.0 | Offline, provider-neutral evidence and prediction records: strict validation, RFC 8785 identity, an append-only single-writer store with JSONL export and checkpoints, detached OpenTimestamps proof parsing, and binary evaluation with named exclusions and reproducible results. No runtime dependencies |
+| [`comuvia`](packages/comuvia/) | **0.1.3** on [PyPI](https://pypi.org/project/comuvia/0.1.3/), alpha · Apache-2.0 | Offline, provider-neutral evidence and prediction records: strict validation, RFC 8785 identity, an append-only single-writer store with JSONL export and checkpoints, packaged dependency/review profiles, selection-aware impact, whole-bundle verification, detached OpenTimestamps proof parsing, and binary evaluation with named exclusions and reproducible results. No runtime dependencies |
 | [`foreglass`](packages/foreglass/) | **0.1.0** on [PyPI](https://pypi.org/project/foreglass/0.1.0/), alpha · Apache-2.0 | An optional reader for the existing public ForeGlass artifacts. It reads them explicitly and within bounds, retains exact bytes and normalizes only their declared semantics. For the current public ledger shape that honestly yields 0 eligible forecasts. Depends only on `comuvia>=0.1.0,<0.2` |
 
 `comuvia` keeps free-form statements separate from their interpretations, and scores only explicitly eligible structured forecasts. It does not claim a truth score, independent timestamp assurance, predictive skill or an industry standard.
@@ -18,7 +18,7 @@ pip install foreglass    # the optional ForeGlass reader; also installs comuvia
 
 Each package README has a short first example: [`comuvia`](packages/comuvia/README.md), [`foreglass`](packages/foreglass/README.md).
 
-To check the files against the approved digests before installing anything, see [verify a download before installing it](release/0.1.2/README.md#verify-a-download-before-installing-it) (for earlier releases, [release 0.1.1](release/0.1.1/README.md#verify-a-download-before-installing-it) and [release 0.1.0](release/0.1.0/README.md#verify-a-download-before-installing-it)).
+To check the files against the approved digests before installing anything, see [verify a download before installing it](release/0.1.3/README.md#verify-a-download-before-installing-it) (for earlier releases, [release 0.1.2](release/0.1.2/README.md#verify-a-download-before-installing-it), [release 0.1.1](release/0.1.1/README.md#verify-a-download-before-installing-it) and [release 0.1.0](release/0.1.0/README.md#verify-a-download-before-installing-it)).
 
 ## Documentation
 
@@ -30,9 +30,11 @@ To check the files against the approved digests before installing anything, see 
 - [Tutorial F: point-forecast error evidence](documentation/tutorials/F-point-forecast-error.md)
 - [Tutorial G: reviewing an exact edition](documentation/tutorials/G-reviewing-an-exact-edition.md)
 - [Tutorial H: checking a consumer's own pinned evaluation](documentation/tutorials/H-pinned-consumer-evaluation.md)
+- [Tutorial J: packaged profiles, selection-aware impact and whole-bundle verification](documentation/tutorials/J-bundle-and-selection-impact.md)
 - [Working with 0.1 records: five details that surprise new users](documentation/guides/working-with-0.1-records.md)
 - [Record store: layout, lock, crash safety and limits](documentation/architecture/record-store.md)
 - [Python compatibility and build tooling](documentation/architecture/python-compatibility.md)
+- [Release 0.1.3: digests, build recipe and download verification](release/0.1.3/)
 - [Release 0.1.2: digests, build recipe and download verification](release/0.1.2/)
 - [Release 0.1.1: digests, build recipe and download verification](release/0.1.1/)
 - [Release 0.1.0: digests, build recipe and download verification](release/0.1.0/)
@@ -41,6 +43,7 @@ To check the files against the approved digests before installing anything, see 
 
 | Version | Published | Packages | Source |
 |---|---|---|---|
+| 0.1.3 | 2026-11-20 | [`comuvia` 0.1.3](https://pypi.org/project/comuvia/0.1.3/); `foreglass` unchanged at 0.1.0 | Tag `v0.1.3` |
 | 0.1.2 | 2026-11-18 | [`comuvia` 0.1.2](https://pypi.org/project/comuvia/0.1.2/); `foreglass` unchanged at 0.1.0 | Tag `v0.1.2` |
 | 0.1.1 | 2026-10-14 | [`comuvia` 0.1.1](https://pypi.org/project/comuvia/0.1.1/); `foreglass` unchanged at 0.1.0 | Tag `v0.1.1` |
 | 0.1.0 | 2026-10-01 | [`comuvia` 0.1.0](https://pypi.org/project/comuvia/0.1.0/) and [`foreglass` 0.1.0](https://pypi.org/project/foreglass/0.1.0/) | Tag `v0.1.0` |
@@ -59,7 +62,7 @@ python -I tools/package_smoke.py check --dist <out>/dist --work <another empty d
 
 `build` produces byte-reproducible wheels and sdists with the pinned release recipe and inspects their contents. `check` installs them from local files only, with no index, into fresh virtual environments, and runs the package tests, the tutorials and a CLI scenario with an audit hook that refuses network events.
 
-Each release's exact files are rebuilt from its tag with its recipe: 0.1.0 from tag `v0.1.0` with [`release/0.1.0/BUILD.md`](release/0.1.0/BUILD.md), 0.1.1 from tag `v0.1.1` with [`release/0.1.1/BUILD.md`](release/0.1.1/BUILD.md), and 0.1.2 from tag `v0.1.2` with [`release/0.1.2/BUILD.md`](release/0.1.2/BUILD.md). Later commits update the package changelogs, which the source distributions include, so only the tag reproduces a release's files. Releases are published only by the manually approved [release workflow](.github/workflows/release.yml), which uploads only files listed in that release's approved `release/<version>/SHA256SUMS` ([`release/0.1.0/SHA256SUMS`](release/0.1.0/SHA256SUMS), [`release/0.1.1/SHA256SUMS`](release/0.1.1/SHA256SUMS), `release/0.1.2/SHA256SUMS`) and refuses any file whose digest differs.
+Each release's exact files are rebuilt from its tag with its recipe: 0.1.0 from tag `v0.1.0` with [`release/0.1.0/BUILD.md`](release/0.1.0/BUILD.md), 0.1.1 from tag `v0.1.1` with [`release/0.1.1/BUILD.md`](release/0.1.1/BUILD.md), 0.1.2 from tag `v0.1.2` with [`release/0.1.2/BUILD.md`](release/0.1.2/BUILD.md), and 0.1.3 from tag `v0.1.3` with [`release/0.1.3/BUILD.md`](release/0.1.3/BUILD.md). Later commits update the package changelogs, which the source distributions include, so only the tag reproduces a release's files. Releases are published only by the manually approved [release workflow](.github/workflows/release.yml), which uploads only files listed in that release's approved `release/<version>/SHA256SUMS` ([`release/0.1.0/SHA256SUMS`](release/0.1.0/SHA256SUMS), [`release/0.1.1/SHA256SUMS`](release/0.1.1/SHA256SUMS), [`release/0.1.2/SHA256SUMS`](release/0.1.2/SHA256SUMS), `release/0.1.3/SHA256SUMS`) and refuses any file whose digest differs.
 
 ## Contributing and security
 

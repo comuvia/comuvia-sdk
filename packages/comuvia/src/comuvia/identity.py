@@ -19,6 +19,7 @@ import math
 import re
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from pathlib import Path
 
 from . import reasons
 from .issues import Issue, RefusalError, pointer_join
@@ -365,12 +366,15 @@ def verify(
     expected_digest: str | None = None,
     content: bytes | None = None,
     records: Iterable[Mapping] = (),
+    check_profiles: bool = False,
 ) -> Verification:
     """Check a record's identities.
 
     ``expected_digest`` is the record digest it should have; ``content`` holds the retained
     bytes for a snapshot or artifact descriptor; ``records`` are candidate targets for
-    the body's references. Nothing is fetched: a locator is never dereferenced.
+    the body's references. When ``check_profiles`` is ``True``, any packaged dependency
+    profile under ``extensions`` is also validated and its pinned targets are checked
+    against ``records``. Nothing is fetched: a locator is never dereferenced.
     """
     issues: list[Issue] = []
     digest = record_digest(body)
@@ -397,7 +401,51 @@ def verify(
             result = "mismatch"
             issues.append(Issue(pointer, reasons.REFERENCE_DIGEST_MISMATCH, "referenced body has a different digest"))
         checks.append(ReferenceCheck(pointer, ref["record_type"], ref["id"], ref["revision"], result))
+
+    if check_profiles:
+        from .profiles import dependencies as _deps
+
+        profile_issues, profile_refs = _deps.verify_record_profile(body, index)
+        issues.extend(profile_issues)
+        checks.extend(profile_refs)
+
     return Verification(digest, record_identity, content_identity, tuple(checks), tuple(sorted(issues)))
+
+
+def runtime_identity() -> dict:
+    """Describe the loaded ``comuvia`` runtime without exposing host filesystem paths.
+
+    When ``comuvia`` is imported directly from a wheel archive (``zipimporter``),
+    ``archive_name``, ``archive_sha256`` and ``archive_bytes`` identify that exact wheel
+    for consumer receipts; when imported from an unpacked directory they are ``None``.
+    """
+    from . import __version__
+    from .validation import SCHEMA_VERSION
+
+    archive = getattr(__loader__, "archive", None)
+    archive_name = None
+    archive_sha256 = None
+    archive_bytes = None
+    if isinstance(archive, (str, Path)):
+        candidate = Path(archive)
+        if candidate.is_file() and not candidate.is_symlink():
+            try:
+                raw = candidate.read_bytes()
+            except OSError:
+                raw = None
+            if raw is not None:
+                archive_name = candidate.name
+                archive_sha256 = "sha256:" + hashlib.sha256(raw).hexdigest()
+                archive_bytes = len(raw)
+    return {
+        "package": "comuvia",
+        "version": __version__,
+        "schema_version": SCHEMA_VERSION,
+        "source": "archive" if archive_bytes is not None else "directory",
+        "archive_name": archive_name,
+        "archive_sha256": archive_sha256,
+        "archive_bytes": archive_bytes,
+    }
 
 
 def revision_conflicts(bodies: Iterable[Mapping]) -> list[Issue]:

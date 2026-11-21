@@ -2,7 +2,7 @@
 
 `comuvia` is an offline, provider-neutral library for evidence and prediction records. It keeps exact source bytes separate from record identity. Statements, interpretations, assessments and declared probabilities are distinct record types, and a missing value stays explicitly unknown or withheld. Only explicitly eligible structured forecasts are scored; every other candidate is reported with named exclusion reasons.
 
-Version 0.1.2 · Apache-2.0 · Python 3.11–3.13 · PEP 561 typed · no runtime dependencies · no network access.
+Version 0.1.3 · Apache-2.0 · Python 3.11–3.13 · PEP 561 typed · no runtime dependencies · no network access.
 
 ## Install
 
@@ -61,13 +61,15 @@ Run them from the repository root. Every person, organisation and value in the [
 | Capability | What it does | API | CLI |
 |---|---|---|---|
 | Record types & static typing | Nine `comuvia/0.1` types: `resource_snapshot`, `source_assertion`, `interpretation`, `assessment`, `question`, `forecast`, `outcome`, `evaluation`, `artifact_descriptor`. JSON Schemas and PEP 561 `TypedDict`s (`comuvia.types`) ship in the package (`schema_dir()` returns the schema directory; use `.iterdir()`) | `schema_dir()`, `RECORD_TYPES`, `comuvia.types` | — |
-| Envelope builders | Minimal mechanical helpers for revision 1 and successor revisions; `data_origin`, `recorded_by` and `recorded_at` are required explicitly and validated via `validate` | `new_record`, `revise` | — |
+| Envelope, content & pin builders | Minimal mechanical helpers for revision 1, successor revisions with pin cascading (`repin`), content descriptors, non-applicable markers and stale-pin detection | `new_record`, `revise`, `stale_pins`, `snapshot_content`, `unretained_content`, `descriptor_content`, `not_applicable_marker` | — |
 | Strict parsing | Refuses duplicate members, invalid UTF-8, a BOM, unpaired surrogates, non-finite numbers, integers binary64 would change, and nesting deeper than 64 | `parse_json` | — |
 | Validation | Refusals with named codes and JSON Pointers; unknown and withheld markers; day-precision values; namespaced `extensions` | `validate`, `load_record` | `comuvia validate` |
-| Identity | RFC 8785 canonical bytes; SHA-256 record and content digests; references that carry digests; separate record, content and reference results | `canonicalize`, `record_digest`, `content_digest`, `reference_to`, `verify`, `revision_conflicts` | `comuvia digest`, `comuvia verify` |
+| Identity | RFC 8785 canonical bytes; SHA-256 record and content digests; wheel runtime identity; references that carry digests; separate record, content and reference results | `canonicalize`, `record_digest`, `content_digest`, `reference_to`, `runtime_identity`, `verify`, `revision_conflicts` | `comuvia digest`, `comuvia verify` |
 | Proof parsing | Detached OpenTimestamps (`.ots`) binary proof parser: header, operations and attestations (block heights, calendar URIs, merkle roots). Never checked against Bitcoin or calendars | `comuvia.ots.parse_proof`, `comuvia.ots.check_proof_digest` | `comuvia verify --ots` |
-| Selector check | A verbatim quote, its prefix/suffix and its code-point position, checked against retained bytes | `check_selector` | `comuvia verify --content` |
-| Record store | Single writer, append-only, crash-safe; canonical JSONL export/import; tamper-evident index prefix checkpoints; `verify` names each problem | `RecordStore` | `comuvia store init/append/verify/show/export/import/checkpoint/repair` |
+| Selectors & quote locating | Deterministic quote locator plus verbatim quote, prefix/suffix, code-point range and optional `media_time` verification against retained bytes and timed segments | `locate_quote`, `check_selector` | `comuvia verify --content` |
+| Validated profiles | Dependency lineage (`org.comuvia.dependencies/v1` and selection-aware `v2`) and exact-edition review binding (`edition-review/1`) | `comuvia.profiles.dependencies`, `comuvia.profiles.edition_review` | `comuvia store verify --profiles` |
+| Bundle verification | Offline verification across records, retained bytes, selectors, profiles, embedded JSON references and independent expectations | `verify_bundle`, `check_embedded`, `expectation`, `check_expectation` | `comuvia bundle verify`, `comuvia bundle expectation` |
+| Record store | Single writer, append-only, crash-safe; canonical JSONL export/import; tamper-evident index prefix checkpoints; optional profile enforcement; `verify` names each problem | `RecordStore` | `comuvia store init/append/verify/show/export/import/checkpoint/repair` |
 | Evaluation | The packaged `binary-brier-v1` rule: every failing eligibility check named, all counts shown, raw binary64 losses, **no aggregate score** | `evaluate`, `load_rule` | `comuvia evaluate` |
 | Reproduction | Re-derives a stored evaluation from the forecast, outcome and rule it pins by digest | `evaluation_records`, `reproduce` | `comuvia evaluate --append`, `comuvia reproduce` |
 
@@ -77,7 +79,7 @@ Run them from the repository root. Every person, organisation and value in the [
 - **Text `media_time` in 0.1.** `source_assertion.selector` requires `media_time`. Because 0.1 has no dedicated not-applicable marker, record a plain-text source's `media_time` as `{"unknown": "not_applicable", "note": "text resource has no timeline"}` and read that code as non-applicable rather than missing data.
 - **Frozen dataclasses.** Result types (`SelectorCheck`, `Verification`, `EvaluationReport`, `StoreReport`, `Issue`, etc.) are frozen dataclasses; inspect class-level fields with `dataclasses.fields()`.
 
-## What 0.1.0–0.1.2 promise
+## What 0.1.0–0.1.3 promise
 
 - **Record shapes.** The `comuvia/0.1` shapes are frozen: the packaged schemas, and the record digest (SHA-256 over RFC 8785 bytes of the whole body). Any change is a new schema version.
 - **Scoring rule.** `binary-brier-v1` version `1`, `sha256:9a0180cf0678614b3d423ca8e641bff9805e8582ce898438d8586251f96877c1`. A changed rule is a new version; a stored evaluation pins its rule by digest.
@@ -104,6 +106,6 @@ The `tests/` directory in the source distribution checks an installed wheel agai
 
 ## Source, issues and security
 
-- Source, release checksums and build recipe: [github.com/comuvia/comuvia-sdk](https://github.com/comuvia/comuvia-sdk) ([`release/0.1.2`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.2), [`release/0.1.1`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.1), [`release/0.1.0`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.0))
+- Source, release checksums and build recipe: [github.com/comuvia/comuvia-sdk](https://github.com/comuvia/comuvia-sdk) ([`release/0.1.3`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.3), [`release/0.1.2`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.2), [`release/0.1.1`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.1), [`release/0.1.0`](https://github.com/comuvia/comuvia-sdk/tree/main/release/0.1.0))
 - Issues: [github.com/comuvia/comuvia-sdk/issues](https://github.com/comuvia/comuvia-sdk/issues)
 - Reporting a vulnerability: [SECURITY.md](https://github.com/comuvia/comuvia-sdk/blob/main/SECURITY.md)

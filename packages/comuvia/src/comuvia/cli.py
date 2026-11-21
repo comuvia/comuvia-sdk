@@ -12,9 +12,10 @@ import sys
 from pathlib import Path
 
 from . import __version__, reasons
+from .bundle import expectation, preflight, verify_bundle
 from .evaluation import evaluate, evaluation_records, reproduce
-from .identity import canonicalize, content_digest, parse_json, record_digest, verify
-from .issues import Issue, RefusalError
+from .identity import canonicalize, content_digest, parse_json, record_digest, revision_conflicts, verify
+from .issues import Issue, RefusalError, pointer_join
 from .ots import ProofError, check_proof_digest, parse_proof
 from .selectors import check_selector
 from .store import RecordStore
@@ -141,7 +142,7 @@ def cmd_verify(args, out: _Output) -> int:
 
     body = _read_record(args.record)
     records = RecordStore(args.store).records() if args.store else []
-    result = verify(body, expected_digest=args.expected_digest, content=content, records=records)
+    result = verify(body, expected_digest=args.expected_digest, content=content, records=records, check_profiles=args.profiles)
     selector = None
     if body["record_type"] == "source_assertion" and content is not None:
         snapshot = next((r for r in records if r["record_type"] == body["resource"]["record_type"]
@@ -198,7 +199,7 @@ def cmd_store_append(args, out: _Output) -> int:
     entries = []
     with RecordStore(args.store, writer=True) as store:
         for path, body in zip(args.files, bodies):
-            entry = store.append(body)
+            entry = store.append(body, check_profiles=args.profiles)
             entries.append({"file": path, **entry.as_index(), "appended": entry.appended})
     lines = [
         f"{'appended' if e['appended'] else 'present '} seq={e['sequence']} {e['record_type']} {e['id']} r{e['revision']} {e['digest']}"
@@ -210,12 +211,13 @@ def cmd_store_append(args, out: _Output) -> int:
 
 def cmd_store_verify(args, out: _Output) -> int:
     cp = parse_json(Path(args.checkpoint).read_bytes()) if args.checkpoint else None
-    report = RecordStore(args.store).verify(checkpoint=cp)
+    report = RecordStore(args.store).verify(checkpoint=cp, check_profiles=args.profiles)
     data = {
         "ok": report.ok,
         "entries": report.entries,
         "bodies": report.bodies,
         "checkpoint_verified": report.checkpoint_verified,
+        "profiles_checked": report.profiles_checked,
         "lock_holder": report.lock_holder,
         "lock_note": "holder details last written by a writer; a reader cannot tell whether that holder is still alive",
         "scope": "identity and references only; run 'comuvia reproduce' to check stored evaluation results",
@@ -226,6 +228,8 @@ def cmd_store_verify(args, out: _Output) -> int:
     lines = [f"{'OK' if report.ok else 'PROBLEMS FOUND'}: {report.entries} index entries, {report.bodies} bodies"]
     if args.checkpoint:
         lines.append(f"checkpoint: {'verified' if report.checkpoint_verified else 'FAILED'}")
+    if args.profiles:
+        lines.append("profiles: checked")
     lines.append(f"writer details last recorded: {holder} (a reader cannot tell whether that writer is alive)")
     lines += _issue_lines(report.issues)
     lines.append(f"limit: {report.detection_limit}")
@@ -273,7 +277,7 @@ def cmd_store_export(args, out: _Output) -> int:
 
 def cmd_store_import(args, out: _Output) -> int:
     with RecordStore(args.store, writer=True) as store:
-        imported = store.import_jsonl(args.file)
+        imported = store.import_jsonl(args.file, check_profiles=args.profiles)
     entries = [{**e.as_index(), "appended": e.appended} for e in imported]
     lines = [
         f"{'appended' if e['appended'] else 'present '} seq={e['sequence']} {e['record_type']} {e['id']} r{e['revision']} {e['digest']}"
@@ -363,6 +367,152 @@ def cmd_reproduce(args, out: _Output) -> int:
     return FAILED if failed else OK
 
 
+_WINDOWS_DEVICES = frozenset({
+    "CON", "PRN", "AUX", "NUL",
+    *(f"COM{i}" for i in range(1, 10)),
+    *(f"LPT{i}" for i in range(1, 10)),
+})
+
+
+def _check_regular_input_path(raw_path: str, pointer: str = "") -> Path:
+    if "\x00" in raw_path or raw_path.startswith("\\\\") or raw_path.startswith("//"):
+        raise RefusalError([Issue(pointer, reasons.INVALID_CONTENT_INPUT, "network/UNC paths are refused")])
+    p = Path(raw_path)
+    if p.drive.startswith("\\\\"):
+        raise RefusalError([Issue(pointer, reasons.INVALID_CONTENT_INPUT, "UNC paths are refused")])
+    if p.is_symlink() or not p.is_file():
+        raise RefusalError([Issue(pointer, reasons.INVALID_CONTENT_INPUT, f"{raw_path} is not a regular file")])
+    return p.resolve()
+
+
+def _load_path_map(map_path: str) -> dict[str, bytes]:
+    p = _check_regular_input_path(map_path)
+    base_dir = p.parent
+    raw_map = parse_json(p.read_bytes())
+    if not isinstance(raw_map, dict):
+        raise _Usage(f"{map_path} must be a JSON object mapping keys to relative file paths inside {base_dir}")
+    loaded: dict[str, bytes] = {}
+    for key, rel in raw_map.items():
+        ptr = pointer_join("", str(key))
+        if not isinstance(key, str) or key == "" or not isinstance(rel, str) or rel == "":
+            raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "map entry must map a non-empty key to a relative file path")])
+        if "\x00" in rel or rel.startswith(("/", "\\")):
+            raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must be relative to the map directory")])
+        rel_path = Path(rel)
+        if rel_path.is_absolute() or rel_path.drive or rel_path.root:
+            raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must not carry a drive, root or UNC prefix")])
+        parts = rel_path.parts
+        if not parts or any(part in ("..", "") for part in parts):
+            raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must not traverse parent directories")])
+        for part in parts:
+            stem = part.split(".", 1)[0].upper()
+            if stem in _WINDOWS_DEVICES:
+                raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must not name a reserved device")])
+        cur = base_dir
+        for part in parts:
+            if part == ".":
+                continue
+            cur = cur / part
+            if cur.is_symlink():
+                raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must not traverse symlinks")])
+        resolved = cur.resolve()
+        if not resolved.is_relative_to(base_dir) or not resolved.is_file() or resolved.is_symlink():
+            raise RefusalError([Issue(ptr, reasons.INVALID_CONTENT_INPUT, "mapped path must name a regular file inside the map directory")])
+        loaded[key] = resolved.read_bytes()
+    return loaded
+
+
+def cmd_bundle_verify(args, out: _Output) -> int:
+    content_map = _load_path_map(args.content_map) if args.content_map else None
+    embedded_map = _load_path_map(args.embedded_map) if args.embedded_map else {}
+    exp_manifest = parse_json(_check_regular_input_path(args.expectation, "/expectation").read_bytes()) if args.expectation else None
+
+    def _locate_embedded(loc):
+        if isinstance(loc, str):
+            return embedded_map.get(loc)
+        return None
+
+    report = verify_bundle(
+        args.target,
+        contents=content_map,
+        require_retained_content=args.require_content,
+        check_selectors=not args.no_selectors,
+        check_profiles=not args.no_profiles,
+        check_embedded_pins=bool(args.check_embedded or args.embedded_map),
+        locate_embedded=_locate_embedded if args.embedded_map else None,
+        expectation_manifest=exp_manifest,
+    )
+    data = {
+        "ok": report.ok,
+        "records_checked": report.records_checked,
+        "contents_checked": report.contents_checked,
+        "selectors_checked": report.selectors_checked,
+        "profiles_checked": report.profiles_checked,
+        "embedded_checked": report.embedded_checked,
+        "expectation_checked": report.expectation_checked,
+        "issues": _issues(report.issues),
+    }
+    lines = [
+        f"{'OK' if report.ok else 'PROBLEMS FOUND'}: records={report.records_checked}, "
+        f"contents={report.contents_checked}, selectors={report.selectors_checked}, "
+        f"profiles={report.profiles_checked}, embedded={report.embedded_checked}, "
+        f"expectation={report.expectation_checked}"
+    ] + _issue_lines(report.issues)
+    out.emit(data, lines)
+    return OK if report.ok else FAILED
+
+
+def cmd_bundle_expectation(args, out: _Output) -> int:
+    if "\x00" in args.target or args.target.startswith(("\\\\", "//")):
+        raise RefusalError([Issue("", reasons.INVALID_CONTENT_INPUT, "network/UNC paths are refused")])
+    target = Path(args.target)
+    if target.is_dir():
+        store = RecordStore(target)
+        rep = store.verify()
+        if not rep.ok:
+            raise RefusalError(list(rep.issues))
+        bodies = store.records()
+    elif target.is_file() and not target.is_symlink():
+        raw = target.read_bytes()
+        raw_lines = raw.split(b"\n")
+        if raw_lines and raw_lines[-1] == b"":
+            raw_lines.pop()
+        if not raw_lines:
+            raise RefusalError([Issue("", reasons.INVALID_JSON, "JSONL input is empty")])
+        bodies = []
+        line_issues: list[Issue] = []
+        for idx, ln in enumerate(raw_lines):
+            if ln.endswith(b"\r"):
+                ln = ln[:-1]
+            try:
+                bodies.append(load_record(ln))
+            except RefusalError as error:
+                line_issues.extend(Issue(f"line:{idx + 1}{i.pointer}", i.code, i.message) for i in error.issues)
+        if line_issues:
+            raise RefusalError(line_issues)
+    else:
+        raise RefusalError([Issue("", reasons.NOT_A_STORE, f"{args.target} is neither a comuvia store nor a regular JSONL file")])
+
+    conflicts = revision_conflicts(bodies)
+    if conflicts:
+        raise RefusalError(conflicts)
+    pf = preflight(bodies)
+    if not pf["ok"]:
+        raise RefusalError([
+            Issue("", reasons.REVISION_CONFLICT, f"duplicate or malformed record keys: {pf}")
+        ])
+    exp = expectation(bodies)
+    if args.out:
+        dest = Path(args.out)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(canonicalize(exp) + b"\n")
+    lines = [f"expectation entries={len(exp['entries'])} ids={len(exp['latest'])}"]
+    if args.out:
+        lines.append(f"wrote {args.out}")
+    out.emit(exp, lines)
+    return OK
+
+
 # ------------------------------------------------------------------ parser
 
 
@@ -398,6 +548,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--expected-digest", help="expected sha256:... digest")
     p.add_argument("--store", help="store whose records resolve the record's references")
     p.add_argument("--ots", help="detached OpenTimestamps proof (.ots) to parse offline")
+    p.add_argument("--profiles", action="store_true", help="also check packaged dependency profiles under extensions")
     p.set_defaults(handler=cmd_verify)
 
     store = sub.add_parser("store", parents=[common], help="single-writer record store").add_subparsers(dest="store_command", required=True)
@@ -407,6 +558,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = store.add_parser("append", parents=[common], help="append record files (takes the writer lock)")
     p.add_argument("store")
     p.add_argument("files", nargs="+")
+    p.add_argument("--profiles", action="store_true", help="refuse records with broken or invalid dependency profiles")
     p.set_defaults(handler=cmd_store_append)
     p = store.add_parser(
         "verify", parents=[common],
@@ -414,6 +566,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("store")
     p.add_argument("--checkpoint", help="independently retained checkpoint JSON file")
+    p.add_argument("--profiles", action="store_true", help="also check packaged dependency profiles on stored records")
     p.set_defaults(handler=cmd_store_verify)
     p = store.add_parser("show", parents=[common], help="list stored records")
     p.add_argument("store")
@@ -429,6 +582,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = store.add_parser("import", parents=[common], help="validate and append JSONL records (takes the writer lock)")
     p.add_argument("store")
     p.add_argument("file")
+    p.add_argument("--profiles", action="store_true", help="refuse batches with broken or invalid dependency profiles")
     p.set_defaults(handler=cmd_store_import)
     p = store.add_parser("checkpoint", parents=[common], help="emit a tamper-evident index prefix checkpoint")
     p.add_argument("store")
@@ -454,6 +608,22 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--store", required=True)
     p.add_argument("ids", nargs="*", help="evaluation ids (default: every stored evaluation)")
     p.set_defaults(handler=cmd_reproduce)
+
+    bundle = sub.add_parser("bundle", parents=[common], help="whole-bundle verification and expectation manifests").add_subparsers(dest="bundle_command", required=True)
+    p = bundle.add_parser("verify", parents=[common], help="verify records, retained bytes, selectors, profiles and expectations")
+    p.add_argument("target", help="store directory or JSONL file")
+    p.add_argument("--content-map", help="JSON mapping 'type/id/rN' to retained content file paths")
+    p.add_argument("--require-content", action="store_true", help="fail if any retained snapshot or descriptor lacks content bytes")
+    p.add_argument("--no-selectors", action="store_true", help="skip source_assertion selector checks")
+    p.add_argument("--no-profiles", action="store_true", help="skip dependency and edition-review profile checks")
+    p.add_argument("--check-embedded", action="store_true", help="check embedded pins and {file|path, sha256} references in JSON artifacts")
+    p.add_argument("--embedded-map", help="JSON mapping embedded locator strings to file paths")
+    p.add_argument("--expectation", help="independently retained expectation manifest JSON")
+    p.set_defaults(handler=cmd_bundle_verify)
+    p = bundle.add_parser("expectation", parents=[common], help="emit an expectation manifest for a store or JSONL bundle")
+    p.add_argument("target", help="store directory or JSONL file")
+    p.add_argument("--out", help="write canonical expectation JSON to this file")
+    p.set_defaults(handler=cmd_bundle_expectation)
     return parser
 
 

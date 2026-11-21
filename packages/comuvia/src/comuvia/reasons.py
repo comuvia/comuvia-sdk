@@ -40,6 +40,11 @@ INVALID_COVERAGE = "invalid_coverage"
 INFORMATION_CUTOFF_AFTER_ISSUED_AT = "information_cutoff_after_issued_at"
 RESOLUTION_DEADLINE_BEFORE_FORECAST_DEADLINE = "resolution_deadline_before_forecast_deadline"
 PROTECTED_FIELD = "protected_field"
+INVALID_CONTENT_INPUT = "invalid_content_input"
+NOT_A_SUCCESSOR = "not_a_successor"
+PIN_NOT_FOUND = "pin_not_found"
+RECORDED_BEFORE_PREDECESSOR = "recorded_before_predecessor"
+NO_CHANGE = "no_change"
 
 # Identity and detached-proof verification.
 RECORD_DIGEST_MISMATCH = "record_digest_mismatch"
@@ -52,6 +57,23 @@ PROOF_DIGEST_MISMATCH = "proof_digest_mismatch"
 # Selector check against retained bytes.
 QUOTE_MISMATCH = "quote_mismatch"
 SELECTOR_MISMATCH = "selector_mismatch"
+AMBIGUOUS_QUOTE = "ambiguous_quote"
+
+# Profile and bundle verification.
+UNSUPPORTED_PROFILE_VERSION = "unsupported_profile_version"
+INVALID_PROFILE = "invalid_profile"
+UNSUPPORTED_ROLE = "unsupported_role"
+DUPLICATE_PIN = "duplicate_pin"
+OBSERVED_HAS_INPUTS = "observed_has_inputs"
+DERIVED_WITHOUT_INPUTS = "derived_without_inputs"
+ORIGIN_CONFLICT = "origin_conflict"
+UNIT_CONFLICT = "unit_conflict"
+LIMIT_EXCEEDED = "limit_exceeded"
+MISSING_PIN = "missing_pin"
+PIN_MISMATCH = "pin_mismatch"
+MISSING_CONTENT = "missing_content"
+EMBEDDED_REFERENCE_FAILED = "embedded_reference_failed"
+EXPECTATION_FAILED = "expectation_failed"
 
 # Record store: append refusals and writer lock.
 NOT_A_STORE = "not_a_store"
@@ -136,5 +158,15 @@ STORE_CODES = frozenset({
     INDEX_ENTRY_MISMATCH, INDEX_SEQUENCE_GAP, UNEXPECTED_FILE, LEFTOVER_TEMP_FILE,
     CHECKPOINT_INVALID, CHECKPOINT_MISMATCH,
 })
-SELECTOR_CODES = frozenset({QUOTE_MISMATCH, SELECTOR_MISMATCH})
+SELECTOR_CODES = frozenset({QUOTE_MISMATCH, SELECTOR_MISMATCH, AMBIGUOUS_QUOTE})
+AUTHORING_CODES = frozenset({
+    PROTECTED_FIELD, INVALID_CONTENT_INPUT, NOT_A_SUCCESSOR, PIN_NOT_FOUND,
+    RECORDED_BEFORE_PREDECESSOR, NO_CHANGE,
+})
+PROFILE_CODES = frozenset({
+    UNSUPPORTED_PROFILE_VERSION, INVALID_PROFILE, UNSUPPORTED_ROLE, DUPLICATE_PIN,
+    OBSERVED_HAS_INPUTS, DERIVED_WITHOUT_INPUTS, ORIGIN_CONFLICT, UNIT_CONFLICT,
+    LIMIT_EXCEEDED, MISSING_PIN, PIN_MISMATCH,
+})
+BUNDLE_CODES = frozenset({MISSING_CONTENT, EMBEDDED_REFERENCE_FAILED, EXPECTATION_FAILED})
 REPRODUCTION_CODES = frozenset({EVALUATION_INPUT_NOT_FOUND, RULE_NOT_FOUND})

@@ -1,5 +1,23 @@
 # comuvia changelog
 
+## 0.1.3 — 2026-11-20
+
+Additive profile validation, selection-aware correction impact, pin-cascade/content builders, deterministic quote locating, audiovisual `media_time` verification, whole-bundle verification and runtime wheel identity on the unchanged `comuvia/0.1` schema and `comuvia-store/1` layout. Zero runtime dependencies; existing 0.1.0, 0.1.1 and 0.1.2 records, stores and evaluations remain byte-for-byte compatible.
+
+- **Packaged profiles and selection-aware impact (`comuvia.profiles`).**
+  - `comuvia.profiles.dependencies` ships `org.comuvia.dependencies/v1` (`check_bundle`, `impact`) and adds `org.comuvia.dependencies/v2` with structured `selection` descriptors (`json_pointer`, `text_quote`, `byte_range`, `line_range`) so `impact(..., contents=...)` reports `selection_status` (`unchanged`, `changed`, `unscoped`) on affected dependents when a container is revised, while treating `meaning_changed` as `changed` even on identical bytes.
+  - `comuvia.profiles.edition_review` ships `edition-review/1`, `review-summary/1` and `contribution/1` (`review_status`).
+  - Opt-in profile and extension-pin checking added to `verify(..., check_profiles=True)`, `RecordStore.append(..., check_profiles=True)`, `RecordStore.import_jsonl(..., check_profiles=True)`, `RecordStore.verify(..., check_profiles=True)` and CLI `comuvia verify --profiles` / `comuvia store append|import|verify --profiles`.
+- **Pin-cascade, content and marker builders (`comuvia.builders`, `comuvia.identity`).**
+  - `revise(..., repin=(), require_change=False, enforce_monotonic_time=False)` moves exact `reference_to(old)` pins across core fields and `extensions` onto a successor revision (`not_a_successor`, `pin_not_found`, `no_change`, `recorded_before_predecessor`).
+  - `stale_pins(records)` reports `superseded`, `mismatch` and `missing` pins across core fields and `extensions`.
+  - `snapshot_content()`, `unretained_content()`, `descriptor_content()`, `not_applicable_marker()`, `is_not_applicable()` and `runtime_identity()` (recording the loaded wheel filename, SHA-256 and byte length without host filesystem paths).
+- **Deterministic quote locating and audiovisual `media_time` verification (`comuvia.selectors`).**
+  - `locate_quote(exact, content, *, context_chars=32, max_context_chars=256, occurrence=None, media_time=None)` locates verbatim quotes in UTF-8 bytes, widens prefix/suffix context when `occurrence` is explicitly specified, refuses missing or ambiguous quotes (`quote_mismatch`, `ambiguous_quote`), and returns a schema-valid `selector`.
+  - `check_selector(..., media_duration=None, timed_segments=None, time_tolerance=0.5)` verifies `selector.media_time` (`start_seconds`, `end_seconds`) against media duration bounds and optional speech/caption segments.
+- **Whole-bundle verification and independent expectations (`comuvia.bundle`, `comuvia.cli`).**
+  - `verify_bundle()`, `check_embedded()`, `preflight()`, `expectation()` and `check_expectation()`, plus CLI `comuvia bundle verify` and `comuvia bundle expectation`.
+
 ## 0.1.2 — 2026-11-18
 
 Additive usability, typing, store portability/checkpoint, and detached proof-parsing improvements on the unchanged `comuvia/0.1` schema and `comuvia-store/1` layout. Zero runtime dependencies; existing 0.1.0 and 0.1.1 records, stores and evaluations remain byte-for-byte compatible.

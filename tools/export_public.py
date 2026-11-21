@@ -55,6 +55,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 PUBLIC_PATHS = [
     ".gitattributes",
+    ".github/workflows/ci.yml",
     ".github/workflows/release.yml",
     ".gitignore",
     "CONTRIBUTING.md",
@@ -71,6 +72,7 @@ PUBLIC_PATHS = [
     "release/0.1.0",
     "release/0.1.1",
     "release/0.1.2",
+    "release/0.1.3",
     "tools",
 ]
 # Initial mode only: the first public commit used this date and message. Chained exports
